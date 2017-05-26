@@ -1,0 +1,4 @@
+# Day 2 Capstone Project
+
+A capstone project to practice the
+scrape->tidy->model->visualize workflow.

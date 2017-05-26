@@ -1,0 +1,3 @@
+# Visualizing data
+
+How to visualize data using ggplot2.

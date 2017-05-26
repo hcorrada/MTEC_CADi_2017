@@ -1,0 +1,4 @@
+# Your First Analysis
+
+Here we describe an analysis we will do
+to motivate our introduction to R.

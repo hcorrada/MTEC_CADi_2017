@@ -1,0 +1,4 @@
+# Setting up the Tools
+
+Here we setup R, RStudio and anything else
+we will use in the course.

@@ -1,0 +1,5 @@
+# Tidying data
+
+What is tidy data and how to manipulate it
+using dplyr.
+

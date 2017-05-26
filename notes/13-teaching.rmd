@@ -1,0 +1,3 @@
+# Teaching with R
+
+How to use R in teaching.

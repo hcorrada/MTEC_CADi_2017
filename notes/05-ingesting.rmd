@@ -1,0 +1,4 @@
+# Ingesting data
+
+How to scrape data in R, and an introduction
+to R itself.

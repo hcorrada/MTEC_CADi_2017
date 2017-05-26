@@ -1,0 +1,3 @@
+# Publishing Analyses with R
+
+Publishing stuff with R. Rmarkdown, bookdown and shiny.

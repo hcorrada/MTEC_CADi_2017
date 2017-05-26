@@ -1,0 +1,11 @@
+---
+title: "CADI 2017"
+author: "Héctor Corrada Bravo"
+date: "`r Sys.Date()`"
+output: 
+  bookdown::gitbook
+---
+
+# Preamble
+
+Here is where the course notes will be included.

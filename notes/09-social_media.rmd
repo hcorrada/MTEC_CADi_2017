@@ -1,0 +1,5 @@
+# Social Media Analysis
+
+An analysis of twitter text and network
+with an introduction to basic statistical
+modeling.
