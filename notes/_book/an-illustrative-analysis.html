@@ -110,6 +110,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.3" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#visualizing-the-data"><i class="fa fa-check"></i><b>3.3</b> Visualizing the data</a></li>
 <li class="chapter" data-level="3.4" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#modeling-data"><i class="fa fa-check"></i><b>3.4</b> Modeling data</a></li>
 <li class="chapter" data-level="3.5" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#visualizing-model-result"><i class="fa fa-check"></i><b>3.5</b> Visualizing model result</a></li>
+<li class="chapter" data-level="3.6" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#abstracting-the-analysis"><i class="fa fa-check"></i><b>3.6</b> Abstracting the analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="setting-up-the-tools.html"><a href="setting-up-the-tools.html"><i class="fa fa-check"></i><b>4</b> Setting up the Tools</a></li>
 <li class="chapter" data-level="5" data-path="your-first-analysis.html"><a href="your-first-analysis.html"><i class="fa fa-check"></i><b>5</b> Your First Analysis</a></li>
@@ -635,6 +636,439 @@ annot_tab &lt;-<span class="st"> </span>clustered_tab %&gt;%
            <span class="dt">label=</span>annot_tab$title)</code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p>Roughly, movies are clustered into Star Wars and low vs. high rated movies. The latter seem to have some difference in domestic gross. We could use statistical modeling to see if that’s the case, but will skip that for now. Do note also, that the clustering algorithm we used seems to be assigning one of the movies incorrectly, which warrants further investigation.</p>
+</div>
+<div id="abstracting-the-analysis" class="section level2">
+<h2><span class="header-section-number">3.6</span> Abstracting the analysis</h2>
+<p>While not a tremendous success, we decide we want to carry on with this analysis. We would like to do this for other actors’ movies. To do this let’s write a function that performs the steps of this analysis that are specific to an actor.</p>
+<p>This function must do the following:</p>
+<ol style="list-style-type: decimal">
+<li>Scrape movie ratings from Rotten Tomatoes</li>
+<li>Clean up the scraped data</li>
+<li>Join with the budget data we downloaded previously</li>
+<li>Perform the clustering algorithm</li>
+<li>Make the final plot</li>
+</ol>
+<p>With this in mind, we write functions for each of these steps, and then make one final function that puts all of these together</p>
+<p>First, let’s write the scraping function. It will take an actor’s name and output the scraped data</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">scrape_rt &lt;-<span class="st"> </span>function(actor, <span class="dt">base_url=</span><span class="st">&quot;https://www.rottentomatoes.com/celebrity/&quot;</span>) {
+   url &lt;-<span class="st"> </span><span class="kw">paste0</span>(base_url, actor)
+    html &lt;-<span class="st"> </span><span class="kw">read_html</span>(url) 
+    
+  html %&gt;%
+<span class="st">    </span><span class="kw">html_nodes</span>(<span class="st">&quot;#filmographyTbl&quot;</span>) %&gt;%
+<span class="st">    </span><span class="kw">html_table</span>() %&gt;%
+<span class="st">    </span>magrittr::<span class="kw">extract2</span>(<span class="dv">1</span>) %&gt;%
+<span class="st">    </span><span class="kw">as_tibble</span>()
+}</code></pre></div>
+<p>Ok, let’s test it with Gael García Bernal:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ggb_tab &lt;-<span class="st"> </span><span class="kw">scrape_rt</span>(<span class="st">&quot;gael_garcia_bernal&quot;</span>) 
+ggb_tab %&gt;%
+<span class="st">  </span><span class="kw">head</span>() %&gt;%
+<span class="st">  </span>knitr::<span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">RATING</th>
+<th align="left">TITLE</th>
+<th align="left">CREDIT</th>
+<th align="left">BOX OFFICE</th>
+<th align="right">YEAR</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">30%</td>
+<td align="left">Salt and Fire</td>
+<td align="left">Dr. Fabio Cavani</td>
+<td align="left">—</td>
+<td align="right">2017</td>
+</tr>
+<tr class="even">
+<td align="left">75%</td>
+<td align="left">You’re Killing Me Susana (Me estás matando Susana)</td>
+<td align="left">Eligio</td>
+<td align="left">—</td>
+<td align="right">2017</td>
+</tr>
+<tr class="odd">
+<td align="left">94%</td>
+<td align="left">Neruda</td>
+<td align="left">Oscar Peluchonneau</td>
+<td align="left">$1M</td>
+<td align="right">2016</td>
+</tr>
+<tr class="even">
+<td align="left">60%</td>
+<td align="left">Desierto</td>
+<td align="left">Executive Producer</td>
+<td align="left"></td>
+<td align="right"></td>
+</tr>
+</tbody>
+</table>
+<pre><code>                                        Moises   $2M           2016</code></pre>
+<p>60% Zoom Edward — 2016 No Score Yet Z Actor — 2016</p>
+<p>Good start, now let’s write the function that cleans up that table</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cleanup_rt_tab &lt;-<span class="st"> </span>function(data) {
+ data  %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="co"># make sure the movie is rated</span>
+<span class="st">  </span><span class="kw">filter</span>(RATING !=<span class="st"> &quot;No Score Yet&quot;</span>) %&gt;%<span class="st"> </span>
+<span class="st">  </span>
+<span class="st">  </span><span class="co"># make the rating look numeric</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">RATING =</span> <span class="kw">str_replace</span>(RATING, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;&quot;</span>)) %&gt;%
+<span class="st">  </span>
+<span class="st">  </span><span class="co"># remove producer and director credits</span>
+<span class="st">  </span><span class="kw">filter</span>(!<span class="kw">str_detect</span>(CREDIT, <span class="st">&quot;Prod&quot;</span>) &amp;
+<span class="st">         </span>!<span class="kw">str_detect</span>(CREDIT, <span class="st">&quot;Dir&quot;</span>)) %&gt;%
+<span class="st">  </span>
+<span class="st">  </span><span class="co"># convert to proper types</span>
+<span class="st">  </span>readr::<span class="kw">type_convert</span>()
+}</code></pre></div>
+<p>And let’s test that again</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ggb_tab %&gt;%<span class="st"> </span><span class="kw">cleanup_rt_tab</span>() %&gt;%
+<span class="st">  </span><span class="kw">head</span>() %&gt;%
+<span class="st">  </span>knitr::<span class="kw">kable</span>()</code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   RATING = col_integer(),
+##   TITLE = col_character(),
+##   CREDIT = col_character(),
+##   `BOX OFFICE` = col_character()
+## )</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">RATING</th>
+<th align="left">TITLE</th>
+<th align="left">CREDIT</th>
+<th align="left">BOX OFFICE</th>
+<th align="right">YEAR</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">30</td>
+<td align="left">Salt and Fire</td>
+<td align="left">Dr. Fabio Cavani</td>
+<td align="left">—</td>
+<td align="right">2017</td>
+</tr>
+<tr class="even">
+<td align="right">75</td>
+<td align="left">You’re Killing Me Susana (Me estás matando Susana)</td>
+<td align="left">Eligio</td>
+<td align="left">—</td>
+<td align="right">2017</td>
+</tr>
+<tr class="odd">
+<td align="right">94</td>
+<td align="left">Neruda</td>
+<td align="left">Oscar Peluchonneau</td>
+<td align="left">$1M</td>
+<td align="right">2016</td>
+</tr>
+<tr class="even">
+<td align="right">60</td>
+<td align="left">Zoom</td>
+<td align="left">Edward</td>
+<td align="left">—</td>
+<td align="right">2016</td>
+</tr>
+<tr class="odd">
+<td align="right">77</td>
+<td align="left">Rosewater</td>
+<td align="left">Maziar Bahari</td>
+<td align="left">—</td>
+<td align="right">2014</td>
+</tr>
+<tr class="even">
+<td align="right">93</td>
+<td align="left">No</td>
+<td align="left">René Saavedra</td>
+<td align="left">$2.4M</td>
+<td align="right">2013</td>
+</tr>
+</tbody>
+</table>
+<p>Next, the function that joins ratings and budgets:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">join_budget &lt;-<span class="st"> </span>function(data) {
+  data %&gt;%
+<span class="st">  </span><span class="co"># join the two tables together</span>
+<span class="st">  </span><span class="kw">inner_join</span>(clean_budget_tab, <span class="dt">by=</span><span class="kw">c</span>(<span class="dt">TITLE=</span><span class="st">&quot;movie&quot;</span>)) 
+}</code></pre></div>
+<p>And test it:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ggb_tab %&gt;%
+<span class="st">  </span><span class="kw">cleanup_rt_tab</span>() %&gt;%
+<span class="st">  </span><span class="kw">join_budget</span>() %&gt;%
+<span class="st">  </span><span class="kw">head</span>() %&gt;%
+<span class="st">  </span>knitr::<span class="kw">kable</span>()</code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   RATING = col_integer(),
+##   TITLE = col_character(),
+##   CREDIT = col_character(),
+##   `BOX OFFICE` = col_character()
+## )</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">RATING</th>
+<th align="left">TITLE</th>
+<th align="left">CREDIT</th>
+<th align="left">BOX OFFICE</th>
+<th align="right">YEAR</th>
+<th align="left">release_date</th>
+<th align="right">production_budget</th>
+<th align="right">domestic_gross</th>
+<th align="right">worldwide_gross</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">60</td>
+<td align="left">Zoom</td>
+<td align="left">Edward</td>
+<td align="left">—</td>
+<td align="right">2016</td>
+<td align="left">2006-08-11</td>
+<td align="right">35</td>
+<td align="right">11.989328</td>
+<td align="right">12.506188</td>
+</tr>
+<tr class="even">
+<td align="right">77</td>
+<td align="left">Rosewater</td>
+<td align="left">Maziar Bahari</td>
+<td align="left">—</td>
+<td align="right">2014</td>
+<td align="left">2014-11-14</td>
+<td align="right">10</td>
+<td align="right">3.128941</td>
+<td align="right">3.168858</td>
+</tr>
+<tr class="odd">
+<td align="right">40</td>
+<td align="left">Letters to Juliet</td>
+<td align="left">Victor</td>
+<td align="left">$53.1M</td>
+<td align="right">2010</td>
+<td align="left">2010-05-14</td>
+<td align="right">30</td>
+<td align="right">53.032453</td>
+<td align="right">82.148538</td>
+</tr>
+<tr class="even">
+<td align="right">43</td>
+<td align="left">Blindness</td>
+<td align="left">Bartender/King of Ward Three</td>
+<td align="left">$3.1M</td>
+<td align="right">2008</td>
+<td align="left">2008-10-03</td>
+<td align="right">25</td>
+<td align="right">3.073392</td>
+<td align="right">20.052958</td>
+</tr>
+<tr class="odd">
+<td align="right">69</td>
+<td align="left">Babel</td>
+<td align="left">Santiago</td>
+<td align="left">$34.3M</td>
+<td align="right">2006</td>
+<td align="left">2006-10-27</td>
+<td align="right">20</td>
+<td align="right">34.302837</td>
+<td align="right">132.121212</td>
+</tr>
+<tr class="even">
+<td align="right">92</td>
+<td align="left">Amores Perros</td>
+<td align="left">Octavio</td>
+<td align="left">$4.9M</td>
+<td align="right">2001</td>
+<td align="left">2001-03-30</td>
+<td align="right">2</td>
+<td align="right">5.383834</td>
+<td align="right">20.883834</td>
+</tr>
+</tbody>
+</table>
+<p>Two more functions to go. Next, we cluster the movies:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cluster_movies &lt;-<span class="st"> </span>function(data, <span class="dt">k=</span><span class="dv">3</span>) {
+  data &lt;-<span class="st"> </span>data %&gt;%
+<span class="st">    </span><span class="kw">select</span>(<span class="dt">rating=</span>RATING, <span class="dt">title=</span>TITLE, domestic_gross)
+  
+  kmeans_result &lt;-<span class="st">  </span>data %&gt;%
+<span class="st">    </span><span class="kw">select</span>(rating, domestic_gross) %&gt;%
+<span class="st">    </span><span class="kw">kmeans</span>(<span class="dt">centers=</span>k) 
+
+  clustered_tab &lt;-<span class="st"> </span>kmeans_result %&gt;%
+<span class="st">    </span><span class="kw">augment</span>(<span class="dt">data=</span>data) %&gt;%
+<span class="st">    </span><span class="kw">rename</span>(<span class="dt">cluster=</span>.cluster) %&gt;%
+<span class="st">    </span><span class="kw">as_tibble</span>()
+
+  kmeans_centers &lt;-<span class="st"> </span>kmeans_result %&gt;%
+<span class="st">    </span><span class="kw">tidy</span>() %&gt;%
+<span class="st">    </span><span class="kw">as_tibble</span>()
+
+   clustered_tab %&gt;%
+<span class="st">    </span><span class="kw">left_join</span>(<span class="kw">select</span>(kmeans_centers, x1, x2, cluster)) %&gt;%
+<span class="st">  </span>
+<span class="st">    </span><span class="co"># calculate the distance of each movie to its center</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">center_dist=</span><span class="kw">sqrt</span>((rating-x1)^<span class="dv">2</span>+(domestic_gross-x2)^<span class="dv">2</span>))
+}</code></pre></div>
+<p>And test:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ggb_tab %&gt;%
+<span class="st">  </span><span class="kw">cleanup_rt_tab</span>() %&gt;%
+<span class="st">  </span><span class="kw">join_budget</span>() %&gt;%
+<span class="st">  </span><span class="kw">cluster_movies</span>() %&gt;%
+<span class="st">  </span>knitr::<span class="kw">kable</span>()</code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   RATING = col_integer(),
+##   TITLE = col_character(),
+##   CREDIT = col_character(),
+##   `BOX OFFICE` = col_character()
+## )</code></pre>
+<pre><code>## Joining, by = &quot;cluster&quot;</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">rating</th>
+<th align="left">title</th>
+<th align="right">domestic_gross</th>
+<th align="left">cluster</th>
+<th align="right">x1</th>
+<th align="right">x2</th>
+<th align="right">center_dist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">60</td>
+<td align="left">Zoom</td>
+<td align="right">11.989328</td>
+<td align="left">3</td>
+<td align="right">51.5</td>
+<td align="right">7.531360</td>
+<td align="right">9.598098</td>
+</tr>
+<tr class="even">
+<td align="right">77</td>
+<td align="left">Rosewater</td>
+<td align="right">3.128941</td>
+<td align="left">2</td>
+<td align="right">84.5</td>
+<td align="right">4.256387</td>
+<td align="right">7.584269</td>
+</tr>
+<tr class="odd">
+<td align="right">40</td>
+<td align="left">Letters to Juliet</td>
+<td align="right">53.032453</td>
+<td align="left">1</td>
+<td align="right">54.5</td>
+<td align="right">43.667645</td>
+<td align="right">17.261218</td>
+</tr>
+<tr class="even">
+<td align="right">43</td>
+<td align="left">Blindness</td>
+<td align="right">3.073392</td>
+<td align="left">3</td>
+<td align="right">51.5</td>
+<td align="right">7.531360</td>
+<td align="right">9.598098</td>
+</tr>
+<tr class="odd">
+<td align="right">69</td>
+<td align="left">Babel</td>
+<td align="right">34.302837</td>
+<td align="left">1</td>
+<td align="right">54.5</td>
+<td align="right">43.667645</td>
+<td align="right">17.261218</td>
+</tr>
+<tr class="even">
+<td align="right">92</td>
+<td align="left">Amores Perros</td>
+<td align="right">5.383834</td>
+<td align="left">2</td>
+<td align="right">84.5</td>
+<td align="right">4.256387</td>
+<td align="right">7.584269</td>
+</tr>
+</tbody>
+</table>
+<p>Finally, the function that makes and annotates the plot</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot_movies &lt;-<span class="st"> </span>function(data, actor) {
+  plt &lt;-<span class="st"> </span>data %&gt;%<span class="st"> </span><span class="kw">ggplot</span>() +
+<span class="st">    </span><span class="kw">aes</span>(<span class="dt">x=</span>rating, <span class="dt">y=</span>domestic_gross, <span class="dt">color=</span>cluster) +
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">2.3</span>) +
+<span class="st">    </span><span class="kw">theme_bw</span>() +
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="kw">paste0</span>(actor, <span class="st">&quot;&#39;s movies&quot;</span>),
+         <span class="dt">x=</span><span class="st">&quot;Rotten Tomatoes rating&quot;</span>,
+         <span class="dt">y=</span><span class="st">&quot;Domestic Gross (Millions)&quot;</span>)
+  
+  annot_dat &lt;-<span class="st"> </span>data %&gt;%
+<span class="st">    </span><span class="kw">group_by</span>(cluster) %&gt;%
+<span class="st">    </span><span class="kw">arrange</span>(center_dist) %&gt;%
+<span class="st">    </span><span class="kw">slice</span>(<span class="dv">1</span>)
+  
+  plt &lt;-<span class="st"> </span>plt +
+<span class="st">     </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, 
+           <span class="dt">x=</span>annot_dat$x1,
+           <span class="dt">y=</span>annot_dat$x2,
+           <span class="dt">label=</span>annot_dat$title)
+  plt
+}</code></pre></div>
+<p>And a final test:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ggb_tab %&gt;%
+<span class="st">  </span><span class="kw">cleanup_rt_tab</span>() %&gt;%
+<span class="st">  </span><span class="kw">join_budget</span>() %&gt;%
+<span class="st">  </span><span class="kw">cluster_movies</span>() %&gt;%
+<span class="st">  </span><span class="kw">plot_movies</span>(<span class="st">&quot;Gael García Bernal&quot;</span>)</code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   RATING = col_integer(),
+##   TITLE = col_character(),
+##   CREDIT = col_character(),
+##   `BOX OFFICE` = col_character()
+## )</code></pre>
+<pre><code>## Joining, by = &quot;cluster&quot;</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>Now, we can make one final function that puts all of this together:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">analyze_actor &lt;-<span class="st"> </span>function(actor, <span class="dt">k=</span><span class="dv">3</span>, <span class="dt">base_url=</span><span class="st">&quot;https://www.rottentomatoes.com/celebrity/&quot;</span>) {
+  <span class="co"># first let&#39;s make the name work with RT</span>
+  rt_name &lt;-<span class="st"> </span>actor %&gt;%
+<span class="st">    </span><span class="kw">str_to_lower</span>() %&gt;%
+<span class="st">    </span><span class="kw">str_replace_all</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>)
+  
+  <span class="kw">message</span>(<span class="st">&quot;Scraping Rotten Tomatoes with name &quot;</span>, rt_name)
+  dirty_dat &lt;-<span class="st"> </span><span class="kw">scrape_rt</span>(rt_name, <span class="dt">base_url=</span>base_url) 
+  
+  <span class="kw">message</span>(<span class="st">&quot;Preparing data for analysis&quot;</span>)
+  clean_dat &lt;-<span class="st"> </span>dirty_dat %&gt;%
+<span class="st">    </span><span class="kw">cleanup_rt_tab</span>() %&gt;%
+<span class="st">    </span><span class="kw">join_budget</span>() 
+    
+  <span class="kw">message</span>(<span class="st">&quot;Performing clustering and plotting&quot;</span>)
+    clean_dat %&gt;%<span class="st"> </span><span class="kw">cluster_movies</span>(<span class="dt">k=</span>k) %&gt;%
+<span class="st">    </span><span class="kw">plot_movies</span>(actor)
+}</code></pre></div>
+<p>And a final test:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">analyze_actor</span>(<span class="st">&quot;Gael Garcia Bernal&quot;</span>)</code></pre></div>
+<pre><code>## Scraping Rotten Tomatoes with name gael_garcia_bernal</code></pre>
+<pre><code>## Preparing data for analysis</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   RATING = col_integer(),
+##   TITLE = col_character(),
+##   CREDIT = col_character(),
+##   `BOX OFFICE` = col_character()
+## )</code></pre>
+<pre><code>## Performing clustering and plotting</code></pre>
+<pre><code>## Joining, by = &quot;cluster&quot;</code></pre>
+<p><img src="_main_files/figure-html/test_bbg-1.png" width="672" /></p>
 
 </div>
 </div>

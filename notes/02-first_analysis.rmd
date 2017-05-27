@@ -371,3 +371,34 @@ ggb_tab %>%
   cluster_movies() %>%
   plot_movies("Gael García Bernal")
 ```
+
+Now, we can make one final function that puts all of this together:
+
+```{r}
+analyze_actor <- function(actor, k=3, base_url="https://www.rottentomatoes.com/celebrity/") {
+  # first let's make the name work with RT
+  rt_name <- actor %>%
+    str_to_lower() %>%
+    str_replace_all(" ", "_")
+  
+  message("Scraping Rotten Tomatoes with name ", rt_name)
+  dirty_dat <- scrape_rt(rt_name, base_url=base_url) 
+  
+  message("Preparing data for analysis")
+  clean_dat <- dirty_dat %>%
+    cleanup_rt_tab() %>%
+    join_budget() 
+    
+  message("Performing clustering and plotting")
+    clean_dat %>% cluster_movies(k=k) %>%
+    plot_movies(actor)
+}
+```
+
+And a final test:
+
+```{r test_bbg, cache=TRUE}
+analyze_actor("Gael Garcia Bernal")
+```
+
+## Making analyses accessible
