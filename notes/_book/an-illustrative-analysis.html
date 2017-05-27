@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>CADI 2017</title>
+  <meta name="description" content="CADI 2017">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="CADI 2017" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="CADI 2017" />
+  
+  
+  
+
+<meta name="author" content="Héctor Corrada Bravo">
+
+
+<meta name="date" content="2017-05-27">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="introduction-and-overview.html">
+<link rel="next" href="setting-up-the-tools.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preamble</a></li>
+<li class="chapter" data-level="2" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html"><i class="fa fa-check"></i><b>2</b> Introduction and Overview</a></li>
+<li class="chapter" data-level="3" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html"><i class="fa fa-check"></i><b>3</b> An Illustrative Analysis</a><ul>
+<li class="chapter" data-level="3.1" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#gathering-data"><i class="fa fa-check"></i><b>3.1</b> Gathering data</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#movie-ratings"><i class="fa fa-check"></i><b>3.1.1</b> Movie ratings</a></li>
+<li class="chapter" data-level="3.1.2" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#movie-budgets-and-revenue"><i class="fa fa-check"></i><b>3.1.2</b> Movie budgets and revenue</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#manipulating-the-data"><i class="fa fa-check"></i><b>3.2</b> Manipulating the data</a></li>
+<li class="chapter" data-level="3.3" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#visualizing-the-data"><i class="fa fa-check"></i><b>3.3</b> Visualizing the data</a></li>
+<li class="chapter" data-level="3.4" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#modeling-data"><i class="fa fa-check"></i><b>3.4</b> Modeling data</a></li>
+<li class="chapter" data-level="3.5" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#visualizing-model-result"><i class="fa fa-check"></i><b>3.5</b> Visualizing model result</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="setting-up-the-tools.html"><a href="setting-up-the-tools.html"><i class="fa fa-check"></i><b>4</b> Setting up the Tools</a></li>
+<li class="chapter" data-level="5" data-path="your-first-analysis.html"><a href="your-first-analysis.html"><i class="fa fa-check"></i><b>5</b> Your First Analysis</a></li>
+<li class="chapter" data-level="6" data-path="ingesting-data.html"><a href="ingesting-data.html"><i class="fa fa-check"></i><b>6</b> Ingesting data</a></li>
+<li class="chapter" data-level="7" data-path="tidying-data.html"><a href="tidying-data.html"><i class="fa fa-check"></i><b>7</b> Tidying data</a></li>
+<li class="chapter" data-level="8" data-path="visualizing-data.html"><a href="visualizing-data.html"><i class="fa fa-check"></i><b>8</b> Visualizing data</a></li>
+<li class="chapter" data-level="9" data-path="day-1-capstone-project.html"><a href="day-1-capstone-project.html"><i class="fa fa-check"></i><b>9</b> Day 1 Capstone Project</a></li>
+<li class="chapter" data-level="10" data-path="social-media-analysis.html"><a href="social-media-analysis.html"><i class="fa fa-check"></i><b>10</b> Social Media Analysis</a></li>
+<li class="chapter" data-level="11" data-path="survey-analysis.html"><a href="survey-analysis.html"><i class="fa fa-check"></i><b>11</b> Survey Analysis</a></li>
+<li class="chapter" data-level="12" data-path="day-2-capstone-project.html"><a href="day-2-capstone-project.html"><i class="fa fa-check"></i><b>12</b> Day 2 Capstone Project</a></li>
+<li class="chapter" data-level="13" data-path="publishing-analyses-with-r.html"><a href="publishing-analyses-with-r.html"><i class="fa fa-check"></i><b>13</b> Publishing Analyses with R</a></li>
+<li class="chapter" data-level="14" data-path="teaching-with-r.html"><a href="teaching-with-r.html"><i class="fa fa-check"></i><b>14</b> Teaching with R</a></li>
+<li class="chapter" data-level="15" data-path="day-3-capstone-project.html"><a href="day-3-capstone-project.html"><i class="fa fa-check"></i><b>15</b> Day 3 Capstone Project</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CADI 2017</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="an-illustrative-analysis" class="section level1">
+<h1><span class="header-section-number">3</span> An Illustrative Analysis</h1>
+<p><a href="http://fivethirtyeight.com" class="uri">http://fivethirtyeight.com</a> has a clever series of articles on the types of movies different actors make in their careers: <a href="https://fivethirtyeight.com/tag/hollywood-taxonomy/" class="uri">https://fivethirtyeight.com/tag/hollywood-taxonomy/</a></p>
+<p>I’d like to do a similar analysis. Let’s do this in order:</p>
+<ol style="list-style-type: decimal">
+<li>Let’s do this analysis for Diego Luna</li>
+<li>Let’s use a clustering algorithm to determine the different types of movies they make</li>
+<li>Then, let’s write an application that performs this analysis for any actor and test it with Gael García Bernal</li>
+<li>Let’s make the application interactive so that a user can change the actor and the number of movie clusters the method learns.</li>
+</ol>
+<div id="gathering-data" class="section level2">
+<h2><span class="header-section-number">3.1</span> Gathering data</h2>
+<div id="movie-ratings" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> Movie ratings</h3>
+<p>For this analysis we need to get the movies Diego Luna was in, along with their Rotten Tomatoes ratings. For that we scrape this webpage: <a href="https://www.rottentomatoes.com/celebrity/diego_luna" class="uri">https://www.rottentomatoes.com/celebrity/diego_luna</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(rvest)
+<span class="kw">library</span>(stringr)
+
+<span class="co"># URL base for search</span>
+base_url &lt;-<span class="st"> &quot;https://www.rottentomatoes.com/celebrity/&quot;</span>
+
+<span class="co"># let&#39;s see how this works for Diego Luna</span>
+
+<span class="co"># scrape the table from the website</span>
+dl_url &lt;-<span class="st"> </span><span class="kw">paste0</span>(base_url, <span class="st">&quot;diego_luna&quot;</span>)
+dl_html &lt;-<span class="st"> </span><span class="kw">read_html</span>(dl_url) 
+dl_tab &lt;-<span class="st">  </span>dl_html %&gt;%
+<span class="st">  </span><span class="kw">html_nodes</span>(<span class="st">&quot;#filmographyTbl&quot;</span>) %&gt;%
+<span class="st">  </span><span class="kw">html_table</span>() %&gt;%
+<span class="st">  </span>magrittr::<span class="kw">extract2</span>(<span class="dv">1</span>) %&gt;%
+<span class="st">  </span><span class="kw">as_tibble</span>()
+
+<span class="co"># clean it up</span>
+clean_dl_tab &lt;-<span class="st"> </span>dl_tab %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="co"># make sure the movie is rated</span>
+<span class="st">  </span><span class="kw">filter</span>(RATING !=<span class="st"> &quot;No Score Yet&quot;</span>) %&gt;%<span class="st"> </span>
+<span class="st">  </span>
+<span class="st">  </span><span class="co"># make the rating look numeric</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">RATING =</span> <span class="kw">str_replace</span>(RATING, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;&quot;</span>)) %&gt;%
+<span class="st">  </span>
+<span class="st">  </span><span class="co"># remove producer and director credits</span>
+<span class="st">  </span><span class="kw">filter</span>(!<span class="kw">str_detect</span>(CREDIT, <span class="st">&quot;Prod&quot;</span>) &amp;
+<span class="st">         </span>!<span class="kw">str_detect</span>(CREDIT, <span class="st">&quot;Dir&quot;</span>)) %&gt;%
+<span class="st">  </span>
+<span class="st">  </span><span class="co"># convert to proper types</span>
+<span class="st">  </span>readr::<span class="kw">type_convert</span>()</code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   RATING = col_integer(),
+##   TITLE = col_character(),
+##   CREDIT = col_character(),
+##   `BOX OFFICE` = col_character()
+## )</code></pre>
+<p>This is what we have so far:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">RATING</th>
+<th align="left">TITLE</th>
+<th align="left">CREDIT</th>
+<th align="left">BOX OFFICE</th>
+<th align="right">YEAR</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">85</td>
+<td align="left">Rogue One: A Star Wars Story</td>
+<td align="left">Captain Cassian Andor</td>
+<td align="left">$532.2M</td>
+<td align="right">2016</td>
+</tr>
+<tr class="even">
+<td align="right">89</td>
+<td align="left">Blood Father</td>
+<td align="left">Jonah</td>
+<td align="left">—</td>
+<td align="right">2016</td>
+</tr>
+<tr class="odd">
+<td align="right">82</td>
+<td align="left">The Book of Life</td>
+<td align="left">Manolo</td>
+<td align="left">—</td>
+<td align="right">2014</td>
+</tr>
+<tr class="even">
+<td align="right">100</td>
+<td align="left">I Stay with You (Me quedo contigo)</td>
+<td align="left">Actor</td>
+<td align="left">—</td>
+<td align="right">2014</td>
+</tr>
+<tr class="odd">
+<td align="right">67</td>
+<td align="left">Elysium</td>
+<td align="left">Julio</td>
+<td align="left">$90.8M</td>
+<td align="right">2013</td>
+</tr>
+<tr class="even">
+<td align="right">41</td>
+<td align="left">Casa de mi padre</td>
+<td align="left">Raul</td>
+<td align="left">$5.9M</td>
+<td align="right">2012</td>
+</tr>
+<tr class="odd">
+<td align="right">51</td>
+<td align="left">Contraband</td>
+<td align="left">Gonzalo</td>
+<td align="left">$66.5M</td>
+<td align="right">2012</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="movie-budgets-and-revenue" class="section level3">
+<h3><span class="header-section-number">3.1.2</span> Movie budgets and revenue</h3>
+<p>For the move budgets and revenue data we scrape this webpage: <a href="http://www.the-numbers.com/movie/budgets/all" class="uri">http://www.the-numbers.com/movie/budgets/all</a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># scrape the webpage</span>
+budget_url &lt;-<span class="st"> &quot;http://www.the-numbers.com/movie/budgets/all&quot;</span>
+budget_html &lt;-<span class="st"> </span><span class="kw">read_html</span>(budget_url)
+budget_tab &lt;-<span class="st"> </span>budget_html %&gt;%
+<span class="st">  </span><span class="kw">html_nodes</span>(<span class="st">&quot;table&quot;</span>) %&gt;%
+<span class="st">  </span><span class="kw">html_table</span>(<span class="dt">fill=</span><span class="ot">TRUE</span>) %&gt;%
+<span class="st">  </span>magrittr::<span class="kw">extract2</span>(<span class="dv">1</span>) %&gt;%
+<span class="st">  </span><span class="kw">select</span>(-<span class="dv">1</span>) %&gt;%
+<span class="st">  </span><span class="kw">as_tibble</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># clean up the result</span>
+clean_budget_tab &lt;-<span class="st"> </span>budget_tab %&gt;%
+<span class="st">  </span><span class="co"># remove all those NA rows</span>
+<span class="st">  </span><span class="kw">filter</span>(!<span class="kw">is.na</span>(<span class="st">`</span><span class="dt">Release Date</span><span class="st">`</span>)) %&gt;%
+
+<span class="st">  </span><span class="co"># make the budget columns look numeric </span>
+<span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(-<span class="dv">1</span>), <span class="kw">funs</span>(<span class="kw">str_replace</span>(., <span class="st">&quot;</span><span class="ch">\\</span><span class="st">$&quot;</span>, <span class="st">&quot;&quot;</span>))) %&gt;%
+<span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(-<span class="dv">1</span>), <span class="kw">funs</span>(<span class="kw">str_replace_all</span>(., <span class="st">&quot;,&quot;</span>, <span class="st">&quot;&quot;</span>))) %&gt;%
+<span class="st">  </span>
+<span class="st">  </span><span class="co"># rename columns</span>
+<span class="st">  </span><span class="kw">rename</span>(<span class="dt">release_date=</span><span class="st">`</span><span class="dt">Release Date</span><span class="st">`</span>,
+         <span class="dt">movie=</span>Movie,
+         <span class="dt">production_budget=</span><span class="st">`</span><span class="dt">Production Budget</span><span class="st">`</span>,
+         <span class="dt">domestic_gross=</span><span class="st">`</span><span class="dt">Domestic Gross</span><span class="st">`</span>,
+         <span class="dt">worldwide_gross=</span><span class="st">`</span><span class="dt">Worldwide Gross</span><span class="st">`</span>) %&gt;%
+<span class="st">  </span>
+<span class="st">  </span><span class="co"># convert columns to proper types</span>
+<span class="st">  </span><span class="kw">type_convert</span>(<span class="kw">cols</span>(<span class="dt">release_date=</span><span class="kw">col_date</span>(<span class="dt">format=</span><span class="st">&quot;%m/%d/%Y&quot;</span>))) %&gt;%
+<span class="st">  </span>
+<span class="st">  </span><span class="co"># represent budget and gross in millions</span>
+<span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(-<span class="dv">1</span>,-<span class="dv">2</span>), <span class="kw">funs</span>(. /<span class="st"> </span><span class="fl">1e6</span>))</code></pre></div>
+<p>This is what we have for that table now:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">release_date</th>
+<th align="left">movie</th>
+<th align="right">production_budget</th>
+<th align="right">domestic_gross</th>
+<th align="right">worldwide_gross</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2009-12-18</td>
+<td align="left">Avatar</td>
+<td align="right">425</td>
+<td align="right">760.50762</td>
+<td align="right">2783.9190</td>
+</tr>
+<tr class="even">
+<td align="left">2015-12-18</td>
+<td align="left">Star Wars Ep. VII: The Force Awakens</td>
+<td align="right">306</td>
+<td align="right">936.66223</td>
+<td align="right">2058.6622</td>
+</tr>
+<tr class="odd">
+<td align="left">2007-05-24</td>
+<td align="left">Pirates of the Caribbean: At World’s End</td>
+<td align="right">300</td>
+<td align="right">309.42043</td>
+<td align="right">963.4204</td>
+</tr>
+<tr class="even">
+<td align="left">2015-11-06</td>
+<td align="left">Spectre</td>
+<td align="right">300</td>
+<td align="right">200.07417</td>
+<td align="right">879.6209</td>
+</tr>
+<tr class="odd">
+<td align="left">2012-07-20</td>
+<td align="left">The Dark Knight Rises</td>
+<td align="right">275</td>
+<td align="right">448.13910</td>
+<td align="right">1084.4391</td>
+</tr>
+<tr class="even">
+<td align="left">2013-07-02</td>
+<td align="left">The Lone Ranger</td>
+<td align="right">275</td>
+<td align="right">89.30212</td>
+<td align="right">260.0021</td>
+</tr>
+<tr class="odd">
+<td align="left">2012-03-09</td>
+<td align="left">John Carter</td>
+<td align="right">275</td>
+<td align="right">73.05868</td>
+<td align="right">282.7781</td>
+</tr>
+<tr class="even">
+<td align="left">2010-11-24</td>
+<td align="left">Tangled</td>
+<td align="right">260</td>
+<td align="right">200.82194</td>
+<td align="right">586.5819</td>
+</tr>
+<tr class="odd">
+<td align="left">2007-05-04</td>
+<td align="left">Spider-Man 3</td>
+<td align="right">258</td>
+<td align="right">336.53030</td>
+<td align="right">890.8753</td>
+</tr>
+<tr class="even">
+<td align="left">2015-05-01</td>
+<td align="left">Avengers: Age of Ultron</td>
+<td align="right">250</td>
+<td align="right">459.00587</td>
+<td align="right">1404.7059</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="manipulating-the-data" class="section level2">
+<h2><span class="header-section-number">3.2</span> Manipulating the data</h2>
+<p>Next, we combine the datasets we obtained to get closer to the plot we want to make</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">joined_tab &lt;-<span class="st"> </span>clean_dl_tab %&gt;%
+<span class="st">  </span><span class="co"># join the two tables together</span>
+<span class="st">  </span><span class="kw">inner_join</span>(clean_budget_tab, <span class="dt">by=</span><span class="kw">c</span>(<span class="dt">TITLE=</span><span class="st">&quot;movie&quot;</span>)) </code></pre></div>
+<p>This is the result of this manipulation</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">RATING</th>
+<th align="left">TITLE</th>
+<th align="left">CREDIT</th>
+<th align="left">BOX OFFICE</th>
+<th align="right">YEAR</th>
+<th align="left">release_date</th>
+<th align="right">production_budget</th>
+<th align="right">domestic_gross</th>
+<th align="right">worldwide_gross</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">85</td>
+<td align="left">Rogue One: A Star Wars Story</td>
+<td align="left">Captain Cassian Andor</td>
+<td align="left">$532.2M</td>
+<td align="right">2016</td>
+<td align="left">2016-12-16</td>
+<td align="right">200.0</td>
+<td align="right">532.17732</td>
+<td align="right">1050.98849</td>
+</tr>
+<tr class="even">
+<td align="right">82</td>
+<td align="left">The Book of Life</td>
+<td align="left">Manolo</td>
+<td align="left">—</td>
+<td align="right">2014</td>
+<td align="left">2014-10-17</td>
+<td align="right">50.0</td>
+<td align="right">50.15154</td>
+<td align="right">97.65154</td>
+</tr>
+<tr class="odd">
+<td align="right">67</td>
+<td align="left">Elysium</td>
+<td align="left">Julio</td>
+<td align="left">$90.8M</td>
+<td align="right">2013</td>
+<td align="left">2013-08-09</td>
+<td align="right">120.0</td>
+<td align="right">93.05012</td>
+<td align="right">286.19209</td>
+</tr>
+<tr class="even">
+<td align="right">51</td>
+<td align="left">Contraband</td>
+<td align="left">Gonzalo</td>
+<td align="left">$66.5M</td>
+<td align="right">2012</td>
+<td align="left">2012-01-13</td>
+<td align="right">25.0</td>
+<td align="right">66.52800</td>
+<td align="right">98.40685</td>
+</tr>
+<tr class="odd">
+<td align="right">94</td>
+<td align="left">Milk</td>
+<td align="left">Jack Lira</td>
+<td align="left">$31.8M</td>
+<td align="right">2008</td>
+<td align="left">2008-11-26</td>
+<td align="right">20.0</td>
+<td align="right">31.84130</td>
+<td align="right">57.29337</td>
+</tr>
+<tr class="even">
+<td align="right">69</td>
+<td align="left">Criminal</td>
+<td align="left">Rodrigo</td>
+<td align="left">$0.8M</td>
+<td align="right">2004</td>
+<td align="left">2016-04-15</td>
+<td align="right">31.5</td>
+<td align="right">14.70870</td>
+<td align="right">38.77126</td>
+</tr>
+<tr class="odd">
+<td align="right">61</td>
+<td align="left">The Terminal</td>
+<td align="left">Enrique Cruz</td>
+<td align="left">$77.1M</td>
+<td align="right">2004</td>
+<td align="left">2004-06-18</td>
+<td align="right">75.0</td>
+<td align="right">77.07396</td>
+<td align="right">218.67396</td>
+</tr>
+<tr class="even">
+<td align="right">79</td>
+<td align="left">Open Range</td>
+<td align="left">Button</td>
+<td align="left">$58.3M</td>
+<td align="right">2003</td>
+<td align="left">2003-08-15</td>
+<td align="right">26.0</td>
+<td align="right">58.33125</td>
+<td align="right">68.61399</td>
+</tr>
+<tr class="odd">
+<td align="right">76</td>
+<td align="left">Frida</td>
+<td align="left">Alejandro Gomez</td>
+<td align="left">$25.7M</td>
+<td align="right">2002</td>
+<td align="left">2002-10-25</td>
+<td align="right">12.0</td>
+<td align="right">25.88500</td>
+<td align="right">56.13124</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="visualizing-the-data" class="section level2">
+<h2><span class="header-section-number">3.3</span> Visualizing the data</h2>
+<p>Finally we have what we need to make our plot</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">joined_tab %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>() +
+<span class="st">    </span><span class="kw">theme_bw</span>() +
+<span class="st">    </span><span class="kw">aes</span>(<span class="dt">x=</span>RATING, <span class="dt">y=</span>domestic_gross) +
+<span class="st">    </span><span class="kw">geom_point</span>() +
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Diego Luna&#39;s movies&quot;</span>,
+         <span class="dt">x=</span><span class="st">&quot;Rotten Tomato Rating&quot;</span>,
+         <span class="dt">y=</span><span class="st">&quot;Domestic gross (Millions)&quot;</span>)</code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="modeling-data" class="section level2">
+<h2><span class="header-section-number">3.4</span> Modeling data</h2>
+<p>Now let’s take this data and see if a clustering algorithm partitions these movies into three sensible groups.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(class)
+<span class="kw">library</span>(broom)
+
+kmeans_result &lt;-<span class="st"> </span>joined_tab %&gt;%
+<span class="st">  </span><span class="kw">select</span>(RATING, domestic_gross) %&gt;%
+<span class="st">  </span><span class="kw">kmeans</span>(<span class="dt">centers=</span><span class="dv">3</span>) 
+
+clustered_tab &lt;-<span class="st"> </span>kmeans_result %&gt;%
+<span class="st">  </span><span class="kw">augment</span>(<span class="dt">data=</span>joined_tab) %&gt;%
+<span class="st">  </span><span class="kw">rename</span>(<span class="dt">cluster=</span>.cluster) %&gt;%
+<span class="st">  </span><span class="kw">as_tibble</span>()
+
+kmeans_centers &lt;-<span class="st"> </span>kmeans_result %&gt;%
+<span class="st">  </span><span class="kw">tidy</span>() %&gt;%
+<span class="st">  </span><span class="kw">as_tibble</span>()</code></pre></div>
+<p>Let’s see how the movies are grouped:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">TITLE</th>
+<th align="right">RATING</th>
+<th align="right">domestic_gross</th>
+<th align="left">cluster</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Elysium</td>
+<td align="right">67</td>
+<td align="right">93.05012</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">Contraband</td>
+<td align="right">51</td>
+<td align="right">66.52800</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">The Terminal</td>
+<td align="right">61</td>
+<td align="right">77.07396</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">Open Range</td>
+<td align="right">79</td>
+<td align="right">58.33125</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Rogue One: A Star Wars Story</td>
+<td align="right">85</td>
+<td align="right">532.17732</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">The Book of Life</td>
+<td align="right">82</td>
+<td align="right">50.15154</td>
+<td align="left">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Milk</td>
+<td align="right">94</td>
+<td align="right">31.84130</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left">Criminal</td>
+<td align="right">69</td>
+<td align="right">14.70870</td>
+<td align="left">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Frida</td>
+<td align="right">76</td>
+<td align="right">25.88500</td>
+<td align="left">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="visualizing-model-result" class="section level2">
+<h2><span class="header-section-number">3.5</span> Visualizing model result</h2>
+<p>Let’s remake the same plot, but use color to indicate the cluster</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">final_plot &lt;-<span class="st"> </span>clustered_tab %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>() +
+<span class="st">    </span><span class="kw">aes</span>(<span class="dt">x=</span>RATING, <span class="dt">y=</span>domestic_gross, <span class="dt">color=</span>cluster) +
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">2.3</span>) +
+<span class="st">    </span><span class="kw">theme_bw</span>() +
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Diego Luna&#39;s movies&quot;</span>,
+         <span class="dt">x=</span><span class="st">&quot;Rotten Tomatoes rating&quot;</span>,
+         <span class="dt">y=</span><span class="st">&quot;Domestic Gross (Millions)&quot;</span>)
+final_plot</code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Let’s annotate the graph with some movie titles. Since each cluster is represented by an average rating and domestic gross, let’s find the movie nearest to the average for its cluster.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># join the extended movie table with the centers table</span>
+annot_tab &lt;-<span class="st"> </span>clustered_tab %&gt;%
+<span class="st">  </span><span class="kw">select</span>(<span class="dt">title=</span>TITLE, <span class="dt">rating=</span>RATING, domestic_gross, cluster) %&gt;%
+<span class="st">  </span><span class="kw">left_join</span>(<span class="kw">select</span>(kmeans_centers, x1, x2, cluster)) %&gt;%
+<span class="st">  </span>
+<span class="st">  </span><span class="co"># calculate the distance of each movie to its center</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">center_dist=</span><span class="kw">sqrt</span>((rating-x1)^<span class="dv">2</span>+(domestic_gross-x2)^<span class="dv">2</span>)) %&gt;%
+<span class="st">  </span>
+<span class="st">  </span><span class="co"># find the movie closest to each center</span>
+<span class="st">  </span><span class="kw">group_by</span>(cluster) %&gt;%
+<span class="st">  </span><span class="kw">arrange</span>(center_dist) %&gt;%
+<span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span>)</code></pre></div>
+<pre><code>## Joining, by = &quot;cluster&quot;</code></pre>
+<p>Now let’s annotate the plot with these movie titles:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">final_plot +
+<span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, 
+           <span class="dt">x=</span>annot_tab$x1,
+           <span class="dt">y=</span>annot_tab$x2,
+           <span class="dt">label=</span>annot_tab$title)</code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Roughly, movies are clustered into Star Wars and low vs. high rated movies. The latter seem to have some difference in domestic gross. We could use statistical modeling to see if that’s the case, but will skip that for now. Do note also, that the clustering algorithm we used seems to be assigning one of the movies incorrectly, which warrants further investigation.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction-and-overview.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="setting-up-the-tools.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
