@@ -52,3 +52,5 @@ server <- function(input, output, session) {
     stopApp(TRUE)
   })
 }
+
+shinyApp(ui, server)

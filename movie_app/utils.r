@@ -2,6 +2,9 @@ library(tidyverse)
 library(ggplot2)
 library(rvest)
 library(broom)
+library(stringr)
+
+clean_budget_tab <- read_csv("movie_budgets.csv")
 
 scrape_table <- function(actor, base_url="https://www.rottentomatoes.com/celebrity/") {
   # first let's make the name work with RT
