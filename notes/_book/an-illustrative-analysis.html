@@ -312,6 +312,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </tbody>
 </table>
 <p>This data is for 5361 movies, including its release date, title, production budget, US domestic and worlwide gross earnings. The latter three are in millions of U.S. dollars.</p>
+<p>One thing we might want to check is if the budget and gross entries in this table are inflation adjusted or not. To do this, we can make a plot of domestic gross, which we are using for the subsequent analyses.</p>
+<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Although we don’t know for sure, since the source of our data does not state this specifically, it looks like the domestic gross measurement is inflation adjusted since average gross is stable across years.</p>
 </div>
 </div>
 <div id="manipulating-the-data" class="section level2">
@@ -438,8 +441,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="visualizing-the-data" class="section level2">
 <h2><span class="header-section-number">3.3</span> Visualizing the data</h2>
 <p>Now that we have the data we need, we can make a plot:</p>
-<div class="figure"><span id="fig:unnamed-chunk-6"></span>
-<img src="_main_files/figure-html/unnamed-chunk-6-1.png" alt="Ratings and U.S. Domestic Gross of Diego Luna's movies." width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-7"></span>
+<img src="_main_files/figure-html/unnamed-chunk-7-1.png" alt="Ratings and U.S. Domestic Gross of Diego Luna's movies." width="672" />
 <p class="caption">
 Figure 3.1: Ratings and U.S. Domestic Gross of Diego Luna’s movies.
 </p>
@@ -520,10 +523,10 @@ Figure 3.1: Ratings and U.S. Domestic Gross of Diego Luna’s movies.
 <div id="visualizing-model-result" class="section level2">
 <h2><span class="header-section-number">3.5</span> Visualizing model result</h2>
 <p>Let’s remake the same plot as before, but use color to indicate each movie’s cluster assignment given by the k-means algorithm.</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>The algorithm did make the Star Wars movie it’s own group since it’s so different that the other movies. The grouping of the remaining movies is not as clean.</p>
 <p>To make the plot and clustering more interpretable, let’s annotate the graph with some movie titles. In the k-means algorithm, each group of movies is represented by an average rating and an average domestic gross. What we can do is find the movie in each group that is closest to the average and use that movie title to annotate each group in the plot.</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>Roughly, movies are clustered into Star Wars and low vs. high rated movies. The latter seem to have some difference in domestic gross. For example, movies like <a href="https://www.rottentomatoes.com/m/1133499_1133499_terminal">“The Terminal”</a> have lower rating but make slightly more money than movies like <a href="https://www.rottentomatoes.com/m/frida">“Frida”</a>. We could use statistical modeling to see if that’s the case, but will skip that for now. Do note also, that the clustering algorithm we used seems to be assigning one of the movies incorrectly, which warrants further investigation.</p>
 </div>
 <div id="abstracting-the-analysis" class="section level2">

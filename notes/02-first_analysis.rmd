@@ -111,6 +111,19 @@ clean_budget_tab %>% head(10) %>% knitr::kable()
 This data is for `r nrow(clean_budget_tab)` movies, including its release date, title, production budget,
 US domestic and worlwide gross earnings. The latter three are in millions of U.S. dollars.
 
+One thing we might want to check is if the budget and gross entries in this table are inflation adjusted or not. To do this, we can make a plot of domestic gross, which we are using for the subsequent analyses.
+
+```{r, echo=FALSE}
+clean_budget_tab %>%
+  mutate(year=factor(year(release_date))) %>%
+  ggplot() +
+  aes(x=year, y=domestic_gross) +
+  geom_boxplot() +
+  theme_bw()
+```
+
+Although we don't know for sure, since the source of our data does not state this specifically, it looks like the domestic gross measurement is inflation adjusted since average gross is stable across years.
+
 ## Manipulating the data
 
 Next, we combine the datasets we obtained to get closer to the data we need to make the plot we want.
