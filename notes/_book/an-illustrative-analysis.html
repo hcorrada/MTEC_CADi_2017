@@ -112,6 +112,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.5" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#visualizing-model-result"><i class="fa fa-check"></i><b>3.5</b> Visualizing model result</a></li>
 <li class="chapter" data-level="3.6" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#abstracting-the-analysis"><i class="fa fa-check"></i><b>3.6</b> Abstracting the analysis</a></li>
 <li class="chapter" data-level="3.7" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#making-analyses-accessible"><i class="fa fa-check"></i><b>3.7</b> Making analyses accessible</a></li>
+<li class="chapter" data-level="3.8" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#summary"><i class="fa fa-check"></i><b>3.8</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="setting-up-the-tools.html"><a href="setting-up-the-tools.html"><i class="fa fa-check"></i><b>4</b> Setting up the Tools</a></li>
 <li class="chapter" data-level="5" data-path="your-first-analysis.html"><a href="your-first-analysis.html"><i class="fa fa-check"></i><b>5</b> Your First Analysis</a></li>
@@ -152,51 +153,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Then, let’s write an application that performs this analysis for any actor and test it with Gael García Bernal</li>
 <li>Let’s make the application interactive so that a user can change the actor and the number of movie clusters the method learns.</li>
 </ol>
+<p>For now, we will go step by step through this analysis without showing how we perform this analysis using R. As the course progresses, we will learn how to carry out these steps.</p>
 <div id="gathering-data" class="section level2">
 <h2><span class="header-section-number">3.1</span> Gathering data</h2>
 <div id="movie-ratings" class="section level3">
 <h3><span class="header-section-number">3.1.1</span> Movie ratings</h3>
 <p>For this analysis we need to get the movies Diego Luna was in, along with their Rotten Tomatoes ratings. For that we scrape this webpage: <a href="https://www.rottentomatoes.com/celebrity/diego_luna" class="uri">https://www.rottentomatoes.com/celebrity/diego_luna</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
-<span class="kw">library</span>(rvest)
-<span class="kw">library</span>(stringr)
-
-<span class="co"># URL base for search</span>
-base_url &lt;-<span class="st"> &quot;https://www.rottentomatoes.com/celebrity/&quot;</span>
-
-<span class="co"># let&#39;s see how this works for Diego Luna</span>
-
-<span class="co"># scrape the table from the website</span>
-dl_url &lt;-<span class="st"> </span><span class="kw">paste0</span>(base_url, <span class="st">&quot;diego_luna&quot;</span>)
-dl_html &lt;-<span class="st"> </span><span class="kw">read_html</span>(dl_url) 
-dl_tab &lt;-<span class="st">  </span>dl_html %&gt;%
-<span class="st">  </span><span class="kw">html_nodes</span>(<span class="st">&quot;#filmographyTbl&quot;</span>) %&gt;%
-<span class="st">  </span><span class="kw">html_table</span>() %&gt;%
-<span class="st">  </span>magrittr::<span class="kw">extract2</span>(<span class="dv">1</span>) %&gt;%
-<span class="st">  </span><span class="kw">as_tibble</span>()
-
-<span class="co"># clean it up</span>
-clean_dl_tab &lt;-<span class="st"> </span>dl_tab %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="co"># make sure the movie is rated</span>
-<span class="st">  </span><span class="kw">filter</span>(RATING !=<span class="st"> &quot;No Score Yet&quot;</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span>
-<span class="st">  </span><span class="co"># make the rating look numeric</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">RATING =</span> <span class="kw">str_replace</span>(RATING, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;&quot;</span>)) %&gt;%
-<span class="st">  </span>
-<span class="st">  </span><span class="co"># remove producer and director credits</span>
-<span class="st">  </span><span class="kw">filter</span>(!<span class="kw">str_detect</span>(CREDIT, <span class="st">&quot;Prod&quot;</span>) &amp;
-<span class="st">         </span>!<span class="kw">str_detect</span>(CREDIT, <span class="st">&quot;Dir&quot;</span>)) %&gt;%
-<span class="st">  </span>
-<span class="st">  </span><span class="co"># convert to proper types</span>
-<span class="st">  </span>readr::<span class="kw">type_convert</span>()</code></pre></div>
-<pre><code>## Parsed with column specification:
-## cols(
-##   RATING = col_integer(),
-##   TITLE = col_character(),
-##   CREDIT = col_character(),
-##   `BOX OFFICE` = col_character()
-## )</code></pre>
-<p>This is what we have so far:</p>
+<p>Once we scrape the data from the Rotten Tomatoes website and clean it up, this is part of what we have so far:</p>
 <table>
 <thead>
 <tr class="header">
@@ -259,41 +222,12 @@ clean_dl_tab &lt;-<span class="st"> </span>dl_tab %&gt;%<span class="st"> </span
 </tr>
 </tbody>
 </table>
+<p>This data includes, for each of the movies Diego Luna has acted in, the rotten tomatoes rating, the movie title, Diego Luna’s role in the movie, the U.S. domestic gross and the year of release.</p>
 </div>
 <div id="movie-budgets-and-revenue" class="section level3">
 <h3><span class="header-section-number">3.1.2</span> Movie budgets and revenue</h3>
-<p>For the move budgets and revenue data we scrape this webpage: <a href="http://www.the-numbers.com/movie/budgets/all" class="uri">http://www.the-numbers.com/movie/budgets/all</a></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># scrape the webpage</span>
-budget_url &lt;-<span class="st"> &quot;http://www.the-numbers.com/movie/budgets/all&quot;</span>
-budget_html &lt;-<span class="st"> </span><span class="kw">read_html</span>(budget_url)
-budget_tab &lt;-<span class="st"> </span>budget_html %&gt;%
-<span class="st">  </span><span class="kw">html_nodes</span>(<span class="st">&quot;table&quot;</span>) %&gt;%
-<span class="st">  </span><span class="kw">html_table</span>(<span class="dt">fill=</span><span class="ot">TRUE</span>) %&gt;%
-<span class="st">  </span>magrittr::<span class="kw">extract2</span>(<span class="dv">1</span>) %&gt;%
-<span class="st">  </span><span class="kw">select</span>(-<span class="dv">1</span>) %&gt;%
-<span class="st">  </span><span class="kw">as_tibble</span>()</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># clean up the result</span>
-clean_budget_tab &lt;-<span class="st"> </span>budget_tab %&gt;%
-<span class="st">  </span><span class="co"># remove all those NA rows</span>
-<span class="st">  </span><span class="kw">filter</span>(!<span class="kw">is.na</span>(<span class="st">`</span><span class="dt">Release Date</span><span class="st">`</span>)) %&gt;%
-
-<span class="st">  </span><span class="co"># make the budget columns look numeric </span>
-<span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(-<span class="dv">1</span>), <span class="kw">funs</span>(<span class="kw">str_replace</span>(., <span class="st">&quot;</span><span class="ch">\\</span><span class="st">$&quot;</span>, <span class="st">&quot;&quot;</span>))) %&gt;%
-<span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(-<span class="dv">1</span>), <span class="kw">funs</span>(<span class="kw">str_replace_all</span>(., <span class="st">&quot;,&quot;</span>, <span class="st">&quot;&quot;</span>))) %&gt;%
-<span class="st">  </span>
-<span class="st">  </span><span class="co"># rename columns</span>
-<span class="st">  </span><span class="kw">rename</span>(<span class="dt">release_date=</span><span class="st">`</span><span class="dt">Release Date</span><span class="st">`</span>,
-         <span class="dt">movie=</span>Movie,
-         <span class="dt">production_budget=</span><span class="st">`</span><span class="dt">Production Budget</span><span class="st">`</span>,
-         <span class="dt">domestic_gross=</span><span class="st">`</span><span class="dt">Domestic Gross</span><span class="st">`</span>,
-         <span class="dt">worldwide_gross=</span><span class="st">`</span><span class="dt">Worldwide Gross</span><span class="st">`</span>) %&gt;%
-<span class="st">  </span>
-<span class="st">  </span><span class="co"># convert columns to proper types</span>
-<span class="st">  </span><span class="kw">type_convert</span>(<span class="kw">cols</span>(<span class="dt">release_date=</span><span class="kw">col_date</span>(<span class="dt">format=</span><span class="st">&quot;%m/%d/%Y&quot;</span>))) %&gt;%
-<span class="st">  </span>
-<span class="st">  </span><span class="co"># represent budget and gross in millions</span>
-<span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(-<span class="dv">1</span>,-<span class="dv">2</span>), <span class="kw">funs</span>(. /<span class="st"> </span><span class="fl">1e6</span>))</code></pre></div>
-<p>This is what we have for that table now:</p>
+<p>For the movie budgets and revenue data we scrape this webpage: <a href="http://www.the-numbers.com/movie/budgets/all" class="uri">http://www.the-numbers.com/movie/budgets/all</a></p>
+<p>This is part of what we have for that table after scraping and cleaning up:</p>
 <table>
 <thead>
 <tr class="header">
@@ -362,30 +296,28 @@ clean_budget_tab &lt;-<span class="st"> </span>budget_tab %&gt;%
 <td align="right">586.5819</td>
 </tr>
 <tr class="odd">
+<td align="left">2017-06-21</td>
+<td align="left">Transformers: The Last Knight</td>
+<td align="right">260</td>
+<td align="right">0.00000</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
 <td align="left">2007-05-04</td>
 <td align="left">Spider-Man 3</td>
 <td align="right">258</td>
 <td align="right">336.53030</td>
 <td align="right">890.8753</td>
 </tr>
-<tr class="even">
-<td align="left">2015-05-01</td>
-<td align="left">Avengers: Age of Ultron</td>
-<td align="right">250</td>
-<td align="right">459.00587</td>
-<td align="right">1404.7059</td>
-</tr>
 </tbody>
 </table>
+<p>This data is for 5361 movies, including its release date, title, production budget, US domestic and worlwide gross earnings. The latter three are in millions of U.S. dollars.</p>
 </div>
 </div>
 <div id="manipulating-the-data" class="section level2">
 <h2><span class="header-section-number">3.2</span> Manipulating the data</h2>
-<p>Next, we combine the datasets we obtained to get closer to the plot we want to make</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">joined_tab &lt;-<span class="st"> </span>clean_dl_tab %&gt;%
-<span class="st">  </span><span class="co"># join the two tables together</span>
-<span class="st">  </span><span class="kw">inner_join</span>(clean_budget_tab, <span class="dt">by=</span><span class="kw">c</span>(<span class="dt">TITLE=</span><span class="st">&quot;movie&quot;</span>)) </code></pre></div>
-<p>This is the result of this manipulation</p>
+<p>Next, we combine the datasets we obtained to get closer to the data we need to make the plot we want.</p>
+<p>We combine the two datasets using the movie title, so that the end result has the information in both tables for each movie.</p>
 <table>
 <thead>
 <tr class="header">
@@ -505,35 +437,18 @@ clean_budget_tab &lt;-<span class="st"> </span>budget_tab %&gt;%
 </div>
 <div id="visualizing-the-data" class="section level2">
 <h2><span class="header-section-number">3.3</span> Visualizing the data</h2>
-<p>Finally we have what we need to make our plot</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">joined_tab %&gt;%
-<span class="st">  </span><span class="kw">ggplot</span>() +
-<span class="st">    </span><span class="kw">theme_bw</span>() +
-<span class="st">    </span><span class="kw">aes</span>(<span class="dt">x=</span>RATING, <span class="dt">y=</span>domestic_gross) +
-<span class="st">    </span><span class="kw">geom_point</span>() +
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Diego Luna&#39;s movies&quot;</span>,
-         <span class="dt">x=</span><span class="st">&quot;Rotten Tomato Rating&quot;</span>,
-         <span class="dt">y=</span><span class="st">&quot;Domestic gross (Millions)&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Now that we have the data we need, we can make a plot:</p>
+<div class="figure"><span id="fig:unnamed-chunk-6"></span>
+<img src="_main_files/figure-html/unnamed-chunk-6-1.png" alt="Ratings and U.S. Domestic Gross of Diego Luna's movies." width="672" />
+<p class="caption">
+Figure 3.1: Ratings and U.S. Domestic Gross of Diego Luna’s movies.
+</p>
+</div>
+<p>We see that there is one clear outlier in Diego Luna’s movies, which probably is the one Star Wars movie he acted in. The remaining movies could potentially be grouped into two types of movies, those with higher rating and those with lower ratings.</p>
 </div>
 <div id="modeling-data" class="section level2">
 <h2><span class="header-section-number">3.4</span> Modeling data</h2>
-<p>Now let’s take this data and see if a clustering algorithm partitions these movies into three sensible groups.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(class)
-<span class="kw">library</span>(broom)
-
-kmeans_result &lt;-<span class="st"> </span>joined_tab %&gt;%
-<span class="st">  </span><span class="kw">select</span>(RATING, domestic_gross) %&gt;%
-<span class="st">  </span><span class="kw">kmeans</span>(<span class="dt">centers=</span><span class="dv">3</span>) 
-
-clustered_tab &lt;-<span class="st"> </span>kmeans_result %&gt;%
-<span class="st">  </span><span class="kw">augment</span>(<span class="dt">data=</span>joined_tab) %&gt;%
-<span class="st">  </span><span class="kw">rename</span>(<span class="dt">cluster=</span>.cluster) %&gt;%
-<span class="st">  </span><span class="kw">as_tibble</span>()
-
-kmeans_centers &lt;-<span class="st"> </span>kmeans_result %&gt;%
-<span class="st">  </span><span class="kw">tidy</span>() %&gt;%
-<span class="st">  </span><span class="kw">as_tibble</span>()</code></pre></div>
+<p>We can use a clustering algorithm to partition Diego Luna’s movies. We can use the data we obtained so far and see if the k-means clustering algorithm partitions these movies into three sensible groups using the movie’s rating and domestic gross.</p>
 <p>Let’s see how the movies are grouped:</p>
 <table>
 <thead>
@@ -546,57 +461,57 @@ kmeans_centers &lt;-<span class="st"> </span>kmeans_result %&gt;%
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Elysium</td>
-<td align="right">67</td>
-<td align="right">93.05012</td>
-<td align="left">1</td>
-</tr>
-<tr class="even">
-<td align="left">Contraband</td>
-<td align="right">51</td>
-<td align="right">66.52800</td>
-<td align="left">1</td>
-</tr>
-<tr class="odd">
-<td align="left">The Terminal</td>
-<td align="right">61</td>
-<td align="right">77.07396</td>
-<td align="left">1</td>
-</tr>
-<tr class="even">
-<td align="left">Open Range</td>
-<td align="right">79</td>
-<td align="right">58.33125</td>
-<td align="left">1</td>
-</tr>
-<tr class="odd">
 <td align="left">Rogue One: A Star Wars Story</td>
 <td align="right">85</td>
 <td align="right">532.17732</td>
-<td align="left">2</td>
+<td align="left">1</td>
 </tr>
 <tr class="even">
 <td align="left">The Book of Life</td>
 <td align="right">82</td>
 <td align="right">50.15154</td>
-<td align="left">3</td>
+<td align="left">2</td>
 </tr>
 <tr class="odd">
 <td align="left">Milk</td>
 <td align="right">94</td>
 <td align="right">31.84130</td>
-<td align="left">3</td>
+<td align="left">2</td>
 </tr>
 <tr class="even">
 <td align="left">Criminal</td>
 <td align="right">69</td>
 <td align="right">14.70870</td>
-<td align="left">3</td>
+<td align="left">2</td>
 </tr>
 <tr class="odd">
 <td align="left">Frida</td>
 <td align="right">76</td>
 <td align="right">25.88500</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">Elysium</td>
+<td align="right">67</td>
+<td align="right">93.05012</td>
+<td align="left">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Contraband</td>
+<td align="right">51</td>
+<td align="right">66.52800</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left">The Terminal</td>
+<td align="right">61</td>
+<td align="right">77.07396</td>
+<td align="left">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Open Range</td>
+<td align="right">79</td>
+<td align="right">58.33125</td>
 <td align="left">3</td>
 </tr>
 </tbody>
@@ -604,44 +519,17 @@ kmeans_centers &lt;-<span class="st"> </span>kmeans_result %&gt;%
 </div>
 <div id="visualizing-model-result" class="section level2">
 <h2><span class="header-section-number">3.5</span> Visualizing model result</h2>
-<p>Let’s remake the same plot, but use color to indicate the cluster</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">final_plot &lt;-<span class="st"> </span>clustered_tab %&gt;%
-<span class="st">  </span><span class="kw">ggplot</span>() +
-<span class="st">    </span><span class="kw">aes</span>(<span class="dt">x=</span>RATING, <span class="dt">y=</span>domestic_gross, <span class="dt">color=</span>cluster) +
-<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">2.3</span>) +
-<span class="st">    </span><span class="kw">theme_bw</span>() +
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Diego Luna&#39;s movies&quot;</span>,
-         <span class="dt">x=</span><span class="st">&quot;Rotten Tomatoes rating&quot;</span>,
-         <span class="dt">y=</span><span class="st">&quot;Domestic Gross (Millions)&quot;</span>)
-final_plot</code></pre></div>
+<p>Let’s remake the same plot as before, but use color to indicate each movie’s cluster assignment given by the k-means algorithm.</p>
 <p><img src="_main_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<p>Let’s annotate the graph with some movie titles. Since each cluster is represented by an average rating and domestic gross, let’s find the movie nearest to the average for its cluster.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># join the extended movie table with the centers table</span>
-annot_tab &lt;-<span class="st"> </span>clustered_tab %&gt;%
-<span class="st">  </span><span class="kw">select</span>(<span class="dt">title=</span>TITLE, <span class="dt">rating=</span>RATING, domestic_gross, cluster) %&gt;%
-<span class="st">  </span><span class="kw">left_join</span>(<span class="kw">select</span>(kmeans_centers, x1, x2, cluster)) %&gt;%
-<span class="st">  </span>
-<span class="st">  </span><span class="co"># calculate the distance of each movie to its center</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">center_dist=</span><span class="kw">sqrt</span>((rating-x1)^<span class="dv">2</span>+(domestic_gross-x2)^<span class="dv">2</span>)) %&gt;%
-<span class="st">  </span>
-<span class="st">  </span><span class="co"># find the movie closest to each center</span>
-<span class="st">  </span><span class="kw">group_by</span>(cluster) %&gt;%
-<span class="st">  </span><span class="kw">arrange</span>(center_dist) %&gt;%
-<span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span>)</code></pre></div>
-<pre><code>## Joining, by = &quot;cluster&quot;</code></pre>
-<p>Now let’s annotate the plot with these movie titles:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">final_plot +
-<span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, 
-           <span class="dt">x=</span>annot_tab$x1,
-           <span class="dt">y=</span>annot_tab$x2,
-           <span class="dt">label=</span>annot_tab$title)</code></pre></div>
+<p>The algorithm did make the Star Wars movie it’s own group since it’s so different that the other movies. The grouping of the remaining movies is not as clean.</p>
+<p>To make the plot and clustering more interpretable, let’s annotate the graph with some movie titles. In the k-means algorithm, each group of movies is represented by an average rating and an average domestic gross. What we can do is find the movie in each group that is closest to the average and use that movie title to annotate each group in the plot.</p>
 <p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<p>Roughly, movies are clustered into Star Wars and low vs. high rated movies. The latter seem to have some difference in domestic gross. We could use statistical modeling to see if that’s the case, but will skip that for now. Do note also, that the clustering algorithm we used seems to be assigning one of the movies incorrectly, which warrants further investigation.</p>
+<p>Roughly, movies are clustered into Star Wars and low vs. high rated movies. The latter seem to have some difference in domestic gross. For example, movies like <a href="https://www.rottentomatoes.com/m/1133499_1133499_terminal">“The Terminal”</a> have lower rating but make slightly more money than movies like <a href="https://www.rottentomatoes.com/m/frida">“Frida”</a>. We could use statistical modeling to see if that’s the case, but will skip that for now. Do note also, that the clustering algorithm we used seems to be assigning one of the movies incorrectly, which warrants further investigation.</p>
 </div>
 <div id="abstracting-the-analysis" class="section level2">
 <h2><span class="header-section-number">3.6</span> Abstracting the analysis</h2>
-<p>While not a tremendous success, we decide we want to carry on with this analysis. We would like to do this for other actors’ movies. To do this let’s write a function that performs the steps of this analysis that are specific to an actor.</p>
-<p>This function must do the following:</p>
+<p>While not a tremendous success, we decide we want to carry on with this analysis. We would like to do this for other actors’ movies. One of the big advantages of using R is that we can write a piece of code that takes an actor’s name as input, and reproduces the steps of this analysis for that actor. We call these functions, we’ll see them and use them a lot in this course.</p>
+<p>For our analysis, this function must do the following:</p>
 <ol style="list-style-type: decimal">
 <li>Scrape movie ratings from Rotten Tomatoes</li>
 <li>Clean up the scraped data</li>
@@ -649,23 +537,9 @@ annot_tab &lt;-<span class="st"> </span>clustered_tab %&gt;%
 <li>Perform the clustering algorithm</li>
 <li>Make the final plot</li>
 </ol>
-<p>With this in mind, we write functions for each of these steps, and then make one final function that puts all of these together</p>
-<p>First, let’s write the scraping function. It will take an actor’s name and output the scraped data</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">scrape_rt &lt;-<span class="st"> </span>function(actor, <span class="dt">base_url=</span><span class="st">&quot;https://www.rottentomatoes.com/celebrity/&quot;</span>) {
-   url &lt;-<span class="st"> </span><span class="kw">paste0</span>(base_url, actor)
-    html &lt;-<span class="st"> </span><span class="kw">read_html</span>(url) 
-    
-  html %&gt;%
-<span class="st">    </span><span class="kw">html_nodes</span>(<span class="st">&quot;#filmographyTbl&quot;</span>) %&gt;%
-<span class="st">    </span><span class="kw">html_table</span>() %&gt;%
-<span class="st">    </span>magrittr::<span class="kw">extract2</span>(<span class="dv">1</span>) %&gt;%
-<span class="st">    </span><span class="kw">as_tibble</span>()
-}</code></pre></div>
-<p>Ok, let’s test it with Gael García Bernal:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ggb_tab &lt;-<span class="st"> </span><span class="kw">scrape_rt</span>(<span class="st">&quot;gael_garcia_bernal&quot;</span>) 
-ggb_tab %&gt;%
-<span class="st">  </span><span class="kw">head</span>() %&gt;%
-<span class="st">  </span>knitr::<span class="kw">kable</span>()</code></pre></div>
+<p>With this in mind, we can write functions for each of these steps, and then make one final function that puts all of these together.</p>
+<p>For instance, let’s write the scraping function. It will take an actor’s name and output the scraped data.</p>
+<p>Let’s test it with Gael García Bernal:</p>
 <table>
 <thead>
 <tr class="header">
@@ -698,440 +572,30 @@ ggb_tab %&gt;%
 <td align="left">$1M</td>
 <td align="right">2016</td>
 </tr>
-<tr class="even">
-<td align="left">60%</td>
-<td align="left">Desierto</td>
-<td align="left">Executive Producer</td>
-<td align="left"></td>
-<td align="right"></td>
-</tr>
 </tbody>
 </table>
-<pre><code>                                        Moises   $2M           2016</code></pre>
-<p>60% Zoom Edward — 2016 No Score Yet Z Actor — 2016</p>
-<p>Good start, now let’s write the function that cleans up that table</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cleanup_rt_tab &lt;-<span class="st"> </span>function(data) {
- data  %&gt;%<span class="st"> </span>
-<span class="st">  </span><span class="co"># make sure the movie is rated</span>
-<span class="st">  </span><span class="kw">filter</span>(RATING !=<span class="st"> &quot;No Score Yet&quot;</span>) %&gt;%<span class="st"> </span>
-<span class="st">  </span>
-<span class="st">  </span><span class="co"># make the rating look numeric</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">RATING =</span> <span class="kw">str_replace</span>(RATING, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;&quot;</span>)) %&gt;%
-<span class="st">  </span>
-<span class="st">  </span><span class="co"># remove producer and director credits</span>
-<span class="st">  </span><span class="kw">filter</span>(!<span class="kw">str_detect</span>(CREDIT, <span class="st">&quot;Prod&quot;</span>) &amp;
-<span class="st">         </span>!<span class="kw">str_detect</span>(CREDIT, <span class="st">&quot;Dir&quot;</span>)) %&gt;%
-<span class="st">  </span>
-<span class="st">  </span><span class="co"># convert to proper types</span>
-<span class="st">  </span>readr::<span class="kw">type_convert</span>()
-}</code></pre></div>
-<p>And let’s test that again</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ggb_tab %&gt;%<span class="st"> </span><span class="kw">cleanup_rt_tab</span>() %&gt;%
-<span class="st">  </span><span class="kw">head</span>() %&gt;%
-<span class="st">  </span>knitr::<span class="kw">kable</span>()</code></pre></div>
-<pre><code>## Parsed with column specification:
-## cols(
-##   RATING = col_integer(),
-##   TITLE = col_character(),
-##   CREDIT = col_character(),
-##   `BOX OFFICE` = col_character()
-## )</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="right">RATING</th>
-<th align="left">TITLE</th>
-<th align="left">CREDIT</th>
-<th align="left">BOX OFFICE</th>
-<th align="right">YEAR</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">30</td>
-<td align="left">Salt and Fire</td>
-<td align="left">Dr. Fabio Cavani</td>
-<td align="left">—</td>
-<td align="right">2017</td>
-</tr>
-<tr class="even">
-<td align="right">75</td>
-<td align="left">You’re Killing Me Susana (Me estás matando Susana)</td>
-<td align="left">Eligio</td>
-<td align="left">—</td>
-<td align="right">2017</td>
-</tr>
-<tr class="odd">
-<td align="right">94</td>
-<td align="left">Neruda</td>
-<td align="left">Oscar Peluchonneau</td>
-<td align="left">$1M</td>
-<td align="right">2016</td>
-</tr>
-<tr class="even">
-<td align="right">60</td>
-<td align="left">Zoom</td>
-<td align="left">Edward</td>
-<td align="left">—</td>
-<td align="right">2016</td>
-</tr>
-<tr class="odd">
-<td align="right">77</td>
-<td align="left">Rosewater</td>
-<td align="left">Maziar Bahari</td>
-<td align="left">—</td>
-<td align="right">2014</td>
-</tr>
-<tr class="even">
-<td align="right">93</td>
-<td align="left">No</td>
-<td align="left">René Saavedra</td>
-<td align="left">$2.4M</td>
-<td align="right">2013</td>
-</tr>
-</tbody>
-</table>
-<p>Next, the function that joins ratings and budgets:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">join_budget &lt;-<span class="st"> </span>function(data) {
-  data %&gt;%
-<span class="st">  </span><span class="co"># join the two tables together</span>
-<span class="st">  </span><span class="kw">inner_join</span>(clean_budget_tab, <span class="dt">by=</span><span class="kw">c</span>(<span class="dt">TITLE=</span><span class="st">&quot;movie&quot;</span>)) 
-}</code></pre></div>
-<p>And test it:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ggb_tab %&gt;%
-<span class="st">  </span><span class="kw">cleanup_rt_tab</span>() %&gt;%
-<span class="st">  </span><span class="kw">join_budget</span>() %&gt;%
-<span class="st">  </span><span class="kw">head</span>() %&gt;%
-<span class="st">  </span>knitr::<span class="kw">kable</span>()</code></pre></div>
-<pre><code>## Parsed with column specification:
-## cols(
-##   RATING = col_integer(),
-##   TITLE = col_character(),
-##   CREDIT = col_character(),
-##   `BOX OFFICE` = col_character()
-## )</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="right">RATING</th>
-<th align="left">TITLE</th>
-<th align="left">CREDIT</th>
-<th align="left">BOX OFFICE</th>
-<th align="right">YEAR</th>
-<th align="left">release_date</th>
-<th align="right">production_budget</th>
-<th align="right">domestic_gross</th>
-<th align="right">worldwide_gross</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">60</td>
-<td align="left">Zoom</td>
-<td align="left">Edward</td>
-<td align="left">—</td>
-<td align="right">2016</td>
-<td align="left">2006-08-11</td>
-<td align="right">35</td>
-<td align="right">11.989328</td>
-<td align="right">12.506188</td>
-</tr>
-<tr class="even">
-<td align="right">77</td>
-<td align="left">Rosewater</td>
-<td align="left">Maziar Bahari</td>
-<td align="left">—</td>
-<td align="right">2014</td>
-<td align="left">2014-11-14</td>
-<td align="right">10</td>
-<td align="right">3.128941</td>
-<td align="right">3.168858</td>
-</tr>
-<tr class="odd">
-<td align="right">40</td>
-<td align="left">Letters to Juliet</td>
-<td align="left">Victor</td>
-<td align="left">$53.1M</td>
-<td align="right">2010</td>
-<td align="left">2010-05-14</td>
-<td align="right">30</td>
-<td align="right">53.032453</td>
-<td align="right">82.148538</td>
-</tr>
-<tr class="even">
-<td align="right">43</td>
-<td align="left">Blindness</td>
-<td align="left">Bartender/King of Ward Three</td>
-<td align="left">$3.1M</td>
-<td align="right">2008</td>
-<td align="left">2008-10-03</td>
-<td align="right">25</td>
-<td align="right">3.073392</td>
-<td align="right">20.052958</td>
-</tr>
-<tr class="odd">
-<td align="right">69</td>
-<td align="left">Babel</td>
-<td align="left">Santiago</td>
-<td align="left">$34.3M</td>
-<td align="right">2006</td>
-<td align="left">2006-10-27</td>
-<td align="right">20</td>
-<td align="right">34.302837</td>
-<td align="right">132.121212</td>
-</tr>
-<tr class="even">
-<td align="right">92</td>
-<td align="left">Amores Perros</td>
-<td align="left">Octavio</td>
-<td align="left">$4.9M</td>
-<td align="right">2001</td>
-<td align="left">2001-03-30</td>
-<td align="right">2</td>
-<td align="right">5.383834</td>
-<td align="right">20.883834</td>
-</tr>
-</tbody>
-</table>
-<p>Two more functions to go. Next, we cluster the movies:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cluster_movies &lt;-<span class="st"> </span>function(data, <span class="dt">k=</span><span class="dv">3</span>) {
-  data &lt;-<span class="st"> </span>data %&gt;%
-<span class="st">    </span><span class="kw">select</span>(<span class="dt">rating=</span>RATING, <span class="dt">title=</span>TITLE, domestic_gross)
-  
-  kmeans_result &lt;-<span class="st">  </span>data %&gt;%
-<span class="st">    </span><span class="kw">select</span>(rating, domestic_gross) %&gt;%
-<span class="st">    </span><span class="kw">kmeans</span>(<span class="dt">centers=</span>k) 
-
-  clustered_tab &lt;-<span class="st"> </span>kmeans_result %&gt;%
-<span class="st">    </span><span class="kw">augment</span>(<span class="dt">data=</span>data) %&gt;%
-<span class="st">    </span><span class="kw">rename</span>(<span class="dt">cluster=</span>.cluster) %&gt;%
-<span class="st">    </span><span class="kw">as_tibble</span>()
-
-  kmeans_centers &lt;-<span class="st"> </span>kmeans_result %&gt;%
-<span class="st">    </span><span class="kw">tidy</span>() %&gt;%
-<span class="st">    </span><span class="kw">as_tibble</span>()
-
-   clustered_tab %&gt;%
-<span class="st">    </span><span class="kw">left_join</span>(<span class="kw">select</span>(kmeans_centers, x1, x2, cluster)) %&gt;%
-<span class="st">  </span>
-<span class="st">    </span><span class="co"># calculate the distance of each movie to its center</span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">center_dist=</span><span class="kw">sqrt</span>((rating-x1)^<span class="dv">2</span>+(domestic_gross-x2)^<span class="dv">2</span>))
-}</code></pre></div>
-<p>And test:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ggb_tab %&gt;%
-<span class="st">  </span><span class="kw">cleanup_rt_tab</span>() %&gt;%
-<span class="st">  </span><span class="kw">join_budget</span>() %&gt;%
-<span class="st">  </span><span class="kw">cluster_movies</span>() %&gt;%
-<span class="st">  </span>knitr::<span class="kw">kable</span>()</code></pre></div>
-<pre><code>## Parsed with column specification:
-## cols(
-##   RATING = col_integer(),
-##   TITLE = col_character(),
-##   CREDIT = col_character(),
-##   `BOX OFFICE` = col_character()
-## )</code></pre>
-<pre><code>## Joining, by = &quot;cluster&quot;</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="right">rating</th>
-<th align="left">title</th>
-<th align="right">domestic_gross</th>
-<th align="left">cluster</th>
-<th align="right">x1</th>
-<th align="right">x2</th>
-<th align="right">center_dist</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">60</td>
-<td align="left">Zoom</td>
-<td align="right">11.989328</td>
-<td align="left">3</td>
-<td align="right">51.5</td>
-<td align="right">7.531360</td>
-<td align="right">9.598098</td>
-</tr>
-<tr class="even">
-<td align="right">77</td>
-<td align="left">Rosewater</td>
-<td align="right">3.128941</td>
-<td align="left">2</td>
-<td align="right">84.5</td>
-<td align="right">4.256387</td>
-<td align="right">7.584269</td>
-</tr>
-<tr class="odd">
-<td align="right">40</td>
-<td align="left">Letters to Juliet</td>
-<td align="right">53.032453</td>
-<td align="left">1</td>
-<td align="right">54.5</td>
-<td align="right">43.667645</td>
-<td align="right">17.261218</td>
-</tr>
-<tr class="even">
-<td align="right">43</td>
-<td align="left">Blindness</td>
-<td align="right">3.073392</td>
-<td align="left">3</td>
-<td align="right">51.5</td>
-<td align="right">7.531360</td>
-<td align="right">9.598098</td>
-</tr>
-<tr class="odd">
-<td align="right">69</td>
-<td align="left">Babel</td>
-<td align="right">34.302837</td>
-<td align="left">1</td>
-<td align="right">54.5</td>
-<td align="right">43.667645</td>
-<td align="right">17.261218</td>
-</tr>
-<tr class="even">
-<td align="right">92</td>
-<td align="left">Amores Perros</td>
-<td align="right">5.383834</td>
-<td align="left">2</td>
-<td align="right">84.5</td>
-<td align="right">4.256387</td>
-<td align="right">7.584269</td>
-</tr>
-</tbody>
-</table>
-<p>Finally, the function that makes and annotates the plot</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot_movies &lt;-<span class="st"> </span>function(data, actor) {
-  plt &lt;-<span class="st"> </span>data %&gt;%<span class="st"> </span><span class="kw">ggplot</span>() +
-<span class="st">    </span><span class="kw">aes</span>(<span class="dt">x=</span>rating, <span class="dt">y=</span>domestic_gross, <span class="dt">color=</span>cluster) +
-<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">2.3</span>) +
-<span class="st">    </span><span class="kw">theme_bw</span>() +
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="kw">paste0</span>(actor, <span class="st">&quot;&#39;s movies&quot;</span>),
-         <span class="dt">x=</span><span class="st">&quot;Rotten Tomatoes rating&quot;</span>,
-         <span class="dt">y=</span><span class="st">&quot;Domestic Gross (Millions)&quot;</span>)
-  
-  annot_dat &lt;-<span class="st"> </span>data %&gt;%
-<span class="st">    </span><span class="kw">group_by</span>(cluster) %&gt;%
-<span class="st">    </span><span class="kw">arrange</span>(center_dist) %&gt;%
-<span class="st">    </span><span class="kw">slice</span>(<span class="dv">1</span>)
-  
-  plt &lt;-<span class="st"> </span>plt +
-<span class="st">     </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, 
-           <span class="dt">x=</span>annot_dat$x1,
-           <span class="dt">y=</span>annot_dat$x2,
-           <span class="dt">label=</span>annot_dat$title)
-  plt
-}</code></pre></div>
-<p>And a final test:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ggb_tab %&gt;%
-<span class="st">  </span><span class="kw">cleanup_rt_tab</span>() %&gt;%
-<span class="st">  </span><span class="kw">join_budget</span>() %&gt;%
-<span class="st">  </span><span class="kw">cluster_movies</span>() %&gt;%
-<span class="st">  </span><span class="kw">plot_movies</span>(<span class="st">&quot;Gael García Bernal&quot;</span>)</code></pre></div>
-<pre><code>## Parsed with column specification:
-## cols(
-##   RATING = col_integer(),
-##   TITLE = col_character(),
-##   CREDIT = col_character(),
-##   `BOX OFFICE` = col_character()
-## )</code></pre>
-<pre><code>## Joining, by = &quot;cluster&quot;</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
-<p>Now, we can make one final function that puts all of this together:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">analyze_actor &lt;-<span class="st"> </span>function(actor, <span class="dt">k=</span><span class="dv">3</span>, <span class="dt">base_url=</span><span class="st">&quot;https://www.rottentomatoes.com/celebrity/&quot;</span>) {
-  <span class="co"># first let&#39;s make the name work with RT</span>
-  rt_name &lt;-<span class="st"> </span>actor %&gt;%
-<span class="st">    </span><span class="kw">str_to_lower</span>() %&gt;%
-<span class="st">    </span><span class="kw">str_replace_all</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>)
-  
-  <span class="kw">message</span>(<span class="st">&quot;Scraping Rotten Tomatoes with name &quot;</span>, rt_name)
-  dirty_dat &lt;-<span class="st"> </span><span class="kw">scrape_rt</span>(rt_name, <span class="dt">base_url=</span>base_url) 
-  
-  <span class="kw">message</span>(<span class="st">&quot;Preparing data for analysis&quot;</span>)
-  clean_dat &lt;-<span class="st"> </span>dirty_dat %&gt;%
-<span class="st">    </span><span class="kw">cleanup_rt_tab</span>() %&gt;%
-<span class="st">    </span><span class="kw">join_budget</span>() 
-    
-  <span class="kw">message</span>(<span class="st">&quot;Performing clustering and plotting&quot;</span>)
-    clean_dat %&gt;%<span class="st"> </span><span class="kw">cluster_movies</span>(<span class="dt">k=</span>k) %&gt;%
-<span class="st">    </span><span class="kw">plot_movies</span>(actor)
-}</code></pre></div>
-<p>And a final test:</p>
+<p>Good start. We can then write functions for each of the steps we did with Diego Luna before.</p>
+<p>Then put all of these steps into one function that calls our new functions to put all of our analysis together:</p>
+<p>We can test this with Gael García Bernal</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">analyze_actor</span>(<span class="st">&quot;Gael Garcia Bernal&quot;</span>)</code></pre></div>
-<pre><code>## Scraping Rotten Tomatoes with name gael_garcia_bernal</code></pre>
-<pre><code>## Preparing data for analysis</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   RATING = col_integer(),
-##   TITLE = col_character(),
-##   CREDIT = col_character(),
-##   `BOX OFFICE` = col_character()
-## )</code></pre>
-<pre><code>## Performing clustering and plotting</code></pre>
-<pre><code>## Joining, by = &quot;cluster&quot;</code></pre>
 <p><img src="_main_files/figure-html/test_bbg-1.png" width="672" /></p>
 </div>
 <div id="making-analyses-accessible" class="section level2">
 <h2><span class="header-section-number">3.7</span> Making analyses accessible</h2>
-<p>Now that we have written a function to analyze an actor’s movies, we can make these analyses easier to produce by creating an interactive application that wraps our new function. The <code>shiny</code> package makes creating this type of application easy. This shiny code to creates our movie analysis application:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
-<span class="kw">library</span>(miniUI)
-
-<span class="kw">source</span>(<span class="st">&quot;utils.r&quot;</span>)
-
-ui &lt;-<span class="st"> </span><span class="kw">miniPage</span>(
-  <span class="kw">gadgetTitleBar</span>(<span class="st">&quot;Movie analysis app&quot;</span>),
-  <span class="kw">miniTabstripPanel</span>(
-    <span class="kw">miniTabPanel</span>(<span class="st">&quot;Parameters&quot;</span>, <span class="dt">icon=</span><span class="kw">icon</span>(<span class="st">&quot;sliders&quot;</span>),
-      <span class="kw">miniContentPanel</span>(
-        <span class="kw">textInput</span>(<span class="st">&quot;actor&quot;</span>, <span class="st">&quot;Actor&quot;</span>, <span class="st">&quot;Diego Luna&quot;</span>),
-        <span class="kw">numericInput</span>(<span class="st">&quot;k&quot;</span>, <span class="st">&quot;Num. clusters&quot;</span>, <span class="dv">3</span>)
-      )
-    ),
-    <span class="kw">miniTabPanel</span>(<span class="st">&quot;Plot&quot;</span>, <span class="dt">icon=</span><span class="kw">icon</span>(<span class="st">&quot;area-chart&quot;</span>),
-      <span class="kw">miniContentPanel</span>(
-        <span class="kw">plotOutput</span>(<span class="st">&quot;movie_plot&quot;</span>, <span class="dt">height=</span><span class="st">&quot;100%&quot;</span>)
-      )
-    ),
-    <span class="kw">miniTabPanel</span>(<span class="st">&quot;Data&quot;</span>, <span class="dt">icon=</span><span class="kw">icon</span>(<span class="st">&quot;table&quot;</span>),
-      <span class="kw">miniContentPanel</span>(
-        DT::<span class="kw">dataTableOutput</span>(<span class="st">&quot;table&quot;</span>, <span class="dt">height=</span><span class="st">&quot;100%&quot;</span>)
-      )
-    )
-  )
-)
-
-server &lt;-<span class="st"> </span>function(input, output, session) {
-  scrapeTable &lt;-<span class="st"> </span><span class="kw">reactive</span>({
-    <span class="kw">scrape_table</span>(input$actor)
-  })
-  
-  clusterMovies &lt;-<span class="st"> </span><span class="kw">reactive</span>({
-    <span class="kw">scrapeTable</span>() %&gt;%
-<span class="st">      </span><span class="kw">cluster_movies</span>(input$k)
-  })
-  
-  displayTable &lt;-<span class="st"> </span><span class="kw">reactive</span>({
-    <span class="kw">clusterMovies</span>() %&gt;%
-<span class="st">      </span><span class="kw">select</span>(title, rating, domestic_gross, cluster)
-  })
-  
-  output$movie_plot &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({
-    <span class="kw">clusterMovies</span>() %&gt;%<span class="st"> </span><span class="kw">plot_movies</span>(input$actor)
-  })
-  
-  output$table &lt;-<span class="st"> </span>DT::<span class="kw">renderDataTable</span>({
-    <span class="kw">displayTable</span>()
-  })
-  
-  <span class="kw">observeEvent</span>(input$done, {
-    <span class="kw">stopApp</span>(<span class="ot">TRUE</span>)
-  })
-}
-
-<span class="kw">shinyApp</span>(ui, server)</code></pre></div>
+<p>Now that we have written a function to analyze an actor’s movies, we can make these analyses easier to produce by creating an interactive application that wraps our new function. The <code>shiny</code> R package makes creating this type of application easy.</p>
 <iframe src="https://hcorrada.shinyapps.io/movie_app/?showcase=0" width="672" height="400px">
 </iframe>
+</div>
+<div id="summary" class="section level2">
+<h2><span class="header-section-number">3.8</span> Summary</h2>
+<p>In this analysis we saw examples of the common steps and operations in a data analysis:</p>
+<ol style="list-style-type: decimal">
+<li><p>Data ingestion: we scraped and cleaned data from publicly accessible sites</p></li>
+<li><p>Data manipulation: we integrated data from multiple sources to prepare our analysis</p></li>
+<li><p>Data visualization: we made plots to explore patterns in our data</p></li>
+<li><p>Data modeling: we made a model to capture the grouping patterns in data automatically, using visualization to explore the results of this modeling</p></li>
+<li><p>Publishing: we abstracted our analysis into an application that allows us and others to perform this analysis over more datasets and explore the result of modeling using a variety of parameters</p></li>
+</ol>
 
 </div>
 </div>
