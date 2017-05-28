@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2017-05-27">
+<meta name="date" content="2017-05-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -111,6 +111,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.4" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#modeling-data"><i class="fa fa-check"></i><b>3.4</b> Modeling data</a></li>
 <li class="chapter" data-level="3.5" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#visualizing-model-result"><i class="fa fa-check"></i><b>3.5</b> Visualizing model result</a></li>
 <li class="chapter" data-level="3.6" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#abstracting-the-analysis"><i class="fa fa-check"></i><b>3.6</b> Abstracting the analysis</a></li>
+<li class="chapter" data-level="3.7" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#making-analyses-accessible"><i class="fa fa-check"></i><b>3.7</b> Making analyses accessible</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="setting-up-the-tools.html"><a href="setting-up-the-tools.html"><i class="fa fa-check"></i><b>4</b> Setting up the Tools</a></li>
 <li class="chapter" data-level="5" data-path="your-first-analysis.html"><a href="your-first-analysis.html"><i class="fa fa-check"></i><b>5</b> Your First Analysis</a></li>
@@ -1069,6 +1070,68 @@ ggb_tab %&gt;%
 <pre><code>## Performing clustering and plotting</code></pre>
 <pre><code>## Joining, by = &quot;cluster&quot;</code></pre>
 <p><img src="_main_files/figure-html/test_bbg-1.png" width="672" /></p>
+</div>
+<div id="making-analyses-accessible" class="section level2">
+<h2><span class="header-section-number">3.7</span> Making analyses accessible</h2>
+<p>Now that we have written a function to analyze an actor’s movies, we can make these analyses easier to produce by creating an interactive application that wraps our new function. The <code>shiny</code> package makes creating this type of application easy. This shiny code to creates our movie analysis application:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(shiny)
+<span class="kw">library</span>(miniUI)
+
+<span class="kw">source</span>(<span class="st">&quot;utils.r&quot;</span>)
+
+ui &lt;-<span class="st"> </span><span class="kw">miniPage</span>(
+  <span class="kw">gadgetTitleBar</span>(<span class="st">&quot;Movie analysis app&quot;</span>),
+  <span class="kw">miniTabstripPanel</span>(
+    <span class="kw">miniTabPanel</span>(<span class="st">&quot;Parameters&quot;</span>, <span class="dt">icon=</span><span class="kw">icon</span>(<span class="st">&quot;sliders&quot;</span>),
+      <span class="kw">miniContentPanel</span>(
+        <span class="kw">textInput</span>(<span class="st">&quot;actor&quot;</span>, <span class="st">&quot;Actor&quot;</span>, <span class="st">&quot;Diego Luna&quot;</span>),
+        <span class="kw">numericInput</span>(<span class="st">&quot;k&quot;</span>, <span class="st">&quot;Num. clusters&quot;</span>, <span class="dv">3</span>)
+      )
+    ),
+    <span class="kw">miniTabPanel</span>(<span class="st">&quot;Plot&quot;</span>, <span class="dt">icon=</span><span class="kw">icon</span>(<span class="st">&quot;area-chart&quot;</span>),
+      <span class="kw">miniContentPanel</span>(
+        <span class="kw">plotOutput</span>(<span class="st">&quot;movie_plot&quot;</span>, <span class="dt">height=</span><span class="st">&quot;100%&quot;</span>)
+      )
+    ),
+    <span class="kw">miniTabPanel</span>(<span class="st">&quot;Data&quot;</span>, <span class="dt">icon=</span><span class="kw">icon</span>(<span class="st">&quot;table&quot;</span>),
+      <span class="kw">miniContentPanel</span>(
+        DT::<span class="kw">dataTableOutput</span>(<span class="st">&quot;table&quot;</span>, <span class="dt">height=</span><span class="st">&quot;100%&quot;</span>)
+      )
+    )
+  )
+)
+
+server &lt;-<span class="st"> </span>function(input, output, session) {
+  scrapeTable &lt;-<span class="st"> </span><span class="kw">reactive</span>({
+    <span class="kw">scrape_table</span>(input$actor)
+  })
+  
+  clusterMovies &lt;-<span class="st"> </span><span class="kw">reactive</span>({
+    <span class="kw">scrapeTable</span>() %&gt;%
+<span class="st">      </span><span class="kw">cluster_movies</span>(input$k)
+  })
+  
+  displayTable &lt;-<span class="st"> </span><span class="kw">reactive</span>({
+    <span class="kw">clusterMovies</span>() %&gt;%
+<span class="st">      </span><span class="kw">select</span>(title, rating, domestic_gross, cluster)
+  })
+  
+  output$movie_plot &lt;-<span class="st"> </span><span class="kw">renderPlot</span>({
+    <span class="kw">clusterMovies</span>() %&gt;%<span class="st"> </span><span class="kw">plot_movies</span>(input$actor)
+  })
+  
+  output$table &lt;-<span class="st"> </span>DT::<span class="kw">renderDataTable</span>({
+    <span class="kw">displayTable</span>()
+  })
+  
+  <span class="kw">observeEvent</span>(input$done, {
+    <span class="kw">stopApp</span>(<span class="ot">TRUE</span>)
+  })
+}
+
+<span class="kw">shinyApp</span>(ui, server)</code></pre></div>
+<iframe src="https://hcorrada.shinyapps.io/movie_app/?showcase=0" width="672" height="400px">
+</iframe>
 
 </div>
 </div>
