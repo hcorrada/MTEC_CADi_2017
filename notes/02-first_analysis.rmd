@@ -18,11 +18,13 @@ analysis without showing how we perform this analysis using R. As the course pro
 
 For this analysis we need to get the movies Diego Luna was in, along with their Rotten Tomatoes ratings. For that we scrape this webpage: https://www.rottentomatoes.com/celebrity/diego_luna.
 
-```{r read_dl, echo=FALSE, cache=TRUE, message=FALSE}
+```{r, echo=FALSE, message=FALSE}
 library(tidyverse)
 library(rvest)
 library(stringr)
+```
 
+```{r read_dl, echo=FALSE, cache=TRUE, message=FALSE}
 # URL base for search
 base_url <- "https://www.rottentomatoes.com/celebrity/"
 
@@ -114,6 +116,8 @@ US domestic and worlwide gross earnings. The latter three are in millions of U.S
 One thing we might want to check is if the budget and gross entries in this table are inflation adjusted or not. To do this, we can make a plot of domestic gross, which we are using for the subsequent analyses.
 
 ```{r, echo=FALSE}
+library(lubridate)
+
 clean_budget_tab %>%
   mutate(year=factor(year(release_date))) %>%
   ggplot() +

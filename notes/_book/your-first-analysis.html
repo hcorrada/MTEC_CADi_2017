@@ -25,14 +25,14 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2017-05-27">
+<meta name="date" content="2017-05-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="setting-up-the-tools.html">
+<link rel="prev" href="setting-up-r.html">
 <link rel="next" href="ingesting-data.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,41 +50,23 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
 table.sourceCode { width: 100%; line-height: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
 </style>
 
 </head>
@@ -128,8 +110,28 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.1.1" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#movie-ratings"><i class="fa fa-check"></i><b>3.1.1</b> Movie ratings</a></li>
 <li class="chapter" data-level="3.1.2" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#movie-budgets-and-revenue"><i class="fa fa-check"></i><b>3.1.2</b> Movie budgets and revenue</a></li>
 </ul></li>
+<li class="chapter" data-level="3.2" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#manipulating-the-data"><i class="fa fa-check"></i><b>3.2</b> Manipulating the data</a></li>
+<li class="chapter" data-level="3.3" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#visualizing-the-data"><i class="fa fa-check"></i><b>3.3</b> Visualizing the data</a></li>
+<li class="chapter" data-level="3.4" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#modeling-data"><i class="fa fa-check"></i><b>3.4</b> Modeling data</a></li>
+<li class="chapter" data-level="3.5" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#visualizing-model-result"><i class="fa fa-check"></i><b>3.5</b> Visualizing model result</a></li>
+<li class="chapter" data-level="3.6" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#abstracting-the-analysis"><i class="fa fa-check"></i><b>3.6</b> Abstracting the analysis</a></li>
+<li class="chapter" data-level="3.7" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#making-analyses-accessible"><i class="fa fa-check"></i><b>3.7</b> Making analyses accessible</a></li>
+<li class="chapter" data-level="3.8" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#summary"><i class="fa fa-check"></i><b>3.8</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="setting-up-the-tools.html"><a href="setting-up-the-tools.html"><i class="fa fa-check"></i><b>4</b> Setting up the Tools</a></li>
+<li class="chapter" data-level="4" data-path="setting-up-r.html"><a href="setting-up-r.html"><i class="fa fa-check"></i><b>4</b> Setting up R</a><ul>
+<li class="chapter" data-level="4.1" data-path="setting-up-r.html"><a href="setting-up-r.html#setting-up-r-1"><i class="fa fa-check"></i><b>4.1</b> Setting up R</a></li>
+<li class="chapter" data-level="4.2" data-path="setting-up-r.html"><a href="setting-up-r.html#setting-up-rstudio"><i class="fa fa-check"></i><b>4.2</b> Setting up Rstudio</a></li>
+<li class="chapter" data-level="4.3" data-path="setting-up-r.html"><a href="setting-up-r.html#a-first-look-at-rstudio"><i class="fa fa-check"></i><b>4.3</b> A first look at Rstudio</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="setting-up-r.html"><a href="setting-up-r.html#interactive-console"><i class="fa fa-check"></i><b>4.3.1</b> Interactive Console</a></li>
+<li class="chapter" data-level="4.3.2" data-path="setting-up-r.html"><a href="setting-up-r.html#data-viewer"><i class="fa fa-check"></i><b>4.3.2</b> Data Viewer</a></li>
+<li class="chapter" data-level="4.3.3" data-path="setting-up-r.html"><a href="setting-up-r.html#names-values-and-functions"><i class="fa fa-check"></i><b>4.3.3</b> Names, values and functions</a></li>
+<li class="chapter" data-level="4.3.4" data-path="setting-up-r.html"><a href="setting-up-r.html#plotting"><i class="fa fa-check"></i><b>4.3.4</b> Plotting</a></li>
+<li class="chapter" data-level="4.3.5" data-path="setting-up-r.html"><a href="setting-up-r.html#editor"><i class="fa fa-check"></i><b>4.3.5</b> Editor</a></li>
+<li class="chapter" data-level="4.3.6" data-path="setting-up-r.html"><a href="setting-up-r.html#files-viewer"><i class="fa fa-check"></i><b>4.3.6</b> Files viewer</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="setting-up-r.html"><a href="setting-up-r.html#r-packages"><i class="fa fa-check"></i><b>4.4</b> R packages</a></li>
+<li class="chapter" data-level="4.5" data-path="setting-up-r.html"><a href="setting-up-r.html#finishing-your-setup"><i class="fa fa-check"></i><b>4.5</b> Finishing your setup</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="your-first-analysis.html"><a href="your-first-analysis.html"><i class="fa fa-check"></i><b>5</b> Your First Analysis</a></li>
 <li class="chapter" data-level="6" data-path="ingesting-data.html"><a href="ingesting-data.html"><i class="fa fa-check"></i><b>6</b> Ingesting data</a></li>
 <li class="chapter" data-level="7" data-path="tidying-data.html"><a href="tidying-data.html"><i class="fa fa-check"></i><b>7</b> Tidying data</a></li>
@@ -168,7 +170,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="setting-up-the-tools.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="setting-up-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="ingesting-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
