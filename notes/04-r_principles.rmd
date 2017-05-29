@@ -24,7 +24,7 @@ One of the biggest strengths of the R ecosystem is the variety and quality of pa
 
 One last note before we get started. R has great support for [literate programming](http://en.wikipedia.org/wiki/Literate_programming), where source code that contains both code, the result of evaluating that code, and text explaining that code co-exist in a single document. This is extremely valuable in data analysis, as many choices made by data analysts are worth explaning in text, and interpretation of the results of analyses can co-exist with the computations used in that analysis. This document you are reading contains both text and code. In class, we will use [Rmarkdown](http://rmarkdown.rstudio.com/) for this purpose.
 
-## A simple data analysis to get us going
+## A data analysis to get us going
 
 I'm going to do a very simple analysis of Baltimore crime to show off R. We'll use data downloaded from Baltimore City's awesome open data site (this was downloaded a couple of years ago so if you download now, you will get different results). 
 
@@ -406,10 +406,10 @@ index_vector <- arrest_tab$sex == "M" & arrest_tab$district == "SOUTHERN"
 tmp <- arrest_tab[index_vector,]
 
 # select the attribute/column we need
-tmp <-tmp[,"age"]
+tmp <- tmp[["age"]]
 
 # compute statistic required
-mean(tmp)
+mean(tmp, na.rm=TRUE)
 ```
 
 Let's rewrite this using functions to illustrate the point
@@ -421,15 +421,15 @@ filter_data <- function(data) {
 }
 
 select_column <- function(data, column) {
-  data[, column]
+  data[[column]]
 }
 
 tmp <- filter_data(arrest_tab)
 tmp <- select_column(tmp, "age")
-mean(tmp)
+mean(tmp, na.rm=TRUE)
 ```
 
-So, this pattern of _data -->transform--> data_ becomes clearer when written that way.
+So, this pattern of _data-->transform-->data_ becomes clearer when written that way.
 
 The `dplyr` package introduces _syntactic sugar_ to make this explicit. We can write the above snippet using the "pipe" operator `%>%`:
 
@@ -437,7 +437,7 @@ The `dplyr` package introduces _syntactic sugar_ to make this explicit. We can w
 arrest_tab %>%
   filter_data() %>%
   select_column("age") %>%
-  mean()
+  mean(na.rm=TRUE)
 ```
 
 The `%>%` binary operator takes the value to its **left** and inserts it as the first argument of the function call to its **right**. So the expression `LHS %>% f(another_argument)` is **equivalent** to the expression `f(LHS, another_argument)`. We will see this pattern extensively in class because it explicitly presents the way we want to organize many of our data analysis tasks.

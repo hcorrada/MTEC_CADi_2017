@@ -1,4 +1,4 @@
-# Day 1 Capstone Project
+# Capstone Project 1
 
 A capstone project for the 
 scrape->tidy->visualize workflow.
