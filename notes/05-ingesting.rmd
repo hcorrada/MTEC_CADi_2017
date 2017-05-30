@@ -22,7 +22,7 @@ This ideal principle of how a CSV file is constructed is frequently violated by 
 
 You should read the documentation of the `read_csv` function to appreciate the complexities it can maneuver when reading data from structured text files.
 
-```{r}
+```{r, eval=FALSE}
 ?read_csv
 ```
 
