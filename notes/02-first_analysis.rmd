@@ -34,9 +34,8 @@ base_url <- "https://www.rottentomatoes.com/celebrity/"
 dl_url <- paste0(base_url, "diego_luna")
 dl_html <- read_html(dl_url) 
 dl_tab <-  dl_html %>%
-  html_nodes("#filmographyTbl") %>%
+  html_node("#filmographyTbl") %>%
   html_table() %>%
-  magrittr::extract2(1) %>%
   as_tibble()
 
 # clean it up
@@ -73,9 +72,8 @@ webpage: http://www.the-numbers.com/movie/budgets/all
 budget_url <- "http://www.the-numbers.com/movie/budgets/all"
 budget_html <- read_html(budget_url)
 budget_tab <- budget_html %>%
-  html_nodes("table") %>%
+  html_node("table") %>%
   html_table(fill=TRUE) %>%
-  magrittr::extract2(1) %>%
   select(-1) %>%
   as_tibble()
 ```
@@ -87,8 +85,8 @@ clean_budget_tab <- budget_tab %>%
   filter(!is.na(`Release Date`)) %>%
 
   # make the budget columns look numeric 
-  mutate_at(vars(-1), funs(str_replace(., "\\$", ""))) %>%
-  mutate_at(vars(-1), funs(str_replace_all(., ",", ""))) %>%
+  mutate_at(vars(-1,-2), funs(str_replace(., "\\$", ""))) %>%
+  mutate_at(vars(-1,-2), funs(str_replace_all(., ",", ""))) %>%
   
   # rename columns
   rename(release_date=`Release Date`,
