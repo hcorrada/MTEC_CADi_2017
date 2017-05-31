@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>R principles</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Hector Corrada Bravo" />
+    <link href="libs/remark-css/example.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# R principles
+### Hector Corrada Bravo
+### 2017/5/31
+
+---
+
+
+
+
+# R Principles
+
+R is a computational environment for data analysis. It is designed around a _functional_ language, as opposed to _procedural_ languages like Java or C, 
+
+It has desirable properties for the type of operations and workflows that are frequently performed in the course of analyzing datasets. 
+
+---
+
+## Some history
+
+R is an offspring of S, a language created in AT&amp;T Labs by John Chambers (now at Stanford) and others in 1976 with the goal of creating an environment for statistical computing and data analysis. 
+
+The standard for the language in current use was settled in 1998. 
+
+That same year, "S" won the ACM Software System award, awarded to software systems "that have a lasting influence, reflected in contributions to concepts, in commercial acceptance, or both".
+
+---
+
+## Some history
+
+In 1991, Robert Gentleman and Ross Ihaka created R to provide an open source implementation of the S language and environment. 
+
+It has been maintained by the R core group since 1997, and in 2015 an R consortium, including Microsoft, Google, and others, was created.
+
+---
+
+## Some history
+
+Along with Python, R is one of the most popular environments for data analysis (e.g., figure below from [KDNuggets 2016 software survey](http://www.kdnuggets.com/2016/06/r-python-top-analytics-data-mining-data-science-software.html)) 
+
+![](img/kdnuggets-2016.jpg)
+
+---
+
+## Some history
+
+We use it for this class becauseit provides a clean end-to-end platform for teaching material across the data management-modeling-communication spectrum that we study in class. 
+
+---
+
+## Additional R resources
+
+Resources for learning and reading about R are listed  here: http://www.hcbravo.org/IntroDataScience/resources/ 
+
+Of note are:
+
+- the swirl project: http://swirlstats.com/
+- DataCamp's introduction to R course.
+
+---
+
+## Packages
+
+One of the biggest strengths of the R ecosystem is the variety and quality of packages for data analysis available. 
+
+R uses a package system (like Python and Ruby for instance). 
+
+Packages are divided into two classes: 
+
+- **base** installed when R is installed, includes packages for basic statistics, computing with probability distributions, plotting and graphics, matrix manipulations and other), 
+
+- all other packages are available in CRAN: http://cran.r-project.org 
+
+---
+
+## Literate Programming
+
+R has great support for [literate programming](http://en.wikipedia.org/wiki/Literate_programming): 
+
+_source code that contains both code, the result of evaluating that code, and text explaining that code co-exist in a single document._ 
+
+This document you are reading contains both text and code. In class, we will use [Rmarkdown](http://rmarkdown.rstudio.com/) for this purpose.
+
+---
+
+## A data analysis to get us going
+
+We'll use data downloaded from Baltimore City's awesome open data site (this was downloaded a couple of years ago so if you download now, you will get different results). 
+
+The repository for this particular data is here. https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt
+
+---
+
+## Getting data
+
+We've prepared the data previously into a comma-separated value file (`.csv` file). 
+
+In this format, each line contains _attribute_ values (separated by commas) for one _entity_ in our dataset. Which we can download and load into our R environment.
+
+---
+
+## Variables and Value
+
+To make use of this dataset we want to assign the result of calling `read.csv` (i.e., the dataset) to a variable:
+
+
+```r
+library(tidyverse)
+arrest_tab &lt;- read_csv("data/BPD_Arrests.csv")
+```
+
+```
+## Parsed with column specification:
+## cols(
+##   arrest = col_integer(),
+##   age = col_integer(),
+##   sex = col_character(),
+##   race = col_character(),
+##   arrestDate = col_character(),
+##   arrestTime = col_time(format = ""),
+##   arrestLocation = col_character(),
+##   incidentOffense = col_character(),
+##   incidentLocation = col_character(),
+##   charge = col_character(),
+##   chargeDescription = col_character(),
+##   district = col_character(),
+##   post = col_integer(),
+##   neighborhood = col_character(),
+##   `Location 1` = col_character()
+## )
+```
+
+
+
+---
+
+## Variables and values
+
+Now we can ask what _type_ of value is stored in the `arrest_tab` variable:
+
+
+```r
+class(arrest_tab)
+```
+
+```
+## [1] "tbl_df"     "tbl"        "data.frame"
+```
+
+The `data.frame` is a workhorse data structure in R. It encapsulates the idea of _entities_ (in rows) and _attribute values_ (in columns). We can ask other features of this dataset:
+
+---
+
+
+```r
+# This is a comment in R, by the way
+
+# How many rows (entities) does this dataset contain?
+nrow(arrest_tab)
+```
+
+```
+## [1] 104528
+```
+
+```r
+# How many columns (attributes)?
+ncol(arrest_tab)
+```
+
+```
+## [1] 15
+```
+
+```r
+# What are the names of those columns?
+colnames(arrest_tab)
+```
+
+```
+##  [1] "arrest"            "age"               "sex"              
+##  [4] "race"              "arrestDate"        "arrestTime"       
+##  [7] "arrestLocation"    "incidentOffense"   "incidentLocation" 
+## [10] "charge"            "chargeDescription" "district"         
+## [13] "post"              "neighborhood"      "Location 1"
+```
+
+---
+
+## Indexing
+
+A basic operation in data analysis is selecting subsets of a dataset. For that we can use a few alternative options for _indexing_ into datasets.
+
+
+```r
+# to obtain the value in the first row, fifth column:
+arrest_tab[1,5]
+```
+
+```
+## # A tibble: 1 x 1
+##   arrestDate
+##        &lt;chr&gt;
+## 1 01/01/2011
+```
+
+```r
+# note that indexing in R is 1-based, not 0-based, so the first row is indexed by 1
+```
+
+---
+
+## Indexing
+
+
+```r
+# now we want to do a bit more, so let's say we want the value in the fifth column of our dataset for the first 10 rows. For that we can use slice notation:
+arrest_tab[1:10,5]
+```
+
+```
+## # A tibble: 10 x 1
+##    arrestDate
+##         &lt;chr&gt;
+##  1 01/01/2011
+##  2 01/01/2011
+##  3 01/01/2011
+##  4 01/01/2011
+##  5 01/01/2011
+##  6 01/01/2011
+##  7 01/01/2011
+##  8 01/01/2011
+##  9 01/01/2011
+## 10 01/01/2011
+```
+
+---
+
+## Indexing
+
+
+```r
+# similarly, to obtain the value in the first five columns of the first row
+arrest_tab[1,1:5]
+```
+
+```
+## # A tibble: 1 x 5
+##     arrest   age    sex   race arrestDate
+##      &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;
+## 1 11126858    23      B      M 01/01/2011
+```
+
+```r
+# what is the class of the value when we subset a single column?
+class(arrest_tab[1:10,5])
+```
+
+```
+## [1] "tbl_df"     "tbl"        "data.frame"
+```
+
+```r
+# what is the class of the value when we subset a single row?
+class(arrest_tab[1,1:5])
+```
+
+```
+## [1] "tbl_df"     "tbl"        "data.frame"
+```
+
+---
+
+## Indexing
+
+
+```r
+# what do we get with this indexing?
+arrest_tab[1:10,1:5]
+```
+
+```
+## # A tibble: 10 x 5
+##      arrest   age    sex   race arrestDate
+##       &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;
+##  1 11126858    23      B      M 01/01/2011
+##  2 11127013    37      B      M 01/01/2011
+##  3 11126887    46      B      M 01/01/2011
+##  4 11126873    50      B      M 01/01/2011
+##  5 11126968    33      B      M 01/01/2011
+##  6 11127041    41      B      M 01/01/2011
+##  7 11126932    29      B      M 01/01/2011
+##  8 11126940    20      W      M 01/01/2011
+##  9 11127051    24      B      M 01/01/2011
+## 10 11127018    53      B      M 01/01/2011
+```
+
+We can index any set of rows or columns by constructing _vectors_ of integers. In fact, the slice notation `:` is essentially doing that for a sequence of consecutive indices. You should think of vectors as lists of values with the same class.
+
+---
+
+## Indexing
+
+If we want non-consecutive indices we have other options (e.g., the `c` function, for "concatenate")
+
+
+```r
+# non-consecutive indices using c
+arrest_tab[c(2,4,7,10), 1:5]
+```
+
+```
+## # A tibble: 4 x 5
+##     arrest   age    sex   race arrestDate
+##      &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;
+## 1 11127013    37      B      M 01/01/2011
+## 2 11126873    50      B      M 01/01/2011
+## 3 11126932    29      B      M 01/01/2011
+## 4 11127018    53      B      M 01/01/2011
+```
+
+---
+
+## Indexing
+
+
+```r
+# here's a fun one, when we call columns for a subset of rows
+arrest_tab[c(2,4,7,10), ]
+```
+
+```
+## # A tibble: 4 x 15
+##     arrest   age    sex   race arrestDate arrestTime    arrestLocation
+##      &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;     &lt;time&gt;             &lt;chr&gt;
+## 1 11127013    37      B      M 01/01/2011   00:01:00  2000 Wilkens Ave
+## 2 11126873    50      B      M 01/01/2011   00:04:00 2100 Ashburton St
+## 3 11126932    29      B      M 01/01/2011   00:05:00   800 N Monroe St
+## 4 11127018    53      B      M 01/01/2011   00:15:00 3300 Woodland Ave
+## # ... with 8 more variables: incidentOffense &lt;fctr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;
+```
+
+---
+
+## Indexing
+
+
+```r
+# there is also the `seq` function, to create sequences
+arrest_tab[seq(from=1,to=10), seq(1,10)]
+```
+
+```
+## # A tibble: 10 x 10
+##      arrest   age    sex   race arrestDate arrestTime       arrestLocation
+##       &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;     &lt;time&gt;                &lt;chr&gt;
+##  1 11126858    23      B      M 01/01/2011   00:00:00                 &lt;NA&gt;
+##  2 11127013    37      B      M 01/01/2011   00:01:00     2000 Wilkens Ave
+##  3 11126887    46      B      M 01/01/2011   00:01:00    2800 Mayfield Ave
+##  4 11126873    50      B      M 01/01/2011   00:04:00    2100 Ashburton St
+##  5 11126968    33      B      M 01/01/2011   00:05:00      4000 Wilsby Ave
+##  6 11127041    41      B      M 01/01/2011   00:05:00     2900 Spellman Rd
+##  7 11126932    29      B      M 01/01/2011   00:05:00      800 N Monroe St
+##  8 11126940    20      W      M 01/01/2011   00:05:00      5200 Moravia Rd
+##  9 11127051    24      B      M 01/01/2011   00:07:00 2400 Gainsdbourgh Ct
+## 10 11127018    53      B      M 01/01/2011   00:15:00    3300 Woodland Ave
+## # ... with 3 more variables: incidentOffense &lt;fctr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;
+```
+
+```r
+# that is equivalent to 
+arrest_tab[1:10,1:10]
+```
+
+```
+## # A tibble: 10 x 10
+##      arrest   age    sex   race arrestDate arrestTime       arrestLocation
+##       &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;     &lt;time&gt;                &lt;chr&gt;
+##  1 11126858    23      B      M 01/01/2011   00:00:00                 &lt;NA&gt;
+##  2 11127013    37      B      M 01/01/2011   00:01:00     2000 Wilkens Ave
+##  3 11126887    46      B      M 01/01/2011   00:01:00    2800 Mayfield Ave
+##  4 11126873    50      B      M 01/01/2011   00:04:00    2100 Ashburton St
+##  5 11126968    33      B      M 01/01/2011   00:05:00      4000 Wilsby Ave
+##  6 11127041    41      B      M 01/01/2011   00:05:00     2900 Spellman Rd
+##  7 11126932    29      B      M 01/01/2011   00:05:00      800 N Monroe St
+##  8 11126940    20      W      M 01/01/2011   00:05:00      5200 Moravia Rd
+##  9 11127051    24      B      M 01/01/2011   00:07:00 2400 Gainsdbourgh Ct
+## 10 11127018    53      B      M 01/01/2011   00:15:00    3300 Woodland Ave
+## # ... with 3 more variables: incidentOffense &lt;fctr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;
+```
+
+---
+
+## Indexing
+
+
+```r
+# with the `seq` function you can do more sophisticated things like select only entries in odd rows (1,3,5,7...)
+head(arrest_tab[seq(from=1,to=nrow(arrest_tab),by=2), ])
+```
+
+```
+## # A tibble: 6 x 15
+##     arrest   age    sex   race arrestDate arrestTime       arrestLocation
+##      &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;     &lt;time&gt;                &lt;chr&gt;
+## 1 11126858    23      B      M 01/01/2011   00:00:00                 &lt;NA&gt;
+## 2 11126887    46      B      M 01/01/2011   00:01:00    2800 Mayfield Ave
+## 3 11126968    33      B      M 01/01/2011   00:05:00      4000 Wilsby Ave
+## 4 11126932    29      B      M 01/01/2011   00:05:00      800 N Monroe St
+## 5 11127051    24      B      M 01/01/2011   00:07:00 2400 Gainsdbourgh Ct
+## 6 11127057    28      B      M 01/01/2011   00:15:00    3300 Woodland Ave
+## # ... with 8 more variables: incidentOffense &lt;fctr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;
+```
+
+---
+
+## Indexing
+
+Now, since columns have names, we can also use strings (and vectors of strings) to index data frames.
+
+
+```r
+# single column
+arrest_tab[1:10, "age"]
+```
+
+```
+## # A tibble: 10 x 1
+##      age
+##    &lt;int&gt;
+##  1    23
+##  2    37
+##  3    46
+##  4    50
+##  5    33
+##  6    41
+##  7    29
+##  8    20
+##  9    24
+## 10    53
+```
+
+---
+
+## Indexing
+
+
+```r
+# multiple columns
+arrest_tab[1:10, c("age", "sex", "race")]
+```
+
+```
+## # A tibble: 10 x 3
+##      age    sex   race
+##    &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;
+##  1    23      B      M
+##  2    37      B      M
+##  3    46      B      M
+##  4    50      B      M
+##  5    33      B      M
+##  6    41      B      M
+##  7    29      B      M
+##  8    20      W      M
+##  9    24      B      M
+## 10    53      B      M
+```
+
+If we wanted a single named column from a data frame there's a special operator `$` to index:
+
+
+```r
+# first ten values of the age column
+arrest_tab$age[1:10]
+```
+
+```
+##  [1] 23 37 46 50 33 41 29 20 24 53
+```
+
+---
+
+## EXERCISE
+
+Try using three different ways of selecting rows 20 to 30 of the "sex" column
+
+---
+
+## Indexing
+
+In addition to integer indices or names, we can use vectors of logical values for indexing. 
+
+
+```r
+# rows 2,4,7 and 10 using logical indices
+arrest_tab[c(FALSE,TRUE,FALSE,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,TRUE,rep(FALSE,nrow(arrest_tab)-10)),]
+```
+
+```
+## # A tibble: 4 x 15
+##     arrest   age    sex   race arrestDate arrestTime    arrestLocation
+##      &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;     &lt;time&gt;             &lt;chr&gt;
+## 1 11127013    37      B      M 01/01/2011   00:01:00  2000 Wilkens Ave
+## 2 11126873    50      B      M 01/01/2011   00:04:00 2100 Ashburton St
+## 3 11126932    29      B      M 01/01/2011   00:05:00   800 N Monroe St
+## 4 11127018    53      B      M 01/01/2011   00:15:00 3300 Woodland Ave
+## # ... with 8 more variables: incidentOffense &lt;fctr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;
+```
+
+---
+
+## Indexing
+
+
+```r
+# now here's a fun one, if we only wanted odd rows
+head(arrest_tab[c(TRUE,FALSE),])
+```
+
+```
+## # A tibble: 6 x 15
+##     arrest   age    sex   race arrestDate arrestTime       arrestLocation
+##      &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;     &lt;time&gt;                &lt;chr&gt;
+## 1 11126858    23      B      M 01/01/2011   00:00:00                 &lt;NA&gt;
+## 2 11126887    46      B      M 01/01/2011   00:01:00    2800 Mayfield Ave
+## 3 11126968    33      B      M 01/01/2011   00:05:00      4000 Wilsby Ave
+## 4 11126932    29      B      M 01/01/2011   00:05:00      800 N Monroe St
+## 5 11127051    24      B      M 01/01/2011   00:07:00 2400 Gainsdbourgh Ct
+## 6 11127057    28      B      M 01/01/2011   00:15:00    3300 Woodland Ave
+## # ... with 8 more variables: incidentOffense &lt;fctr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;
+```
+Indices are recycled. For instance if selecting rows, if you pass a logical vector that's shorter than the number of rows  in the data frame, the vector will be recycled as many times as necessary to match the number of rows in the dataset. 
+
+---
+
+## Indexing
+
+The utility of logical indexing is that now we can select rows based on a property of its values for a given column
+
+
+```r
+# select rows for entities younger than 21 years old
+head(arrest_tab[arrest_tab$age &lt; 21, ])
+```
+
+```
+## # A tibble: 6 x 15
+##     arrest   age    sex   race arrestDate arrestTime     arrestLocation
+##      &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;     &lt;time&gt;              &lt;chr&gt;
+## 1 11126940    20      W      M 01/01/2011   00:05:00    5200 Moravia Rd
+## 2 11126942    20      B      M 01/01/2011   01:22:00 1900 Ashburton Ave
+## 3 11126941    20      W      M 01/01/2011   02:00:00  300 S Bentalou St
+## 4 11126955    20      B      M 01/01/2011   02:20:00     900 Myrtle Ave
+## 5 11127139    19      W      M 01/01/2011   02:22:00    4500 Erdman Ave
+## 6 11127003    20      B      F 01/01/2011   02:49:00  2400 Brentwood St
+## # ... with 8 more variables: incidentOffense &lt;fctr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;
+```
+
+```r
+# notice that the value of expression `arrest_tab$age &lt; 21` # is a logical vector
+```
+
+---
+
+## Indexing
+
+
+```r
+# select entities (arrests) occuring in Mount Washington,
+# a specific neighborhood in Baltimore
+head(arrest_tab[arrest_tab$neighborhood == "Mount Washington",])
+```
+
+```
+## # A tibble: 6 x 15
+##   arrest   age    sex   race arrestDate arrestTime arrestLocation
+##    &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;     &lt;time&gt;          &lt;chr&gt;
+## 1     NA    NA     NA     NA       &lt;NA&gt;         NA           &lt;NA&gt;
+## 2     NA    NA     NA     NA       &lt;NA&gt;         NA           &lt;NA&gt;
+## 3     NA    NA     NA     NA       &lt;NA&gt;         NA           &lt;NA&gt;
+## 4     NA    NA     NA     NA       &lt;NA&gt;         NA           &lt;NA&gt;
+## 5     NA    NA     NA     NA       &lt;NA&gt;         NA           &lt;NA&gt;
+## 6     NA    NA     NA     NA       &lt;NA&gt;         NA           &lt;NA&gt;
+## # ... with 8 more variables: incidentOffense &lt;fctr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;
+```
+
+---
+
+## Indexing
+
+
+```r
+# how about arrests where subjects are under 21 in Mount  Washington? 
+# use a logical `and` operator
+indices &lt;- arrest_tab$age &lt; 21 &amp; arrest_tab$neighborhood == "Mount Washington"
+```
+
+---
+
+## Exploration
+
+R has built-in functions that help easily obtain summary information about datasets. For instance:
+
+
+```r
+summary(arrest_tab$sex)
+```
+
+```
+##     A     B     H     I     U     W  NA's 
+##   242 87268     1   218  1749 15048     2
+```
+
+```r
+summary(arrest_tab$race)
+```
+
+```
+##     F     M  NA's 
+## 19431 85095     2
+```
+
+```r
+# well that seems problematic
+# let's rename columns to correct that
+colnames(arrest_tab)[3:4] &lt;- c("race", "sex")
+```
+
+---
+
+## Exploration
+
+We can also ask other useful type of summaries
+
+
+```r
+# What is the average age in arrests?
+mean(arrest_tab$age)
+```
+
+```
+## [1] 33.19639
+```
+
+```r
+# Median age?
+median(arrest_tab$age)
+```
+
+```
+## [1] 30
+```
+
+---
+
+## Exploration
+
+
+```r
+# what types of offenses are there
+summary(arrest_tab$incidentOffense)
+```
+
+```
+##                   Unknown Offense                      87-Narcotics 
+##                             38649                             24744 
+##                 4E-Common Assault           87O-Narcotics (Outside) 
+##                              6739                              6515 
+##               97-Search &amp; Seizure                          79-Other 
+##                              3670                              3461 
+##                  24-Towed Vehicle           6C-Larceny- Shoplifting 
+##                              2994                              1849 
+##              4C-Agg. Asslt.- Oth.                  55A-Prostitution 
+##                              1556                              1398 
+##               4B-Agg. Asslt.- Cut              55-Disorderly Person 
+##                              1195                               923 
+##                   115-Trespassing             5A-Burg. Res. (Force) 
+##                               871                               847 
+##          75-Destruct. Of Property              4D-Agg. Asslt.- Hand 
+##                               686                               618 
+##           61-Person Wanted On War              3B-Robb Highway (Ua) 
+##                               482                               410 
+##                   54-Armed Person                    7A-Stolen Auto 
+##                               394                               392 
+##               4A-Agg. Asslt.- Gun             6D-Larceny- From Auto 
+##                               356                               336 
+##                 6J-Larceny- Other              3AF-Robb Hwy-Firearm 
+##                               312                               277 
+##             49-Family Disturbance              26-Recovered Vehicle 
+##                               253                               249 
+##            6G-Larceny- From Bldg.                      20A-Followup 
+##                               248                               246 
+##                       78-Gambling             5D-Burg. Oth. (Force) 
+##                               219                               196 
+##                 3K-Robb Res. (Ua)              111-Protective Order 
+##                               176                               152 
+##              4F-Assault By Threat                     109-Loitering 
+##                               152                               131 
+##                           117-Fto           5C-Burg. Res. (Noforce) 
+##                               130                               122 
+##                3AK-Robb Hwy-Knife              5B-Burg. Res. (Att.) 
+##                               102                               102 
+##             81-Recovered Property     108-Liquor Law/Open Container 
+##                                94                                92 
+##                3D-Robb Comm. (Ua)                   2A-Rape (Force) 
+##                                92                                89 
+##              6E-Larceny- Auto Acc      112-Traffic Related Incident 
+##                                85                                81 
+##               23-Unauthorized Use                 88-Unfounded Call 
+##                                81                                80 
+##            3AO-Robb Hwy-Other Wpn              7C-Stolen Veh./Other 
+##                                79                                78 
+##                  2H-Indecent Exp.                         1A-Murder 
+##                                72                                64 
+##          71-Sex Offender Registry          48-Involuntary Detention 
+##                                64                                57 
+##                     114-Hindering         3AJF-Robb Carjack-Firearm 
+##                                56                                56 
+##                  2F-Placing Hands                 73-False Pretense 
+##                                54                                54 
+##          6B-Larceny- Purse Snatch                        95-Exparte 
+##                                51                                51 
+##             3CF-Robb Comm-Firearm        3JF-Robb Residence-Firearm 
+##                                43                                43 
+##                 56-Missing Person                  98-Child Neglect 
+##                                41                                41 
+##                3P-Robb Misc. (Ua)                 58-Injured Person 
+##                                35                                35 
+##                    85-Mental Case              3BJ-Robb Carjack(Ua) 
+##                                34                                33 
+##           5F-Burg. Oth. (Noforce)               6F-Larceny- Bicycle 
+##                                31                                31 
+##               2G-Sodomy/Perverson          3JK-Robb Residence-Knife 
+##                                30                                30 
+##               3CK-Robb Comm-Knife                  80-Lost Property 
+##                                25                                25 
+##                 2B-Rape (Attempt)           29-Driving While Intox. 
+##                                21                                20 
+##             3NF-Robb Misc-Firearm              5E-Burg. Oth. (Att.) 
+##                                20                                18 
+##                 2D-Statutory Rape      3JO-Robb Residence-Other Wpn 
+##                                17                                17 
+##           67-Child Abuse-Physical               103-Dead On Arrival 
+##                                17                                15 
+##           3CO-Robb Comm-Other Wpn               3NK-Robb Misc-Knife 
+##                                15                                15 
+##                     113-Littering                           39-Fire 
+##                                14                                14 
+##             76-Child Abuse-Sexual         8AO-Arson Sin Res Str-Occ 
+##                                14                                14 
+##                   96-Stop &amp; Frisk 116-Public Urination / Defecation 
+##                                14                                13 
+##                110-Summons Served               20H-Traffic Control 
+##                                12                                11 
+##           3AJK-Robb Carjack-Knife       3GF-Robb Conv Store-Firearm 
+##                                11                                11 
+##               106-Custody Dispute                52A-Animal Cruelty 
+##                                10                                10 
+##                  70A-Ill. Dumping            83-Discharging Firearm 
+##                                10                                10 
+##           3H-Robb Conv. Stor.(Ua)           3NO-Robb Misc-Other Wpn 
+##                                 9                                 8 
+##              93-Abduction - Other                           (Other) 
+##                                 8                               101
+```
+
+---
+
+## Exploration
+
+
+```r
+# what does summary looks like for continuous attributes?
+summary(arrest_tab$age)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     0.0    23.0    30.0    33.2    43.0    87.0
+```
+
+---
+
+## Exploration
+
+Combining this type of summary with our indexing strategies we learned previously we can ask more specific questions
+
+
+```r
+# What is the average age for arrests in Mount Washington?
+mount_washington_index &lt;- arrest_tab$neighborhood == "Mount Washington"
+
+mean(arrest_tab$age[mount_washington_index], na.rm=TRUE)
+```
+
+```
+## [1] 31.10345
+```
+
+---
+
+## Exploration
+
+
+```r
+# How about the number of arrests in Mount Washington _stratified_ by race and sex?
+table(arrest_tab$race[mount_washington_index], arrest_tab$sex[mount_washington_index])
+```
+
+```
+##    
+##      F  M
+##   A  0  0
+##   B  4 14
+##   H  0  0
+##   I  0  0
+##   U  0  0
+##   W  2  9
+```
+
+---
+
+## Exploration
+
+
+```r
+# how about a graphical summary of arrest ages in Mount Washington?
+# we'll use a boxplot
+boxplot(arrest_tab$age[mount_washington_index])
+```
+
+![](index_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
+
+---
+
+## Exploration
+
+
+```r
+# can we do the same stratified by sex?
+boxplot(arrest_tab$age[mount_washington_index]~arrest_tab$sex[mount_washington_index])
+```
+
+![](index_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
+
+---
+
+## Exploration
+
+This example used a very useful notation in R: the tilde, `~`:
+
+
+```r
+# can we do the same stratified by sex?
+boxplot(arrest_tab$age[mount_washington_index]~arrest_tab$sex[mount_washington_index])
+```
+
+One way of thinking about that abstractly is, do something with this attribute, as a function (or depending on, stratified by, conditioned on) this other attribute. 
+
+For instance, "plot `age` as a function of sex" in our example.
+
+---
+
+## Exploration
+
+Let's write code that's a little cleaner for that last plot,
+ and let's also make the plot a bit more useful by adding a title and axis labels:
+ 
+
+```r
+mount_washington_tab &lt;- arrest_tab[mount_washington_index,]
+boxplot(mount_washington_tab$age~mount_washington_tab$sex,
+        main="Mt. Washington", 
+        xlab="Sex", ylab="Arrest Age")
+```
+
+![](index_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
+
+---
+
+## Exploration
+
+Here's one more useful plot:
+
+
+```r
+barplot(table(mount_washington_tab$race), 
+        xlab="Number of Arrests",
+        ylab="Race")
+```
+
+![](index_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
+
+---
+
+## Functions
+
+Now suppose we wanted to do a similar analysis for other neighborhoods. In that case we should encapsulate the summaries and plots we want to do in a function:
+
+
+```r
+analyze_neighborhood &lt;- function(neighborhood) {
+  neighborhood_index &lt;- arrest_tab$neighborhood == neighborhood
+  neighborhood_tab &lt;- arrest_tab[neighborhood_index,]
+  
+    boxplot(neighborhood_tab$age~neighborhood_tab$sex,
+            main = neighborhood,
+            xlab = "Sex", ylab="Arrest Age")
+    
+    barplot(table(neighborhood_tab$race),
+            main = neighborhood,
+            xlab = "Race", ylab="Number of Arrests")
+}
+```
+
+
+---
+
+## Functions
+
+Now we can use that function to make our plots for specific neighborhoods
+
+
+```r
+analyze_neighborhood("Mount Washington")
+```
+
+![](index_files/figure-html/unnamed-chunk-30-1.png)&lt;!-- --&gt;![](index_files/figure-html/unnamed-chunk-30-2.png)&lt;!-- --&gt;
+
+---
+
+## Exploration
+
+
+```r
+analyze_neighborhood("Hampden")
+```
+
+![](index_files/figure-html/unnamed-chunk-31-1.png)&lt;!-- --&gt;![](index_files/figure-html/unnamed-chunk-31-2.png)&lt;!-- --&gt;
+
+---
+
+## A note on data types
+
+This dataset contains data of types commonly found in data analyses
+
+- Numeric (continuous): A numeric measurement (e.g., height)  
+- Numeric (discrete): Usually obtained from counting, think only integers (e.g., `age` which is measured in years)  
+- Categorical: One of a possible set of values (e.g., `sex`)  
+- Datetime: Date and time of some event or observation (e.g., `arrestDate`, `arrestTime`)  
+- geolocation: Latitude and Longitude of some event or observation (e.g., `Location.`)  
+
+---
+
+## A note on data types
+
+The distinction between continuous and discrete is a bit tricky since measurements that have finite precision must be discrete. 
+
+So, the difference really comes up when we build statistical models of datasets for analysis. 
+
+For now, _think of discrete data as the result of counting, and continuous data the result of some physical measurement_.
+
+---
+
+## Data types
+
+We said that R is designed for data analysis. My favorite example of how that manifests itself is the `factor` datatype. 
+
+If you look at your dataset now, `arrest_tab$sex` should only take one of two values (or three depending on how you record missing, unknown or unspecified). 
+
+So, in R, that categorical data type is called a _factor_. 
+
+---
+
+## Data types
+
+This distinction shows up in many other places where functions have very different behavior when called on a vector of strings and when called on a factor (e.g., functions that make plots, or functions that learn statistical models).
+
+One last note, the possible values a _factor_ can take are called _levels_:
+
+
+```r
+levels(arrest_tab$sex)
+```
+
+```
+## [1] "F" "M"
+```
+
+---
+
+## Thinking in vectors
+
+In data analysis the _vector_ is probably the most fundamental data type (other than basic numbers, strings, etc.). Why? 
+
+Consider getting data about one attribute, say height, for a group of people. What do you get, an array of numbers, all in the same unit (say feet, inches or centimeters). 
+
+How about their name? Then you get an array of strings. 
+
+Abstractly, we think of vectors as arrays of values, all of the same _class_ or datatype. 
+
+---
+
+# Vectors
+
+In our dataset, each column, corresponding to an attribute, is a vector:
+
+
+```r
+# the 'str' function gives a bit more low-level information about objects
+str(arrest_tab$Location)
+```
+
+```
+## Warning: Unknown or uninitialised column: 'Location'.
+```
+
+```
+##  NULL
+```
+
+---
+
+## Vectors
+
+R (and other data analysis languages) are designed to operate on vectors easily. 
+
+For example, frequently we want to do some kind of transformation to a data attribute, say record age in months rather than years. Then we would perform the **same operation** for every value in the corresponding vector:
+
+
+```r
+age_in_months &lt;- arrest_tab$age * 12
+```
+
+---
+
+## Transformations
+
+Another type of transformation frequently done is to combine attributes into a single attribute. Suppose we wanted to combine the `arrestLocation` and `neighborhood` attributes into an `address` attribute:
+
+
+```r
+# remember you can always find out what a function does by using ?paste
+head(paste(arrest_tab$arrestLocation, arrest_tab$neighborhood, sep=", "))
+```
+
+```
+## [1] "NA, NA"                                   
+## [2] "2000 Wilkens Ave, Carrollton Ridge"       
+## [3] "2800 Mayfield Ave, Belair-Edison"         
+## [4] "2100 Ashburton St, Panway/Braddish Avenue"
+## [5] "4000 Wilsby Ave, Pen Lucy"                
+## [6] "2900 Spellman Rd, Cherry Hill"
+```
+
+Here the `paste` function concatenates strings element-wise: the first string in `arrestLocation` is concatenated with the first string in `neighborhood`, etc.
+
+---
+
+## Transformations
+
+Arithmetic operations have the same element-wise operation:
+
+
+```r
+# add first 10 odd numbers to first 10 even numbers
+seq(1, 20, by=2) + seq(2, 20, by=2)
+```
+
+```
+##  [1]  3  7 11 15 19 23 27 31 35 39
+```
+
+---
+
+## Lists vs. vectors
+
+We saw that vectors are arrays of values, all of the same _class_. R also allows arrays of values that have different _class_ or datatype. These are called _lists_. Here is a list containing a string, and a couple of numbers:
+
+
+```r
+my_list &lt;- list("Hector", 40, 71)
+my_list
+```
+
+```
+## [[1]]
+## [1] "Hector"
+## 
+## [[2]]
+## [1] 40
+## 
+## [[3]]
+## [1] 71
+```
+
+
+---
+
+## Vectors and lists
+
+Indexing in lists uses different syntax from the indexing we saw before. To index an element in a list we would use a double-bracket `[[`. 
+
+
+```r
+my_list[[1]]
+```
+
+```
+## [1] "Hector"
+```
+
+In contrast, the single bracket `[` indexes a _part_ of the list, and thus returns another list.
+
+
+```r
+my_list[1]
+```
+
+```
+## [[1]]
+## [1] "Hector"
+```
+
+---
+
+## Vectors and lists
+
+That way we can use slice notation and other operations we saw when indexing vectors as before, but we get lists as results.
+
+
+```r
+my_list[1:2]
+```
+
+```
+## [[1]]
+## [1] "Hector"
+## 
+## [[2]]
+## [1] 40
+```
+
+---
+
+## Vectors and lists
+
+List elements can have names as well:
+
+
+```r
+named_list &lt;- list(person="Hector", age=40, height=71)
+named_list
+```
+
+```
+## $person
+## [1] "Hector"
+## 
+## $age
+## [1] 40
+## 
+## $height
+## [1] 71
+```
+
+Which we can use to index elements as well (both with `[[` and `$`)
+
+
+```r
+named_list[["person"]]
+```
+
+```
+## [1] "Hector"
+```
+
+```r
+named_list$person
+```
+
+```
+## [1] "Hector"
+```
+
+---
+
+## Vectors and lists
+
+Lists can hold arbitrary objects as elements. For example you can have a vector of strings as an element in a list
+
+
+```r
+my_list &lt;- list(person=c("Hector", "Ringo", "Paul", "John"), 40, 71)
+my_list
+```
+
+```
+## $person
+## [1] "Hector" "Ringo"  "Paul"   "John"  
+## 
+## [[2]]
+## [1] 40
+## 
+## [[3]]
+## [1] 71
+```
+
+---
+
+## Vectors and lists
+
+Now, we come to a momentous occassion in understanding R. `data.frame`s are special instances of _lists_! But, in this case, every element in the list is a vector, and all vectors have exactly the same length. So `arrest_tab$age` indexes the named element `age` in the list `arrest_tab`!
+
+---
+
+## Vectors and lists
+
+The pattern of _applying_ functions to entries in vectors also holds for elements in lists. So, if we want to calculate smallest value for every attribute in our dataset, we could do something like this:
+
+
+```r
+sapply(arrest_tab, function(v) sort(v)[1])
+```
+
+```
+##                                           arrest 
+##                                       "11126858" 
+##                                              age 
+##                                              "0" 
+##                                             race 
+##                                              "1" 
+##                                              sex 
+##                                              "1" 
+##                                       arrestDate 
+##                                     "01/01/2011" 
+##                                       arrestTime 
+##                                              "0" 
+##                                   arrestLocation 
+##                                      "0 20Th St" 
+##                                  incidentOffense 
+##                                              "1" 
+##                                 incidentLocation 
+##                        "*** District Detail ***" 
+##                                           charge 
+##                                         "1 0002" 
+##                                chargeDescription 
+## "Abduct Child Under 12 || Abduct Child Under 12" 
+##                                         district 
+##                                        "CENTRAL" 
+##                                             post 
+##                                            "111" 
+##                                     neighborhood 
+##                                          "Abell" 
+##                                       Location 1 
+##                "(39.2000327685, -76.5555163146)"
+```
+
+---
+
+## Making the process explicit with pipes
+
+We've discussed the idea of thinking about data analysis work in terms of "pipelines", where
+we start from data of a certain shape (e.g., a `data.frame`) and apply transformations (functions) to obtain data that contains the computation we want. Consider the following example seen in class:
+
+_What is the mean age of males arrested in the SOUTHERN district?_
+
+---
+
+## Pipes
+
+_What is the mean age of males arrested in the SOUTHERN district?_
+
+We can frame the answer to this question as a series of data transformations to get the answer we are looking for:
+
+
+```r
+# filter data to observations we need
+index_vector &lt;- arrest_tab$sex == "M" &amp; arrest_tab$district == "SOUTHERN"
+tmp &lt;- arrest_tab[index_vector,]
+
+# select the attribute/column we need
+tmp &lt;- tmp[["age"]]
+
+# compute statistic required
+mean(tmp, na.rm=TRUE)
+```
+
+```
+## [1] 32.28481
+```
+
+---
+
+# Pipes
+
+Let's rewrite this using functions to illustrate the point
+
+
+```r
+filter_data &lt;- function(data) {
+  index_vector &lt;- data$sex == "M" &amp; data$district == "SOUTHERN"
+  data[index_vector,]
+}
+
+select_column &lt;- function(data, column) {
+  data[[column]]
+}
+
+tmp &lt;- filter_data(arrest_tab)
+tmp &lt;- select_column(tmp, "age")
+mean(tmp, na.rm=TRUE)
+```
+
+```
+## [1] 32.28481
+```
+
+So, this pattern of _data--&gt;transform--&gt;data_ becomes clearer when written that way.
+
+---
+
+## Pipes
+
+The `dplyr` package introduces _syntactic sugar_ to make this explicit. We can write the above snippet using the "pipe" operator `%&gt;%`:
+
+
+```r
+arrest_tab %&gt;%
+  filter_data() %&gt;%
+  select_column("age") %&gt;%
+  mean(na.rm=TRUE)
+```
+
+```
+## [1] 32.28481
+```
+
+---
+
+## Pipes
+
+The `%&gt;%` binary operator takes the value to its **left** and inserts it as the first argument of the function call to its **right**. 
+
+So the expression `LHS %&gt;% f(another_argument)` is **equivalent** to the expression `f(LHS, another_argument)`. 
+
+We will see this pattern extensively in class because it explicitly presents the way we want to organize many of our data analysis tasks.
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
