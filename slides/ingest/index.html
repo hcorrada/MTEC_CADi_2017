@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ingesting Data</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Hector Corrada Bravo" />
+    <link href="libs/remark-css/example.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Ingesting Data
+### Hector Corrada Bravo
+### 2017/5/31
+
+---
+
+
+
+
+## Ingesting data
+
+Now that we have a better understanding of the R data analysis language, we turn to the first significant challenge in data analysis, getting data into R in a shape that we can use to start our analysis. 
+
+---
+
+## Ingesting data
+
+We will look at two types of data ingestion: 
+
+- _structured ingestion_, where we read data that is already structured, like a comma separated value (CSV) file, 
+
+- _scraping_ where we obtain data from text, usually in websites.
+
+---
+
+## Structured ingestion
+
+We saw in a previous chapter how we can use the `read_csv` file to read data from a CSV file into a data frame. 
+
+Comma separated value (CSV) files are structured in a somewhat regular way, so reading into a data frame is straightforward. 
+
+Each line in the CSV file corresponds to an observation (a row in a data frame). 
+
+Each line contains values separated by a comma (`,`), corresponding to the variables of each observation. 
+
+---
+
+## Structured Ingestion
+
+This ideal principle of how a CSV file is constructed is frequently violated by data contained in CSV files. To get a sense of how to deal with these cases look at the documentation of the `read_csv` function. For instance:
+
+- the first line of the file may or may not contain the names of variables for the data frame (`col_names` argument). 
+
+- strings are quoted using `'` instead of `"` (`quote` argument)
+
+- missing data is encoded with a non-standard code, e.g., `-` (`na` argument)
+
+- values are separated by a character other than `,` (`read_delim` function)
+
+- file may contain header information before the actual data so we have to skip some lines when loading the data (`skip` argument)
+
+
+---
+
+## Structured ingestion
+You should read the documentation of the `read_csv` function to appreciate the complexities it can maneuver when reading data from structured text files.
+
+
+```r
+?read_csv
+```
+
+---
+
+### Excel spreadsheets
+
+Often you will need to ingest data that is stored in an Excel spreadsheet. The `readxl` package is used to do this. The main function for this package is the `read_excel` function. It contains similar arguments to the `read_csv` function we saw above. 
+
+**On your own:** Use the `read_excel` function to parse migration data from the 2009 INEGI national survey contained in file `data/Migracion_interna_eua.xls`.
+
+---
+
+## Scraping
+
+Often, data we want to use is hosted as part of HTML files in webpages. The markup structure of HTML allows to parse data into tables we can use for analysis. Let's use the Rotten Tomatoes ratings webpage for Diego Luna as an example:
+
+![](img/rt_diegoluna.png)
+
+---
+
+## Scraping
+
+We can scrape ratings for his movies from this page. To do this we need to figure out how the HTML page's markup can help us write R expressions to find this data in the page. 
+
+Most web browsers have facilities to show page markup. In Google Chrome, you can use `View&gt;Developer&gt;Developer Tools`, and inspect the page markdown to find where the data is contained. 
+
+---
+
+## Scraping
+
+In this example, we see that the data we want is in a `&lt;table&gt;` element in the page, with id `filmographyTbl`.
+
+![](img/rt_devtools.png)
+
+---
+
+## Scraping
+
+Now that we have that information, we can use the `rvest` package to scrape this data:
+
+
+```r
+library(rvest)
+```
+
+```
+## Loading required package: xml2
+```
+
+```r
+url &lt;- "https://www.rottentomatoes.com/celebrity/diego_luna"
+
+dl_tab &lt;- url %&gt;%
+  read_html() %&gt;%
+  html_node("#filmographyTbl") %&gt;%
+  html_table()
+
+head(dl_tab)
+```
+
+```
+##         RATING                        TITLE
+## 1 No Score Yet                   Flatliners
+## 2          85% Rogue One: A Star Wars Story
+## 3          89%                 Blood Father
+## 4          62%            Mr. Pig (Sr. Pig)
+## 5          82%             The Book of Life
+## 6          39%                 Cesar Chavez
+##                                                                                                                                                                                                                                                                                                     CREDIT
+## 1                                                                                                                                                                                                                                                                                                      Ray
+## 2                                                                                                                                                                                                                                                                                    Captain Cassian Andor
+## 3                                                                                                                                                                                                                                                                                                    Jonah
+## 4 Producer\n                                                \n                                    \n                                            Screenwriter\n                                                \n                                    \n                                            Director
+## 5                                                                                                                                                                                                                                                                                                   Manolo
+## 6                                                                                                                                                   Producer\n                                                \n                                    \n                                            Director
+##   BOX OFFICE YEAR
+## 1          — 2017
+## 2    $532.2M 2016
+## 3          — 2016
+## 4          — 2016
+## 5          — 2014
+## 6      $5.6M 2014
+```
+
+---
+
+## Scraping
+
+The main two functions we used here are `html_node` and `html_table`. `html_node` finds elements in the HTML page according to some selection criteria. Since we want the element with `id=filmographyTbl` we use the `#` selection operation since that corresponds to selection by id. Once the desired element in the page is selected, we can use the `html_table` function to parse the element's text into a data frame.
+
+---
+
+## Scraping
+
+**On your own:** If you wanted to extract the TV filmography from the page, how would you change this call?
+
+**On your own:** We can get movie budget and gross information from this page: http://www.the-numbers.com/movie/budgets/all. Write R code to scrape the budget data from that page.
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

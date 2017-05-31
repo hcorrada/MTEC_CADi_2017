@@ -1,0 +1,12 @@
+base
+methods
+BiocInstaller
+devtools
+RColorBrewer
+datasets
+utils
+grDevices
+graphics
+stats
+xml2
+rvest
