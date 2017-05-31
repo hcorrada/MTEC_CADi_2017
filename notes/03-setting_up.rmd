@@ -141,7 +141,7 @@ In Rstudio, you can use the _Packages_ tab:
 
 ![](img/rstudio_install_packages.png)
 
-**On your own:** Install the following additional packages which we will use later on: `rvest`, `stringr`, and `broom`.
+**On your own:** Install the following additional packages which we will use later on: `rvest`, `stringr`, `nycflights13` and `broom`.
 
 ## Finishing your setup
 
