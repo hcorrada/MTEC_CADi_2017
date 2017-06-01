@@ -9,10 +9,6 @@ movie analysis plot.
 - Write a set of functions to perform the same analysis
 given an actor's name
 
-- (Harder) use the `kmeans` function to cluster movies by rating and domestic gross revenue. Use the `broom` package
-to tidy the result of using `kmeans` and incorprate this
-into the functions above
-
 ## Project 2
 
 Download data from the ENADID and make a plot
