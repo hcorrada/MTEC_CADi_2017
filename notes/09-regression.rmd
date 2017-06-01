@@ -1,0 +1,3 @@
+# Introduction to tidy regression analysis
+
+How to do regression in R using tidy data.

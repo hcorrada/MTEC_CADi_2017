@@ -1,4 +1,0 @@
-# Survey Analysis
-
-A survey analysis to describe slightly more
-complex stat things.
