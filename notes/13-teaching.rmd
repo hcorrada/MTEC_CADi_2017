@@ -22,6 +22,10 @@ and re-executing or modifying analysis code
 - Can use bookdown https://bookdown.org/ to create lecture note
 collection publishable in different formats 
 
+- Placing materials in github https://github.com makes it possible
+for students to download and modify materials. Can also incorporate
+feedback and modifications from others.
+
 ## Assignments
 
 - Students can submit Rmarkdown (or rendered Rmarkdown) for
