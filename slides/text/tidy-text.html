@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Ingesting Data</title>
+    <title>Tidy Text Mining</title>
     <meta charset="utf-8">
     <meta name="author" content="Hector Corrada Bravo" />
     <link href="libs/remark-css/example.css" rel="stylesheet" />
@@ -10,7 +10,7 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Ingesting Data
+# Tidy Text Mining
 ### Hector Corrada Bravo
 ### 2017/5/31
 
@@ -168,11 +168,11 @@ Having the text data in this format lets us manipulate, process, and visualize t
 
 ---
 
-## Tidying the works of Jane Austen {#tidyausten}
+## Tidying the works of Jane Austen
 
 Let's use the text of Jane Austen's 6 completed, published novels from the [janeaustenr](https://cran.r-project.org/package=janeaustenr) package, and transform them into a tidy format. 
 
-The janeaustenr package provides these texts in a one-row-per-line format, where a line is this context is analogous to a literal printed line in a physical book. Let’s start with that, and also use `mutate()` to annotate a `linenumber` quantity to keep track of lines in the original format and a `chapter` (using a regex) to find where all the chapters are.
+The janeaustenr package provides these texts in a one-row-per-line format, where a line is this context is analogous to a literal printed line in a physical book. 
 
 
 ```r
@@ -183,12 +183,17 @@ library(stringr)
 original_books &lt;- austen_books() %&gt;%
   group_by(book) %&gt;%
   mutate(linenumber = row_number(),
-         chapter = cumsum(str_detect(text, regex("^chapter [\\divxlc]",
-                                                 ignore_case = TRUE)))) %&gt;%
+         chapter = cumsum(
+           str_detect(text, 
+                      regex("^chapter [\\divxlc]",
+                      ignore_case = TRUE)))) %&gt;%
   ungroup()
-
-original_books
 ```
+
+---
+
+## Tidy Jane Austen
+
 
 ```
 ## # A tibble: 73,422 x 4
@@ -206,6 +211,10 @@ original_books
 ## 10             CHAPTER 1 Sense &amp; Sensibility         10       1
 ## # ... with 73,412 more rows
 ```
+
+---
+
+## Tidy Jane Austen
 
 To work with this as a tidy dataset, we need to restructure it in the **one-token-per-row** format, which as we saw earlier is done with the `unnest_tokens()` function.
 
@@ -235,9 +244,23 @@ tidy_books
 ## # ... with 725,044 more rows
 ```
 
-This function uses the [tokenizers](https://github.com/ropensci/tokenizers) package to separate each line of text in the original data frame into tokens. The default tokenizing is for words, but other options include characters, n-grams, sentences, lines, paragraphs, or separation around a regex pattern.
+---
 
-Now that the data is in one-word-per-row format, we can manipulate it with tidy tools like dplyr. Often in text analysis, we will want to remove stop words; stop words are words that are not useful for an analysis, typically extremely common words such as "the", "of", "to", and so forth in English. We can remove stop words (kept in the tidytext dataset `stop_words`) with an `anti_join()`.
+## Tidy Jane Austen
+
+This function uses the [tokenizers](https://github.com/ropensci/tokenizers) package to separate each line of text in the original data frame into tokens. 
+
+The default tokenizing is for words, but other options include characters, n-grams, sentences, lines, paragraphs, or separation around a regex pattern.
+
+---
+
+## Tidy Jane Austen
+
+Now that the data is in one-word-per-row format, we can manipulate it with tidy tools like dplyr.
+
+Often in text analysis, we will want to remove stop words; stop words are words that are not useful for an analysis, typically extremely common words such as "the", "of", "to", and so forth in English. 
+
+We can remove stop words (kept in the tidytext dataset `stop_words`) with an `anti_join()`.
 
 
 ```r
@@ -247,7 +270,15 @@ tidy_books &lt;- tidy_books %&gt;%
   anti_join(stop_words)
 ```
 
+---
+
+## Tidy Jane Austen
+
 The `stop_words` dataset in the tidytext package contains stop words from three lexicons. We can use them all together, as we have here, or `filter()` to only use one set of stop words if that is more appropriate for a certain analysis.
+
+---
+
+## Tidy Jane Austen
 
 We can also use dplyr's `count()` to find the most common words in all the books as a whole.
 
@@ -274,7 +305,11 @@ tidy_books %&gt;%
 ## # ... with 13,904 more rows
 ```
 
-Because we've been using tidy tools, our word counts are stored in a tidy data frame. This allows us to pipe this directly to the ggplot2 package, for example to create a visualization of the most common words (Figure \@ref(fig:plotcount)).
+---
+
+## Tidy Jane Austen
+
+Because we've been using tidy tools, our word counts are stored in a tidy data frame. This allows us to pipe this directly to the ggplot2 package, for example to create a visualization of the most common words 
 
 
 ```r
@@ -290,22 +325,60 @@ tidy_books %&gt;%
   coord_flip()
 ```
 
+---
+
+## Tidy Jane Austen
+
 ![The most common words in Jane Austen's novels](tidy-text_files/figure-html/plotcount-1.png)
 
-Note that the `austen_books()` function started us with exactly the text we wanted to analyze, but in other cases we may need to perform cleaning of text data, such as removing copyright headers or formatting. You'll see examples of this kind of pre-processing in the case study chapters, particularly Chapter \@ref(pre-processing-text). 
+---
+
+## Tidy Jane Austen
+
+Note that the `austen_books()` function started us with exactly the text we wanted to analyze, but in other cases we may need to perform cleaning of text data, such as removing copyright headers or formatting.  
+
+---
 
 ## The gutenbergr package
 
-Now that we've used the janeaustenr package to explore tidying text, let's introduce the [gutenbergr](https://github.com/ropenscilabs/gutenbergr) package [@R-gutenbergr]. The gutenbergr package provides access to the public domain works from the [Project Gutenberg](https://www.gutenberg.org/) collection. The package includes tools both for downloading books (stripping out the unhelpful header/footer information), and a complete dataset of Project Gutenberg metadata that can be used to find works of interest. In this book, we will mostly use the function `gutenberg_download()` that downloads one or more works from Project Gutenberg by ID, but you can also use other functions to explore metadata, pair Gutenberg ID with title, author, language, etc., or gather information about authors. 
+Now that we've used the janeaustenr package to explore tidying text, let's introduce the [gutenbergr](https://github.com/ropenscilabs/gutenbergr) package [@R-gutenbergr]. 
+
+The gutenbergr package provides access to the public domain works from the [Project Gutenberg](https://www.gutenberg.org/) collection. 
+
+The package includes tools both for downloading books (stripping out the unhelpful header/footer information), and a complete dataset of Project Gutenberg metadata that can be used to find works of interest. 
+
+---
+
+## Project Gutenberg
+
+In this book, we will mostly use the function `gutenberg_download()` that downloads one or more works from Project Gutenberg by ID, but you can also use other functions to explore metadata, pair Gutenberg ID with title, author, language, etc., or gather information about authors. 
 
 
 &lt;div class="rmdtip"&gt;
 &lt;p&gt;To learn more about gutenbergr, check out the &lt;a href="https://ropensci.org/tutorials/gutenbergr_tutorial.html"&gt;package's tutorial at rOpenSci&lt;/a&gt;, where it is one of rOpenSci's packages for data access.&lt;/p&gt;
 &lt;/div&gt;
 
+---
+
 ## Word frequencies
 
-A common task in text mining is to look at word frequencies, just like we have done above for Jane Austen's novels, and to compare frequencies across different texts. We can do this intuitively and smoothly using tidy data principles. We already have Jane Austen's works; let's get two more sets of texts to compare to. First, let's look at some science fiction and fantasy novels by H.G. Wells, who lived in the late 19th and early 20th centuries. Let's get [*The Time Machine*](https://www.gutenberg.org/ebooks/35), [*The War of the Worlds*](https://www.gutenberg.org/ebooks/36), [*The Invisible Man*](https://www.gutenberg.org/ebooks/5230), and [*The Island of Doctor Moreau*](https://www.gutenberg.org/ebooks/159). We can access these works using `gutenberg_download()` and the Project Gutenberg ID numbers for each novel.
+A common task in text mining is to look at word frequencies, just like we have done above for Jane Austen's novels, and to compare frequencies across different texts. 
+
+We can do this intuitively and smoothly using tidy data principles. 
+
+We already have Jane Austen's works; let's get two more sets of texts to compare to. 
+
+---
+
+## Work frequencies
+
+First, let's look at some science fiction and fantasy novels by H.G. Wells, who lived in the late 19th and early 20th centuries. Let's get [*The Time Machine*](https://www.gutenberg.org/ebooks/35), [*The War of the Worlds*](https://www.gutenberg.org/ebooks/36), [*The Invisible Man*](https://www.gutenberg.org/ebooks/5230), and [*The Island of Doctor Moreau*](https://www.gutenberg.org/ebooks/159). 
+
+---
+
+## Word frequencies
+
+We can access these works using `gutenberg_download()` and the Project Gutenberg ID numbers for each novel.
 
 
 ```r
@@ -314,7 +387,12 @@ library(gutenbergr)
 hgwells &lt;- gutenberg_download(c(35, 36, 5230, 159))
 ```
 
+We've already downloded this data for the course
 
+
+```r
+load("data/hgwells.rda")
+```
 
 
 ```r
@@ -323,7 +401,11 @@ tidy_hgwells &lt;- hgwells %&gt;%
   anti_join(stop_words)
 ```
 
-Just for kicks, what are the most common words in these novels of H.G. Wells?
+---
+
+## Word frequencies
+
+What are the most common words in these novels of H.G. Wells?
 
 
 ```r
@@ -348,14 +430,29 @@ tidy_hgwells %&gt;%
 ## # ... with 11,759 more rows
 ```
 
-Now let's get some well-known works of the Brontë sisters, whose lives overlapped with Jane Austen's somewhat but who wrote in a rather different style. Let's get [*Jane Eyre*](https://www.gutenberg.org/ebooks/1260), [*Wuthering Heights*](https://www.gutenberg.org/ebooks/768), [*The Tenant of Wildfell Hall*](https://www.gutenberg.org/ebooks/969), [*Villette*](https://www.gutenberg.org/ebooks/9182), and [*Agnes Grey*](https://www.gutenberg.org/ebooks/767). We will again use the Project Gutenberg ID numbers for each novel and access the texts using `gutenberg_download()`.
+---
+
+## Word frequencies
+
+Now let's get some well-known works of the Brontë sisters, whose lives overlapped with Jane Austen's somewhat but who wrote in a rather different style. Let's get [*Jane Eyre*](https://www.gutenberg.org/ebooks/1260), [*Wuthering Heights*](https://www.gutenberg.org/ebooks/768), [*The Tenant of Wildfell Hall*](https://www.gutenberg.org/ebooks/969), [*Villette*](https://www.gutenberg.org/ebooks/9182), and [*Agnes Grey*](https://www.gutenberg.org/ebooks/767). 
+
+---
+
+## Word frequencies
+
+We will again use the Project Gutenberg ID numbers for each novel and access the texts using `gutenberg_download()`.
 
 
 ```r
 bronte &lt;- gutenberg_download(c(1260, 768, 969, 9182, 767))
 ```
 
+We already downloaded the dataset for the course
 
+
+```r
+load("data/bronte.rda")
+```
 
 
 ```r
@@ -363,6 +460,10 @@ tidy_bronte &lt;- bronte %&gt;%
   unnest_tokens(word, text) %&gt;%
   anti_join(stop_words)
 ```
+
+---
+
+## Word frequencies
 
 What are the most common words in these novels of the Brontë sisters?
 
@@ -391,7 +492,17 @@ tidy_bronte %&gt;%
 
 Interesting that "time", "eyes", and "hand" are in the top 10 for both H.G. Wells and the Brontë sisters.
 
-Now, let's calculate the frequency for each word for the works of Jane Austen, the Brontë sisters, and H.G. Wells by binding the data frames together. We can use `spread` and `gather` from tidyr to reshape our dataframe so that it is just what we need for plotting and comparing the three sets of novels.
+---
+
+## Word frequency
+
+Now, let's calculate the frequency for each word for the works of Jane Austen, the Brontë sisters, and H.G. Wells by binding the data frames together. 
+
+We can use `spread` and `gather` from tidyr to reshape our dataframe so that it is just what we need for plotting and comparing the three sets of novels.
+
+---
+
+## Word frequency
 
 
 ```r
@@ -409,9 +520,14 @@ frequency &lt;- bind_rows(mutate(tidy_bronte, author = "Brontë Sisters"),
   gather(author, proportion, `Brontë Sisters`:`H.G. Wells`)
 ```
 
+
 We use `str_extract()` here because the UTF-8 encoded texts from Project Gutenberg have some examples of words with underscores around them to indicate emphasis (like italics). The tokenizer treated these as words, but we don't want to count "\_any\_" separately from "any" as we saw in our initial data exploration before choosing to use `str_extract()`. 
 
-Now let's plot (Figure \@ref(fig:plotcompare)).
+---
+
+## Word frequency
+
+Now let's plot:
 
 
 ```r
@@ -430,13 +546,71 @@ ggplot(frequency, aes(x = proportion, y = `Jane Austen`, color = abs(`Jane Auste
   labs(y = "Jane Austen", x = NULL)
 ```
 
-![Comparing the word frequencies of Jane Austen, the Brontë sisters, and H.G. Wells](tidy-text_files/figure-html/plotcompare-1.png)
+---
 
-Words that are close to the line in these plots have similar frequencies in both sets of texts, for example, in both Austen and Brontë texts ("miss", "time", "day" at the upper frequency end) or in both Austen and Wells texts ("time", "day", "brother" at the high frequency end). Words that are far from the line are words that are found more in one set of texts than another. For example, in the Austen-Brontë panel, words like "elizabeth", "emma", and "fanny" (all proper nouns) are found in Austen's texts but not much in the Brontë texts, while words like "arthur" and "dog" are found in the Brontë texts but not the Austen texts. In comparing H.G. Wells with Jane Austen, Wells uses words like "beast", "guns", "feet", and "black" that Austen does not, while Austen uses words like "family", "friend", "letter", and "dear" that Wells does not.
+## Word frequency
 
-Overall, notice in Figure \@ref(fig:plotcompare) that the words in the Austen-Brontë panel are closer to the zero-slope line than in the Austen-Wells panel. Also notice that the words extend to lower frequencies in the Austen-Brontë panel; there is empty space in the Austen-Wells panel at low frequency. These characteristics indicate that Austen and the Brontë sisters use more similar words than Austen and H.G. Wells. Also, we see that not all the words are found in all three sets of texts and there are fewer data points in the panel for Austen and H.G. Wells.
+![Comparing the word frequencies of Jane Austen, the Brontë sisters, and H.G. Wells](tidy-text_files/figure-html/unnamed-chunk-14-1.png)
 
-Let's quantify how similar and different these sets of word frequencies are using a correlation test. How correlated are the word frequencies between Austen and the Brontë sisters, and between Austen and Wells?
+Words that are close to the line in these plots have similar frequencies in both sets of texts, 
+
+---
+
+## Word frequency
+
+![Comparing the word frequencies of Jane Austen, the Brontë sisters, and H.G. Wells](tidy-text_files/figure-html/unnamed-chunk-15-1.png)
+
+In both Austen and Brontë texts ("miss", "time", "day" at the upper frequency end) or in both Austen and Wells texts ("time", "day", "brother" at the high frequency end). 
+
+---
+
+## Word frequency
+
+![Comparing the word frequencies of Jane Austen, the Brontë sisters, and H.G. Wells](tidy-text_files/figure-html/unnamed-chunk-16-1.png)
+
+In the Austen-Brontë panel, words like "elizabeth", "emma", and "fanny" (all proper nouns) are found in Austen's texts but not much in the Brontë texts, while words like "arthur" and "dog" are found in the Brontë texts but not the Austen texts. 
+
+---
+
+## Word frequency
+
+![Comparing the word frequencies of Jane Austen, the Brontë sisters, and H.G. Wells](tidy-text_files/figure-html/unnamed-chunk-17-1.png)
+
+
+In comparing H.G. Wells with Jane Austen, Wells uses words like "beast", "guns", "feet", and "black" that Austen does not, while Austen uses words like "family", "friend", "letter", and "dear" that Wells does not.
+
+---
+
+## Word frequency
+
+![Comparing the word frequencies of Jane Austen, the Brontë sisters, and H.G. Wells](tidy-text_files/figure-html/unnamed-chunk-18-1.png)
+
+Overall, notice that the words in the Austen-Brontë panel are closer to the zero-slope line than in the Austen-Wells panel. 
+
+---
+
+## Word frequency
+
+![Comparing the word frequencies of Jane Austen, the Brontë sisters, and H.G. Wells](tidy-text_files/figure-html/unnamed-chunk-19-1.png)
+
+Also notice that the words extend to lower frequencies in the Austen-Brontë panel; there is empty space in the Austen-Wells panel at low frequency. 
+
+---
+
+## Word frequency
+
+These characteristics indicate that Austen and the Brontë sisters use more similar words than Austen and H.G. Wells. 
+
+Also, we see that not all the words are found in all three sets of texts and there are fewer data points in the panel for Austen and H.G. Wells.
+
+---
+
+## Word frequency
+
+Let's quantify how similar and different these sets of word frequencies are using a correlation test. 
+
+How correlated are the word frequencies between Austen and the Brontë sisters, and between Austen and Wells?
+
 
 
 ```r
@@ -457,6 +631,11 @@ cor.test(data = frequency[frequency$author == "Brontë Sisters",],
 ##       cor 
 ## 0.7609907
 ```
+
+---
+
+## Word frequency
+
 
 ```r
 cor.test(data = frequency[frequency$author == "H.G. Wells",], 
@@ -479,9 +658,15 @@ cor.test(data = frequency[frequency$author == "H.G. Wells",],
 
 Just as we saw in the plots, the word frequencies are more correlated between the Austen and Brontë novels than between Austen and H.G. Wells.
 
+---
+
 ## Summary
 
-In this chapter, we explored what we mean by tidy data when it comes to text, and how tidy data principles can be applied to natural language processing. When text is organized in a format with one token per row, tasks like removing stop words or calculating word frequencies are natural applications of familiar operations within the tidy tool ecosystem. The one-token-per-row framework can be extended from single words to n-grams and other meaningful units of text, as well as to many other analysis priorities that we will consider in this book.
+We explored what we mean by tidy data when it comes to text, and how tidy data principles can be applied to natural language processing. 
+
+When text is organized in a format with one token per row, tasks like removing stop words or calculating word frequencies are natural applications of familiar operations within the tidy tool ecosystem. 
+
+The one-token-per-row framework can be extended from single words to n-grams and other meaningful units of text, as well as to many other analysis priorities.
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
