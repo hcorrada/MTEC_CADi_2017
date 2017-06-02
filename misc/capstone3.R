@@ -107,6 +107,7 @@ get_annotation <- function(cluster_centers, movie_tab) {
     select(title, center_rating, center_domestic_gross)
 }
 
+# add annotation to the plot
 annotate_plot <- function(actor_plot, annotation_data) {
   actor_plot +
     annotate("text", 
@@ -114,6 +115,8 @@ annotate_plot <- function(actor_plot, annotation_data) {
              y=annotation_data$center_domestic_gross,
              label=annotation_data$title)
 }
+
+# make the annotated scatter plot given actor's name
 analyze_actor <- function(long_name, k=3) {
   # scrape and clean data
   analysis_tab <- get_table(long_name)
@@ -139,6 +142,7 @@ analyze_actor <- function(long_name, k=3) {
   actor_plot %>% annotate_plot(annotation_tab)
 }
 
+# do a regression analysis given the actor name
 regress_actor <- function(long_name) {
   get_table(long_name) %>%
     make_regression()
