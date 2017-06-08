@@ -414,8 +414,8 @@ analyze_actor("Gael Garcia Bernal")
 Now that we have written a function to analyze an
 actor's movies, we can make these analyses easier to produce by creating an interactive application that wraps our new function. The `shiny` R package makes creating this type of application easy. 
 
-```{r movie_app, echo=FALSE, cache=TRUE}
-knitr::include_app("https://hcorrada.shinyapps.io/movie_app/")
+```{r movie_app, echo=FALSE, cache=TRUE,screenshot.opts=list(delay=20,zoom=2),dev='png', fig.align='center'}
+knitr::include_app("https://hcorrada.shinyapps.io/movie_app/", height='600px')
 ```
 
 ## Summary

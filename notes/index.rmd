@@ -3,8 +3,7 @@ title: "Lecture Notes: Data Science using R for Humanities and Social Science"
 subtitle: "CADi 2017: Tecnologico de Monterrey, Mexico D.F."
 author: "Héctor Corrada Bravo"
 date: "`r Sys.Date()`"
-output: 
-  bookdown::gitbook
+fontsize: 12pt
 ---
 
 # Preamble
