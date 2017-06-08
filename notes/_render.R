@@ -11,7 +11,7 @@ if (length(formats) == 0) {
 
 for (fmt in formats) {
   cmd = sprintf("bookdown::render_book('index.rmd', '%s', quiet=%s)", fmt, quiet)
-  cat(cmd)
+  cat(cmd, "\n")
   res = bookdown:::Rscript(c('-e', shQuote(cmd)))
   if (res != 0) stop('Failed to compile the book to ', fmt) 
 }

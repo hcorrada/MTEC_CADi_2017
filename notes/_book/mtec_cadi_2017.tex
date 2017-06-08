@@ -9,12 +9,10 @@
 \else % if luatex or xelatex
   \ifxetex
     \usepackage{mathspec}
-    \usepackage{xltxtra,xunicode}
   \else
     \usepackage{fontspec}
   \fi
-  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
-  \newcommand{\euro}{€}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
 \fi
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -24,6 +22,13 @@
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
 \usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Lecture Notes: Data Science using R for Humanities and Social Science},
+            pdfauthor={Héctor Corrada Bravo},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -33,22 +38,39 @@
 \usepackage{framed}
 \definecolor{shadecolor}{RGB}{248,248,248}
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
-\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
-\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
-\newcommand{\RegionMarkerTok}[1]{{#1}}
-\newcommand{\ErrorTok}[1]{\textbf{{#1}}}
-\newcommand{\NormalTok}[1]{{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
 \usepackage{longtable,booktabs}
-\usepackage{graphicx}
+\usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -57,27 +79,25 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\ifxetex
-  \usepackage[setpagesize=false, % page size defined by xetex
-              unicode=false, % unicode breaks when used with xetex
-              xetex]{hyperref}
-\else
-  \usepackage[unicode=true]{hyperref}
-\fi
-\hypersetup{breaklinks=true,
-            bookmarks=true,
-            pdfauthor={Héctor Corrada Bravo},
-            pdftitle={CADI 2017},
-            colorlinks=true,
-            citecolor=blue,
-            urlcolor=blue,
-            linkcolor=magenta,
-            pdfborder={0 0 0}}
-\urlstyle{same}  % don't use monospace font for urls
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
 
 %%% Use protect on footnotes to avoid problems with footnotes in titles
 \let\rmarkdownfootnote\footnote%
@@ -94,9 +114,10 @@
 }
 
 \setlength{\droptitle}{-2em}
-  \title{CADI 2017}
+  \title{Lecture Notes: Data Science using R for Humanities and Social Science}
   \pretitle{\vspace{\droptitle}\centering\huge}
   \posttitle{\par}
+\subtitle{CADi 2017: Tecnologico de Monterrey, Mexico D.F.}
   \author{Héctor Corrada Bravo}
   \preauthor{\centering\large\emph}
   \postauthor{\par}
@@ -117,18 +138,30 @@
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
 \begin{document}
-
 \maketitle
 
-
 {
-\hypersetup{linkcolor=black}
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
 \chapter{Preamble}\label{preamble}
 
-Here is where the course notes will be included.
+These are lecture notes for a CADi course offered at the Tecnologico de
+Monterrey, D.F. campus on May 31-June 2, 2017. Material from these notes
+were drawn from
+
+\begin{itemize}
+\tightlist
+\item
+  Zumen and Mount, ``Practical Data Science with R''\\
+\item
+  Grolemund and Wickham, ``R for Data Science''\\
+\item
+  James, et al., ``Introduction to Statistical Learning with
+  Applications''\\
+\item
+  Silge and Robinson, ``Text Mining with R''
+\end{itemize}
 
 \chapter{Introduction and Overview}\label{introduction-and-overview}
 
@@ -235,7 +268,7 @@ science. The general organization of the course will be the following:
 preparation}\label{day-1-introduction-and-preparation}
 
 \begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   Get ourselved settled with R
 \item
@@ -252,7 +285,7 @@ preparation}\label{day-1-introduction-and-preparation}
 \subsection{Day 2: Use cases}\label{day-2-use-cases}
 
 \begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   Social media analysis: text and network structures
 \item
@@ -271,7 +304,7 @@ preparation}\label{day-1-introduction-and-preparation}
 teaching}\label{day-3-presentation-and-teaching}
 
 \begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   How to present and publish analysis using R
 \item
@@ -283,7 +316,7 @@ teaching}\label{day-3-presentation-and-teaching}
 The data science activities we will cover are roughly organized into a
 general workflow that will help us navigate this material.
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/zumel_mount_cycle.png}
 \caption{}
@@ -292,7 +325,7 @@ general workflow that will help us navigate this material.
 \subsection{Defining the goal}\label{defining-the-goal}
 
 \begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   What is the question/problem?
 \item
@@ -309,7 +342,7 @@ general workflow that will help us navigate this material.
 Management}\label{data-collection-and-management}
 
 \begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   What data is available?
 \item
@@ -324,7 +357,7 @@ Management}\label{data-collection-and-management}
 \subsection{Modeling}\label{modeling}
 
 \begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   What kind of problem is it? E.g., classification, clustering,
   regression, etc.
@@ -339,7 +372,7 @@ Management}\label{data-collection-and-management}
 \subsection{Model evaluation}\label{model-evaluation}
 
 \begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   Did it work? How well?
 \item
@@ -351,7 +384,7 @@ Management}\label{data-collection-and-management}
 \subsection{Presentation}\label{presentation}
 
 \begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   Again, what are the measurements that tell the real story?
 \item
@@ -361,7 +394,7 @@ Management}\label{data-collection-and-management}
 \subsection{Deployment}\label{deployment}
 
 \begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   Where will it be hosted?
 \item
@@ -380,7 +413,7 @@ I'd like to do a similar analysis. Let's do this in order:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi})}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   Let's do this analysis for Diego Luna
 \item
@@ -532,7 +565,7 @@ RATING & TITLE & CREDIT & BOX OFFICE & YEAR & release\_date & production\_budget
 
 Now that we have the data we need, we can make a plot:
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{mtec_cadi_2017_files/figure-latex/unnamed-chunk-8-1.pdf}
 \caption{\label{fig:unnamed-chunk-8}Ratings and U.S. Domestic Gross of Diego
@@ -620,7 +653,7 @@ For our analysis, this function must do the following:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   Scrape movie ratings from Rotten Tomatoes
 \item
@@ -713,7 +746,7 @@ adventorous, it can also be compiled from source. To install R in your
 computer go to \url{https://cran.r-project.org/index.html} and download
 and install the appropriate binary file.
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/cran.png}
 \caption{}
@@ -729,7 +762,7 @@ powerful application to make data analysis with R easier to do. To
 install go to \url{https://www.rstudio.com/products/rstudio/download/}
 and download the appropriate version of Rstudio.
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/rstudio.png}
 \caption{}
@@ -752,7 +785,7 @@ When you installed R, a few illustrative datasets were installed as
 well. Let's take a look at the list of datasets you now have access to.
 Write the following command in the console
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/rstudio_data.png}
 \caption{}
@@ -767,7 +800,7 @@ dataset we can enter the following in the console
 This will make the documentation for the \texttt{swiss} dataset open in
 another pane.
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/rstudio_swiss.png}
 \caption{}
@@ -788,7 +821,7 @@ spreadsheet, with rows representing observations, and columns
 representing variables that describe those observations. Let's see what
 the \texttt{swiss} data looks like using the Rstudio data viewer.
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/rstudio_view_swiss.png}
 \caption{}
@@ -830,7 +863,7 @@ containing that data. Try it out in the console.
 expression \texttt{swiss}, we tell R we want the \emph{value} referenced
 by the name \texttt{swiss}, that is, the data itself!
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/names_values.png}
 \caption{}
@@ -851,7 +884,7 @@ functions.
 Next, I want to show the \emph{Plots} pane in Rstudio. Let's make a plot
 using the \texttt{swiss} dataset:
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/rstudio_plot_swiss.png}
 \caption{}
@@ -896,7 +929,7 @@ write a script that we can use to make the same plot we just made.
 In the Rstudio menu select
 \texttt{File\textgreater{}New\ File\textgreater{}R\ Script}
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/rstudio_new_script.png}
 \caption{}
@@ -905,7 +938,7 @@ In the Rstudio menu select
 This will open a tab in the File editor in which we can write
 expressions:
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/rstudio_file.png}
 \caption{}
@@ -927,7 +960,7 @@ and save again. Run the new expressions.
 Rstudio includes a Files viewer that you can use to find and load files.
 You can find the Files near the Plots viewer
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/rstudio_files.png}
 \caption{}
@@ -954,7 +987,7 @@ expression:
 
 In Rstudio, you can use the \emph{Packages} tab:
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/rstudio_install_packages.png}
 \caption{}
@@ -1001,7 +1034,7 @@ analysis (e.g., figure below from
 \href{http://www.kdnuggets.com/2016/06/r-python-top-analytics-data-mining-data-science-software.html}{KDNuggets
 2016 software survey})
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/kdnuggets-2016.jpg}
 \caption{}
@@ -1051,7 +1084,7 @@ We'll use data downloaded from Baltimore City's awesome open data site
 will get different results).
 
 The repository for this particular data is here.
-\href{https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt}{\url{https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt}}
+\url{https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt}
 
 \section{Getting data}\label{getting-data}
 
@@ -1184,7 +1217,7 @@ datasets.
 \CommentTok{# note that indexing in R is 1-based, not 0-based, so the first row is indexed by 1}
 
 \CommentTok{# now we want to do a bit more, so let's say we want the value in the fifth column of our dataset for the first 10 rows. For that we can use slice notation:}
-\NormalTok{arrest_tab[}\DecValTok{1}\NormalTok{:}\DecValTok{10}\NormalTok{,}\DecValTok{5}\NormalTok{]}
+\NormalTok{arrest_tab[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{,}\DecValTok{5}\NormalTok{]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1207,7 +1240,7 @@ datasets.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# similarly, to obtain the value in the first five columns of the first row}
-\NormalTok{arrest_tab[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{]}
+\NormalTok{arrest_tab[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1221,7 +1254,7 @@ datasets.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# what is the class of the value when we subset a single column?}
-\KeywordTok{class}\NormalTok{(arrest_tab[}\DecValTok{1}\NormalTok{:}\DecValTok{10}\NormalTok{,}\DecValTok{5}\NormalTok{])}
+\KeywordTok{class}\NormalTok{(arrest_tab[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{,}\DecValTok{5}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1232,7 +1265,7 @@ datasets.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# what is the class of the value when we subset a single row?}
-\KeywordTok{class}\NormalTok{(arrest_tab[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{])}
+\KeywordTok{class}\NormalTok{(arrest_tab[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1243,7 +1276,7 @@ datasets.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# what do we get with this indexing?}
-\NormalTok{arrest_tab[}\DecValTok{1}\NormalTok{:}\DecValTok{10}\NormalTok{,}\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{]}
+\NormalTok{arrest_tab[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{,}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1274,7 +1307,7 @@ If we want non-consecutive indices we have other options (e.g., the
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# non-consecutive indices using c}
-\NormalTok{arrest_tab[}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{10}\NormalTok{), }\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{]}
+\NormalTok{arrest_tab[}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{10}\NormalTok{), }\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1336,7 +1369,7 @@ If we want non-consecutive indices we have other options (e.g., the
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# that is equivalent to }
-\NormalTok{arrest_tab[}\DecValTok{1}\NormalTok{:}\DecValTok{10}\NormalTok{,}\DecValTok{1}\NormalTok{:}\DecValTok{10}\NormalTok{]}
+\NormalTok{arrest_tab[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{,}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1386,7 +1419,7 @@ strings) to index data frames.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# single column}
-\NormalTok{arrest_tab[}\DecValTok{1}\NormalTok{:}\DecValTok{10}\NormalTok{, }\StringTok{"age"}\NormalTok{]}
+\NormalTok{arrest_tab[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{, }\StringTok{"age"}\NormalTok{]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1409,7 +1442,7 @@ strings) to index data frames.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# multiple columns}
-\NormalTok{arrest_tab[}\DecValTok{1}\NormalTok{:}\DecValTok{10}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"sex"}\NormalTok{, }\StringTok{"race"}\NormalTok{)]}
+\NormalTok{arrest_tab[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\StringTok{"age"}\NormalTok{, }\StringTok{"sex"}\NormalTok{, }\StringTok{"race"}\NormalTok{)]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1435,7 +1468,7 @@ operator \texttt{\$} to index:
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# first ten values of the age column}
-\NormalTok{arrest_tab$age[}\DecValTok{1}\NormalTok{:}\DecValTok{10}\NormalTok{]}
+\NormalTok{arrest_tab}\OperatorTok{$}\NormalTok{age[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1456,7 +1489,7 @@ values for indexing.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# rows 2,4,7 and 10 using logical indices}
-\NormalTok{arrest_tab[}\KeywordTok{c}\NormalTok{(}\OtherTok{FALSE}\NormalTok{,}\OtherTok{TRUE}\NormalTok{,}\OtherTok{FALSE}\NormalTok{,}\OtherTok{TRUE}\NormalTok{,}\OtherTok{FALSE}\NormalTok{,}\OtherTok{FALSE}\NormalTok{,}\OtherTok{TRUE}\NormalTok{,}\OtherTok{FALSE}\NormalTok{,}\OtherTok{FALSE}\NormalTok{,}\OtherTok{TRUE}\NormalTok{,}\KeywordTok{rep}\NormalTok{(}\OtherTok{FALSE}\NormalTok{,}\KeywordTok{nrow}\NormalTok{(arrest_tab)-}\DecValTok{10}\NormalTok{)),]}
+\NormalTok{arrest_tab[}\KeywordTok{c}\NormalTok{(}\OtherTok{FALSE}\NormalTok{,}\OtherTok{TRUE}\NormalTok{,}\OtherTok{FALSE}\NormalTok{,}\OtherTok{TRUE}\NormalTok{,}\OtherTok{FALSE}\NormalTok{,}\OtherTok{FALSE}\NormalTok{,}\OtherTok{TRUE}\NormalTok{,}\OtherTok{FALSE}\NormalTok{,}\OtherTok{FALSE}\NormalTok{,}\OtherTok{TRUE}\NormalTok{,}\KeywordTok{rep}\NormalTok{(}\OtherTok{FALSE}\NormalTok{,}\KeywordTok{nrow}\NormalTok{(arrest_tab)}\OperatorTok{-}\DecValTok{10}\NormalTok{)),]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1511,7 +1544,7 @@ a property of its values for a given column
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# select rows for entities younger than 21 years old}
-\KeywordTok{head}\NormalTok{(arrest_tab[arrest_tab$age <}\StringTok{ }\DecValTok{21}\NormalTok{, ])}
+\KeywordTok{head}\NormalTok{(arrest_tab[arrest_tab}\OperatorTok{$}\NormalTok{age }\OperatorTok{<}\StringTok{ }\DecValTok{21}\NormalTok{, ])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1536,7 +1569,7 @@ a property of its values for a given column
 
 \CommentTok{# select entities (arrests) occuring in Mount Washington,}
 \CommentTok{# a specific neighborhood in Baltimore}
-\KeywordTok{head}\NormalTok{(arrest_tab[arrest_tab$neighborhood ==}\StringTok{ "Mount Washington"}\NormalTok{,])}
+\KeywordTok{head}\NormalTok{(arrest_tab[arrest_tab}\OperatorTok{$}\NormalTok{neighborhood }\OperatorTok{==}\StringTok{ "Mount Washington"}\NormalTok{,])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1559,7 +1592,7 @@ a property of its values for a given column
 \begin{Highlighting}[]
 \CommentTok{# how about arrests where subjects are under 21 in Mount  Washington? }
 \CommentTok{# use a logical `and` operator}
-\NormalTok{indices <-}\StringTok{ }\NormalTok{arrest_tab$age <}\StringTok{ }\DecValTok{21} \NormalTok{&}\StringTok{ }\NormalTok{arrest_tab$neighborhood ==}\StringTok{ "Mount Washington"}
+\NormalTok{indices <-}\StringTok{ }\NormalTok{arrest_tab}\OperatorTok{$}\NormalTok{age }\OperatorTok{<}\StringTok{ }\DecValTok{21} \OperatorTok{&}\StringTok{ }\NormalTok{arrest_tab}\OperatorTok{$}\NormalTok{neighborhood }\OperatorTok{==}\StringTok{ "Mount Washington"}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1570,7 +1603,7 @@ about datasets. For instance:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(arrest_tab$sex)}
+\KeywordTok{summary}\NormalTok{(arrest_tab}\OperatorTok{$}\NormalTok{sex)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1581,7 +1614,7 @@ about datasets. For instance:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(arrest_tab$race)}
+\KeywordTok{summary}\NormalTok{(arrest_tab}\OperatorTok{$}\NormalTok{race)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1594,7 +1627,7 @@ about datasets. For instance:
 \begin{Highlighting}[]
 \CommentTok{# well that seems problematic}
 \CommentTok{# let's rename columns to correct that}
-\KeywordTok{colnames}\NormalTok{(arrest_tab)[}\DecValTok{3}\NormalTok{:}\DecValTok{4}\NormalTok{] <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"race"}\NormalTok{, }\StringTok{"sex"}\NormalTok{)}
+\KeywordTok{colnames}\NormalTok{(arrest_tab)[}\DecValTok{3}\OperatorTok{:}\DecValTok{4}\NormalTok{] <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"race"}\NormalTok{, }\StringTok{"sex"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1603,7 +1636,7 @@ We can also ask other useful type of summaries
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# What is the average age in arrests?}
-\KeywordTok{mean}\NormalTok{(arrest_tab$age)}
+\KeywordTok{mean}\NormalTok{(arrest_tab}\OperatorTok{$}\NormalTok{age)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1614,7 +1647,7 @@ We can also ask other useful type of summaries
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# Median age?}
-\KeywordTok{median}\NormalTok{(arrest_tab$age)}
+\KeywordTok{median}\NormalTok{(arrest_tab}\OperatorTok{$}\NormalTok{age)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1625,7 +1658,7 @@ We can also ask other useful type of summaries
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# what types of offenses are there}
-\KeywordTok{summary}\NormalTok{(arrest_tab$incidentOffense)}
+\KeywordTok{summary}\NormalTok{(arrest_tab}\OperatorTok{$}\NormalTok{incidentOffense)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1735,7 +1768,7 @@ We can also ask other useful type of summaries
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# what does summary looks like for continuous attributes?}
-\KeywordTok{summary}\NormalTok{(arrest_tab$age)}
+\KeywordTok{summary}\NormalTok{(arrest_tab}\OperatorTok{$}\NormalTok{age)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1750,9 +1783,9 @@ previously we can ask more specific questions
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# What is the average age for arrests in Mount Washington?}
-\NormalTok{mount_washington_index <-}\StringTok{ }\NormalTok{arrest_tab$neighborhood ==}\StringTok{ "Mount Washington"}
+\NormalTok{mount_washington_index <-}\StringTok{ }\NormalTok{arrest_tab}\OperatorTok{$}\NormalTok{neighborhood }\OperatorTok{==}\StringTok{ "Mount Washington"}
 
-\KeywordTok{mean}\NormalTok{(arrest_tab$age[mount_washington_index], }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{mean}\NormalTok{(arrest_tab}\OperatorTok{$}\NormalTok{age[mount_washington_index], }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1763,7 +1796,7 @@ previously we can ask more specific questions
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# How about the number of arrests in Mount Washington _stratified_ by race and sex?}
-\KeywordTok{table}\NormalTok{(arrest_tab$race[mount_washington_index], arrest_tab$sex[mount_washington_index])}
+\KeywordTok{table}\NormalTok{(arrest_tab}\OperatorTok{$}\NormalTok{race[mount_washington_index], arrest_tab}\OperatorTok{$}\NormalTok{sex[mount_washington_index])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1782,7 +1815,7 @@ previously we can ask more specific questions
 \begin{Highlighting}[]
 \CommentTok{# how about a graphical summary of arrest ages in Mount Washington?}
 \CommentTok{# we'll use a boxplot}
-\KeywordTok{boxplot}\NormalTok{(arrest_tab$age[mount_washington_index])}
+\KeywordTok{boxplot}\NormalTok{(arrest_tab}\OperatorTok{$}\NormalTok{age[mount_washington_index])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1791,7 +1824,7 @@ previously we can ask more specific questions
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# can we do the same stratified by sex?}
-\KeywordTok{boxplot}\NormalTok{(arrest_tab$age[mount_washington_index]~arrest_tab$sex[mount_washington_index])}
+\KeywordTok{boxplot}\NormalTok{(arrest_tab}\OperatorTok{$}\NormalTok{age[mount_washington_index]}\OperatorTok{~}\NormalTok{arrest_tab}\OperatorTok{$}\NormalTok{sex[mount_washington_index])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1810,7 +1843,7 @@ also make the plot a bit more useful by adding a title and axis labels:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{mount_washington_tab <-}\StringTok{ }\NormalTok{arrest_tab[mount_washington_index,]}
-\KeywordTok{boxplot}\NormalTok{(mount_washington_tab$age~mount_washington_tab$sex,}
+\KeywordTok{boxplot}\NormalTok{(mount_washington_tab}\OperatorTok{$}\NormalTok{age}\OperatorTok{~}\NormalTok{mount_washington_tab}\OperatorTok{$}\NormalTok{sex,}
         \DataTypeTok{main=}\StringTok{"Mt. Washington"}\NormalTok{, }
         \DataTypeTok{xlab=}\StringTok{"Sex"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"Arrest Age"}\NormalTok{)}
 \end{Highlighting}
@@ -1822,7 +1855,7 @@ Here's one more useful plot:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{barplot}\NormalTok{(}\KeywordTok{table}\NormalTok{(mount_washington_tab$race), }
+\KeywordTok{barplot}\NormalTok{(}\KeywordTok{table}\NormalTok{(mount_washington_tab}\OperatorTok{$}\NormalTok{race), }
         \DataTypeTok{xlab=}\StringTok{"Number of Arrests"}\NormalTok{,}
         \DataTypeTok{ylab=}\StringTok{"Race"}\NormalTok{)}
 \end{Highlighting}
@@ -1838,16 +1871,16 @@ in a function:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{analyze_neighborhood <-}\StringTok{ }\NormalTok{function(neighborhood) \{}
-  \NormalTok{neighborhood_index <-}\StringTok{ }\NormalTok{arrest_tab$neighborhood ==}\StringTok{ }\NormalTok{neighborhood}
-  \NormalTok{neighborhood_tab <-}\StringTok{ }\NormalTok{arrest_tab[neighborhood_index,]}
+\NormalTok{analyze_neighborhood <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(neighborhood) \{}
+\NormalTok{  neighborhood_index <-}\StringTok{ }\NormalTok{arrest_tab}\OperatorTok{$}\NormalTok{neighborhood }\OperatorTok{==}\StringTok{ }\NormalTok{neighborhood}
+\NormalTok{  neighborhood_tab <-}\StringTok{ }\NormalTok{arrest_tab[neighborhood_index,]}
   
-    \KeywordTok{boxplot}\NormalTok{(neighborhood_tab$age~neighborhood_tab$sex,}
-            \DataTypeTok{main =} \NormalTok{neighborhood,}
+    \KeywordTok{boxplot}\NormalTok{(neighborhood_tab}\OperatorTok{$}\NormalTok{age}\OperatorTok{~}\NormalTok{neighborhood_tab}\OperatorTok{$}\NormalTok{sex,}
+            \DataTypeTok{main =}\NormalTok{ neighborhood,}
             \DataTypeTok{xlab =} \StringTok{"Sex"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"Arrest Age"}\NormalTok{)}
     
-    \KeywordTok{barplot}\NormalTok{(}\KeywordTok{table}\NormalTok{(neighborhood_tab$race),}
-            \DataTypeTok{main =} \NormalTok{neighborhood,}
+    \KeywordTok{barplot}\NormalTok{(}\KeywordTok{table}\NormalTok{(neighborhood_tab}\OperatorTok{$}\NormalTok{race),}
+            \DataTypeTok{main =}\NormalTok{ neighborhood,}
             \DataTypeTok{xlab =} \StringTok{"Race"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"Number of Arrests"}\NormalTok{)}
 \NormalTok{\}}
 \end{Highlighting}
@@ -1879,7 +1912,7 @@ neighborhoods
 This dataset contains data of types commonly found in data analyses
 
 \begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   Numeric (continuous): A numeric measurement (e.g., height)\\
 \item
@@ -1907,7 +1940,7 @@ your dataset now, \texttt{arrest\_tab\$sex} is a vector of strings:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{class}\NormalTok{(arrest_tab$sex)}
+\KeywordTok{class}\NormalTok{(arrest_tab}\OperatorTok{$}\NormalTok{sex)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1917,7 +1950,7 @@ your dataset now, \texttt{arrest\_tab\$sex} is a vector of strings:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(arrest_tab$sex)}
+\KeywordTok{summary}\NormalTok{(arrest_tab}\OperatorTok{$}\NormalTok{sex)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1934,8 +1967,8 @@ turning the \texttt{sex} attribute into a \emph{factor}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{arrest_tab$sex <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(arrest_tab$sex)}
-\KeywordTok{summary}\NormalTok{(arrest_tab$sex)}
+\NormalTok{arrest_tab}\OperatorTok{$}\NormalTok{sex <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(arrest_tab}\OperatorTok{$}\NormalTok{sex)}
+\KeywordTok{summary}\NormalTok{(arrest_tab}\OperatorTok{$}\NormalTok{sex)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1954,7 +1987,7 @@ One last note, the possible values a \emph{factor} can take are called
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{levels}\NormalTok{(arrest_tab$sex)}
+\KeywordTok{levels}\NormalTok{(arrest_tab}\OperatorTok{$}\NormalTok{sex)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1980,7 +2013,7 @@ In our dataset, each column, corresponding to an attribute, is a vector:
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# the 'str' function gives a bit more low-level information about objects}
-\KeywordTok{str}\NormalTok{(arrest_tab$Location)}
+\KeywordTok{str}\NormalTok{(arrest_tab}\OperatorTok{$}\NormalTok{Location)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2000,7 +2033,7 @@ in the corresponding vector:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{age_in_months <-}\StringTok{ }\NormalTok{arrest_tab$age *}\StringTok{ }\DecValTok{12}
+\NormalTok{age_in_months <-}\StringTok{ }\NormalTok{arrest_tab}\OperatorTok{$}\NormalTok{age }\OperatorTok{*}\StringTok{ }\DecValTok{12}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2015,7 +2048,7 @@ into a single attribute. Suppose we wanted to combine the
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# remember you can always find out what a function does by using ?paste}
-\KeywordTok{head}\NormalTok{(}\KeywordTok{paste}\NormalTok{(arrest_tab$arrestLocation, arrest_tab$neighborhood, }\DataTypeTok{sep=}\StringTok{", "}\NormalTok{))}
+\KeywordTok{head}\NormalTok{(}\KeywordTok{paste}\NormalTok{(arrest_tab}\OperatorTok{$}\NormalTok{arrestLocation, arrest_tab}\OperatorTok{$}\NormalTok{neighborhood, }\DataTypeTok{sep=}\StringTok{", "}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2037,7 +2070,7 @@ Arithmetic operations have the same element-wise operation:
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# add first 10 odd numbers to first 10 even numbers}
-\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DataTypeTok{by=}\DecValTok{2}\NormalTok{) +}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DataTypeTok{by=}\DecValTok{2}\NormalTok{)}
+\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DataTypeTok{by=}\DecValTok{2}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DataTypeTok{by=}\DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2103,7 +2136,7 @@ indexing vectors as before, but we get lists as results.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{my_list[}\DecValTok{1}\NormalTok{:}\DecValTok{2}\NormalTok{]}
+\NormalTok{my_list[}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2150,7 +2183,7 @@ and \texttt{\$})
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{named_list$person}
+\NormalTok{named_list}\OperatorTok{$}\NormalTok{person}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2191,7 +2224,7 @@ for every attribute in our dataset, we could do something like this:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{sapply}\NormalTok{(arrest_tab, function(v) }\KeywordTok{sort}\NormalTok{(v)[}\DecValTok{1}\NormalTok{])}
+\KeywordTok{sapply}\NormalTok{(arrest_tab, }\ControlFlowTok{function}\NormalTok{(v) }\KeywordTok{sort}\NormalTok{(v)[}\DecValTok{1}\NormalTok{])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2245,7 +2278,7 @@ transformations to get the answer we are looking for:
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# filter data to observations we need}
-\NormalTok{index_vector <-}\StringTok{ }\NormalTok{arrest_tab$sex ==}\StringTok{ "M"} \NormalTok{&}\StringTok{ }\NormalTok{arrest_tab$district ==}\StringTok{ "SOUTHERN"}
+\NormalTok{index_vector <-}\StringTok{ }\NormalTok{arrest_tab}\OperatorTok{$}\NormalTok{sex }\OperatorTok{==}\StringTok{ "M"} \OperatorTok{&}\StringTok{ }\NormalTok{arrest_tab}\OperatorTok{$}\NormalTok{district }\OperatorTok{==}\StringTok{ "SOUTHERN"}
 \NormalTok{tmp <-}\StringTok{ }\NormalTok{arrest_tab[index_vector,]}
 
 \CommentTok{# select the attribute/column we need}
@@ -2264,13 +2297,13 @@ Let's rewrite this using functions to illustrate the point
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{filter_data <-}\StringTok{ }\NormalTok{function(data) \{}
-  \NormalTok{index_vector <-}\StringTok{ }\NormalTok{data$sex ==}\StringTok{ "M"} \NormalTok{&}\StringTok{ }\NormalTok{data$district ==}\StringTok{ "SOUTHERN"}
-  \NormalTok{data[index_vector,]}
+\NormalTok{filter_data <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(data) \{}
+\NormalTok{  index_vector <-}\StringTok{ }\NormalTok{data}\OperatorTok{$}\NormalTok{sex }\OperatorTok{==}\StringTok{ "M"} \OperatorTok{&}\StringTok{ }\NormalTok{data}\OperatorTok{$}\NormalTok{district }\OperatorTok{==}\StringTok{ "SOUTHERN"}
+\NormalTok{  data[index_vector,]}
 \NormalTok{\}}
 
-\NormalTok{select_column <-}\StringTok{ }\NormalTok{function(data, column) \{}
-  \NormalTok{data[[column]]}
+\NormalTok{select_column <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(data, column) \{}
+\NormalTok{  data[[column]]}
 \NormalTok{\}}
 
 \NormalTok{tmp <-}\StringTok{ }\KeywordTok{filter_data}\NormalTok{(arrest_tab)}
@@ -2293,9 +2326,9 @@ operator \texttt{\%\textgreater{}\%}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{arrest_tab %>%}
-\StringTok{  }\KeywordTok{filter_data}\NormalTok{() %>%}
-\StringTok{  }\KeywordTok{select_column}\NormalTok{(}\StringTok{"age"}\NormalTok{) %>%}
+\NormalTok{arrest_tab }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter_data}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{select_column}\NormalTok{(}\StringTok{"age"}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{mean}\NormalTok{(}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -2387,7 +2420,7 @@ The markup structure of HTML allows to parse data into tables we can use
 for analysis. Let's use the Rotten Tomatoes ratings webpage for Diego
 Luna as an example:
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/rt_diegoluna.png}
 \caption{}
@@ -2403,7 +2436,7 @@ example, we see that the data we want is in a
 \texttt{\textless{}table\textgreater{}} element in the page, with id
 \texttt{filmographyTbl}.
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/rt_devtools.png}
 \caption{}
@@ -2418,9 +2451,9 @@ to scrape this data:
 
 \NormalTok{url <-}\StringTok{ "https://www.rottentomatoes.com/celebrity/diego_luna"}
 
-\NormalTok{dl_tab <-}\StringTok{ }\NormalTok{url %>%}
-\StringTok{  }\KeywordTok{read_html}\NormalTok{() %>%}
-\StringTok{  }\KeywordTok{html_node}\NormalTok{(}\StringTok{"#filmographyTbl"}\NormalTok{) %>%}
+\NormalTok{dl_tab <-}\StringTok{ }\NormalTok{url }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{read_html}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{html_node}\NormalTok{(}\StringTok{"#filmographyTbl"}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{html_table}\NormalTok{()}
 
 \KeywordTok{head}\NormalTok{(dl_tab)}
@@ -2490,7 +2523,7 @@ data structures where
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   Each attribute (or variable) forms a column\\
 \item
@@ -2535,7 +2568,7 @@ The set of common operations we will study are based on these common
 problems found in datasets. We will see each one in detail:
 
 \begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   Column headers are values, not variable names (gather)\\
 \item
@@ -2641,7 +2674,7 @@ to use in the \texttt{tidyr} package is \texttt{gather}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{tidy_pew <-}\StringTok{ }\KeywordTok{gather}\NormalTok{(pew, income, frequency, -religion)}
+\NormalTok{tidy_pew <-}\StringTok{ }\KeywordTok{gather}\NormalTok{(pew, income, frequency, }\OperatorTok{-}\NormalTok{religion)}
 \NormalTok{tidy_pew}
 \end{Highlighting}
 \end{Shaded}
@@ -2809,7 +2842,7 @@ use \texttt{gather} the tabulation columns into a \texttt{demo} and
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{tidy_tb <-}\StringTok{ }\KeywordTok{gather}\NormalTok{(tb, demo, n, -iso2, -year)}
+\NormalTok{tidy_tb <-}\StringTok{ }\KeywordTok{gather}\NormalTok{(tb, demo, n, }\OperatorTok{-}\NormalTok{iso2, }\OperatorTok{-}\NormalTok{year)}
 \NormalTok{tidy_tb}
 \end{Highlighting}
 \end{Shaded}
@@ -2867,8 +2900,8 @@ We can put these two commands together in a pipeline:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{tidy_tb <-}\StringTok{ }\NormalTok{tb %>%}\StringTok{ }
-\StringTok{  }\KeywordTok{gather}\NormalTok{(demo, n, -iso2, -year)  %>%}
+\NormalTok{tidy_tb <-}\StringTok{ }\NormalTok{tb }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{gather}\NormalTok{(demo, n, }\OperatorTok{-}\NormalTok{iso2, }\OperatorTok{-}\NormalTok{year)  }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{separate}\NormalTok{(demo, }\KeywordTok{c}\NormalTok{(}\StringTok{"sex"}\NormalTok{, }\StringTok{"age"}\NormalTok{), }\DataTypeTok{sep=}\DecValTok{1}\NormalTok{)}
 \NormalTok{tidy_tb}
 \end{Highlighting}
@@ -2962,8 +2995,8 @@ Challenge: How would a tidy version of this data look like?
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{weather %>%}
-\StringTok{  }\KeywordTok{gather}\NormalTok{(day, value, d1:d31, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{) %>%}
+\NormalTok{weather }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{gather}\NormalTok{(day, value, d1}\OperatorTok{:}\NormalTok{d31, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{spread}\NormalTok{(element, value)}
 \end{Highlighting}
 \end{Shaded}
@@ -2999,8 +3032,8 @@ before:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{tidy_billboard <-}\StringTok{ }\NormalTok{billboard %>%}
-\StringTok{  }\KeywordTok{gather}\NormalTok{(week, rank, wk1:wk76, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{tidy_billboard <-}\StringTok{ }\NormalTok{billboard }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{gather}\NormalTok{(week, rank, wk1}\OperatorTok{:}\NormalTok{wk76, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
 \NormalTok{tidy_billboard}
 \end{Highlighting}
 \end{Shaded}
@@ -3026,7 +3059,7 @@ Let's sort this table by track to see a problem with this table:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{tidy_billboard <-}\StringTok{ }\NormalTok{tidy_billboard %>%}
+\NormalTok{tidy_billboard <-}\StringTok{ }\NormalTok{tidy_billboard }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{arrange}\NormalTok{(track)}
 \NormalTok{tidy_billboard}
 \end{Highlighting}
@@ -3059,8 +3092,8 @@ Let's make a song table that only includes information about songs:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{song <-}\StringTok{ }\NormalTok{tidy_billboard %>%}
-\StringTok{  }\KeywordTok{select}\NormalTok{(artist, track, year, time, date.entered) %>%}
+\NormalTok{song <-}\StringTok{ }\NormalTok{tidy_billboard }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(artist, track, year, time, date.entered) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{unique}\NormalTok{()}
 \NormalTok{song}
 \end{Highlighting}
@@ -3094,9 +3127,9 @@ we can produce the final version of our song table like this:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{song <-}\StringTok{ }\NormalTok{tidy_billboard %>%}
-\StringTok{  }\KeywordTok{select}\NormalTok{(artist, track, year, time, date.entered) %>%}\StringTok{ }
-\StringTok{  }\KeywordTok{unique}\NormalTok{() %>%}
+\NormalTok{song <-}\StringTok{ }\NormalTok{tidy_billboard }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(artist, track, year, time, date.entered) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{unique}\NormalTok{() }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{song_id =} \KeywordTok{row_number}\NormalTok{())}
 \NormalTok{song}
 \end{Highlighting}
@@ -3131,7 +3164,7 @@ makes a new row that combines the information from both tables.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{tidy_billboard %>%}
+\NormalTok{tidy_billboard }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{left_join}\NormalTok{(song, }\KeywordTok{c}\NormalTok{(}\StringTok{"artist"}\NormalTok{, }\StringTok{"year"}\NormalTok{, }\StringTok{"track"}\NormalTok{, }\StringTok{"time"}\NormalTok{, }\StringTok{"date.entered"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
@@ -3159,8 +3192,8 @@ information and the \texttt{song\_id}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{rank <-}\StringTok{ }\NormalTok{tidy_billboard %>%}
-\StringTok{  }\KeywordTok{left_join}\NormalTok{(song, }\KeywordTok{c}\NormalTok{(}\StringTok{"artist"}\NormalTok{, }\StringTok{"year"}\NormalTok{, }\StringTok{"track"}\NormalTok{, }\StringTok{"time"}\NormalTok{, }\StringTok{"date.entered"}\NormalTok{)) %>%}
+\NormalTok{rank <-}\StringTok{ }\NormalTok{tidy_billboard }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{left_join}\NormalTok{(song, }\KeywordTok{c}\NormalTok{(}\StringTok{"artist"}\NormalTok{, }\StringTok{"year"}\NormalTok{, }\StringTok{"track"}\NormalTok{, }\StringTok{"time"}\NormalTok{, }\StringTok{"date.entered"}\NormalTok{)) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{select}\NormalTok{(song_id, week, rank)}
 \NormalTok{rank}
 \end{Highlighting}
@@ -3188,7 +3221,7 @@ dataset:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   When using \texttt{gather} to make the \texttt{week} and \texttt{rank}
   columns, remove any weeks where the song does not appear in the top
@@ -3218,7 +3251,7 @@ the structure we usually see in a dataset before we start analysis:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   Each attribute/variable forms a column
 \item
@@ -3251,7 +3284,7 @@ databases). It works best when used in conjuction with the non-standard
 the \texttt{magrittr} package.
 
 A complete introduction to \texttt{dplyr} is found here:
-\href{http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html}{\url{http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html}}
+\url{http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html}
 
 We will use a dataset of inbound and outbound flights to New York City
 as an example:
@@ -3271,7 +3304,7 @@ time.
 Single table verbs:
 
 \begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   \texttt{filter()} and \texttt{slice()}: subset observations
   (entities)\\
@@ -3302,7 +3335,7 @@ this is used when splitting datasets to train and test statistical
 models). Much more useful is the ability to filter observations based on
 attribute values.
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/subset.png}
 \caption{}
@@ -3311,10 +3344,10 @@ attribute values.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# include only flights on United Airlines}
-\NormalTok{flights %>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(carrier ==}\StringTok{ "UA"}\NormalTok{)}
+\NormalTok{flights }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(carrier }\OperatorTok{==}\StringTok{ "UA"}\NormalTok{)}
 
 \CommentTok{# select even samples, note function `n` defined by dplyr}
-\NormalTok{flights %>%}\StringTok{ }\KeywordTok{slice}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\KeywordTok{n}\NormalTok{(), }\DataTypeTok{by=}\DecValTok{2}\NormalTok{))}
+\NormalTok{flights }\OperatorTok{%>%}\StringTok{ }\KeywordTok{slice}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\KeywordTok{n}\NormalTok{(), }\DataTypeTok{by=}\DecValTok{2}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3324,7 +3357,7 @@ Frequently, we may want to restrict a data analysis to a subset of
 variables (attributes, columns) to improve efficiency or
 interpretability.
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/select.png}
 \caption{}
@@ -3333,7 +3366,7 @@ interpretability.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# select only month carrier and origin variables}
-\NormalTok{flights %>%}\StringTok{ }\KeywordTok{select}\NormalTok{(month, carrier, origin)}
+\NormalTok{flights }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(month, carrier, origin)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3344,7 +3377,7 @@ select columns using partial string matching:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{billboard %>%}
+\NormalTok{billboard }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{select}\NormalTok{(}\KeywordTok{starts_with}\NormalTok{(}\StringTok{"wk"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
@@ -3354,7 +3387,7 @@ select columns using partial string matching:
 One of the most common operations in data analysis is to create new
 variables (attributes), based on other existing attributes.
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/mutate.png}
 \caption{}
@@ -3373,7 +3406,7 @@ variables
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# add new variable with total delay}
-\NormalTok{flights %>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{delay=}\NormalTok{dep_delay +}\StringTok{ }\NormalTok{arr_delay)}
+\NormalTok{flights }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{delay=}\NormalTok{dep_delay }\OperatorTok{+}\StringTok{ }\NormalTok{arr_delay)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3385,7 +3418,7 @@ computing summaries (refered to as summary statistics) for variables
 \texttt{summarize} operation summarizes one variable (columns) over
 multiple observations (rowss) into a single value.
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/summarize.png}
 \caption{}
@@ -3394,8 +3427,8 @@ multiple observations (rowss) into a single value.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# compute mean total delay across all flights}
-\NormalTok{flights %>%}\StringTok{ }
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{delay =} \NormalTok{dep_delay +}\StringTok{ }\NormalTok{arr_delay) %>%}
+\NormalTok{flights }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{delay =}\NormalTok{ dep_delay }\OperatorTok{+}\StringTok{ }\NormalTok{arr_delay) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{mean_delay =} \KeywordTok{mean}\NormalTok{(delay, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{),}
             \DataTypeTok{min_delay =} \KeywordTok{min}\NormalTok{(delay, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{),}
             \DataTypeTok{max_delay =} \KeywordTok{max}\NormalTok{(delay, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{))}
@@ -3412,7 +3445,7 @@ is the basis of statistical analysis and Machine Learning models for
 regression and prediction, and it is essential in understanding the
 design of effective visualizations.
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/groupby.png}
 \caption{}
@@ -3428,9 +3461,9 @@ group, rather than the whole table.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# compute mean total delay per carrier}
-\NormalTok{flights %>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{delay =} \NormalTok{dep_delay +}\StringTok{ }\NormalTok{arr_delay) %>%}
-\StringTok{  }\KeywordTok{group_by}\NormalTok{(carrier) %>%}
+\NormalTok{flights }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{delay =}\NormalTok{ dep_delay }\OperatorTok{+}\StringTok{ }\NormalTok{arr_delay) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(carrier) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{delay=}\KeywordTok{mean}\NormalTok{(delay, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
@@ -3506,7 +3539,7 @@ In this case, all observations on left operand (LHS) are retained:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{flights %>%}
+\NormalTok{flights }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{left_join}\NormalTok{(airlines, }\DataTypeTok{by=}\StringTok{"carrier"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -3522,7 +3555,7 @@ All observations on right operand (RHS) are retained:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{flights %>%}
+\NormalTok{flights }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{right_join}\NormalTok{(airlines, }\DataTypeTok{by=}\StringTok{"carrier"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -3538,7 +3571,7 @@ Only observations matching on both tables are retained
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{flights %>%}
+\NormalTok{flights }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{inner_join}\NormalTok{(airlines, }\DataTypeTok{by=}\StringTok{"carrier"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -3551,7 +3584,7 @@ All observations are retained, regardless of matching condition
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{flights %>%}
+\NormalTok{flights }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{full_join}\NormalTok{(airlines, }\DataTypeTok{by=}\StringTok{"carrier"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -3565,7 +3598,7 @@ All join operations are based on a matching condition:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{flights %>%}
+\NormalTok{flights }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{left_join}\NormalTok{(airlines, }\DataTypeTok{by=}\StringTok{"carrier"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -3578,7 +3611,7 @@ argument:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{flights %>%}
+\NormalTok{flights }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{left_join}\NormalTok{(airlines)}
 \end{Highlighting}
 \end{Shaded}
@@ -3591,8 +3624,8 @@ You can also specify join conditions on arbitrary attributes using the
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{flights %>%}
-\StringTok{  }\KeywordTok{left_join}\NormalTok{(airlines, }\DataTypeTok{by=}\KeywordTok{c}\NormalTok{(}\StringTok{"carrier"} \NormalTok{=}\StringTok{ "name"}\NormalTok{))}
+\NormalTok{flights }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{left_join}\NormalTok{(airlines, }\DataTypeTok{by=}\KeywordTok{c}\NormalTok{(}\StringTok{"carrier"}\NormalTok{ =}\StringTok{ "name"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3603,7 +3636,7 @@ We've just seen \emph{mutating joins} that create new tables.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{flights %>%}\StringTok{ }\KeywordTok{anti_join}\NormalTok{(airlines, }\DataTypeTok{by=}\StringTok{"carrier"}\NormalTok{)}
+\NormalTok{flights }\OperatorTok{%>%}\StringTok{ }\KeywordTok{anti_join}\NormalTok{(airlines, }\DataTypeTok{by=}\StringTok{"carrier"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3623,28 +3656,28 @@ that \emph{are not} included in the \texttt{airlines} table.
 \texttt{dplyr}}{Final note on dplyr}}\label{final-note-on-dplyr}
 
 \begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   Very efficient implementation of these operations.
 \item
   More info:
-  \href{http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html}{\url{http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html}}
+  \url{http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html}
 \item
   Cheatsheet:
-  \href{http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf}{\url{http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf}}
+  \url{http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf}
 \end{itemize}
 
 \section{Exercise}\label{exercise}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   Clean up the Diego Luna ratings data scraped in the previous unit.
 \end{enumerate}
 
 \begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   Only keep movies that have a rating and that Diego Luna acts in
 \item
@@ -3655,13 +3688,13 @@ that \emph{are not} included in the \texttt{airlines} table.
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{1}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   Clean up the movie budget data scraped in the previous unit.
 \end{enumerate}
 
 \begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   Remove rows with missing values
 \item
@@ -3709,7 +3742,7 @@ Ultimately, the purpose of EDA is to spot problems in data (as part of
 data wrangling) and understand variable properties like:
 
 \begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   central trends (mean)
 \item
@@ -3739,7 +3772,7 @@ variable in the flights dataset.
 \KeywordTok{library}\NormalTok{(dplyr)}
 \KeywordTok{library}\NormalTok{(nycflights13)}
 
-\KeywordTok{plot}\NormalTok{(flights$dep_delay)}
+\KeywordTok{plot}\NormalTok{(flights}\OperatorTok{$}\NormalTok{dep_delay)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3751,7 +3784,7 @@ and change the graphical representation to make easier to see.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{plot}\NormalTok{(}\KeywordTok{sort}\NormalTok{(flights$dep_delay), }\DataTypeTok{type=}\StringTok{"h"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"Departure Delay"}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{sort}\NormalTok{(flights}\OperatorTok{$}\NormalTok{dep_delay), }\DataTypeTok{type=}\StringTok{"h"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"Departure Delay"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3769,7 +3802,7 @@ visualization gives us about this variable?
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{hist}\NormalTok{(flights$dep_delay, }\DataTypeTok{xlab=}\StringTok{"Departure Delay"}\NormalTok{)}
+\KeywordTok{hist}\NormalTok{(flights}\OperatorTok{$}\NormalTok{dep_delay, }\DataTypeTok{xlab=}\StringTok{"Departure Delay"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3785,7 +3818,7 @@ smooth curve that describes the \emph{distribution} of values of the
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{plot}\NormalTok{(}\KeywordTok{density}\NormalTok{(flights$dep_delay, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{), }\DataTypeTok{xlab=}\StringTok{"Departure Delay"}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{density}\NormalTok{(flights}\OperatorTok{$}\NormalTok{dep_delay, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{), }\DataTypeTok{xlab=}\StringTok{"Departure Delay"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3796,7 +3829,7 @@ distribution of a variable is using a \texttt{boxplot}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{boxplot}\NormalTok{(flights$dep_delay, }\DataTypeTok{ylab=}\StringTok{"Departure Delay"}\NormalTok{)}
+\KeywordTok{boxplot}\NormalTok{(flights}\OperatorTok{$}\NormalTok{dep_delay, }\DataTypeTok{ylab=}\StringTok{"Departure Delay"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3807,9 +3840,9 @@ to see this better:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{boxplot}\NormalTok{(}\KeywordTok{log}\NormalTok{(flights$dep_delay -}\StringTok{ }
-\StringTok{            }\KeywordTok{min}\NormalTok{(flights$dep_delay,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
-            \NormalTok{+}\DecValTok{1}\NormalTok{), }\DataTypeTok{ylab=}\StringTok{"Departure Delay"}\NormalTok{)}
+\KeywordTok{boxplot}\NormalTok{(}\KeywordTok{log}\NormalTok{(flights}\OperatorTok{$}\NormalTok{dep_delay }\OperatorTok{-}\StringTok{ }
+\StringTok{            }\KeywordTok{min}\NormalTok{(flights}\OperatorTok{$}\NormalTok{dep_delay,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{)}
+            \OperatorTok{+}\DecValTok{1}\NormalTok{), }\DataTypeTok{ylab=}\StringTok{"Departure Delay"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3836,7 +3869,7 @@ distribution of departure delays \emph{conditioned} on origin airport.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{boxplot}\NormalTok{(}\KeywordTok{log}\NormalTok{(flights$dep_delay -}\StringTok{ }\KeywordTok{min}\NormalTok{(flights$dep_delay, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{) +}\StringTok{ }\DecValTok{1}\NormalTok{) ~}\StringTok{ }\NormalTok{flights$origin,}
+\KeywordTok{boxplot}\NormalTok{(}\KeywordTok{log}\NormalTok{(flights}\OperatorTok{$}\NormalTok{dep_delay }\OperatorTok{-}\StringTok{ }\KeywordTok{min}\NormalTok{(flights}\OperatorTok{$}\NormalTok{dep_delay, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{) }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{) }\OperatorTok{~}\StringTok{ }\NormalTok{flights}\OperatorTok{$}\NormalTok{origin,}
         \DataTypeTok{ylab=}\StringTok{"Departure Delay"}\NormalTok{, }\DataTypeTok{xlab=}\StringTok{"Airport of origin"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -3849,7 +3882,7 @@ on another variable.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{plot}\NormalTok{(flights$dep_delay, flights$arr_delay, }\DataTypeTok{xlab=}\StringTok{"Departure Delay"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"Arrival Delay"}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(flights}\OperatorTok{$}\NormalTok{dep_delay, flights}\OperatorTok{$}\NormalTok{arr_delay, }\DataTypeTok{xlab=}\StringTok{"Departure Delay"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"Arrival Delay"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3867,7 +3900,7 @@ The central premise is to characterize the building pieces behind plots:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   The data that goes into a plot, works best when data is tidy
 \item
@@ -3886,18 +3919,18 @@ Let's start with a simple example:
 \NormalTok{batting <-}\StringTok{ }\KeywordTok{tbl_df}\NormalTok{(Batting)}
 
 \CommentTok{# scatter plot of at bats vs. runs for 2010}
-\NormalTok{batting %>%}\StringTok{ }
-\StringTok{  }\KeywordTok{filter}\NormalTok{(yearID ==}\StringTok{ "2010"}\NormalTok{) %>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{AB, }\DataTypeTok{y=}\NormalTok{R)) +}
+\NormalTok{batting }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(yearID }\OperatorTok{==}\StringTok{ "2010"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{AB, }\DataTypeTok{y=}\NormalTok{R)) }\OperatorTok{+}
 \StringTok{    }\KeywordTok{geom_point}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{mtec_cadi_2017_files/figure-latex/unnamed-chunk-95-1.pdf}
 
-\textbf{Data}: Batting table filtering for year\\\textbf{Aesthetic
-attributes}: - x-axis mapped to variables \texttt{AB} - y-axis mapped to
-variable \texttt{R}
+\textbf{Data}: Batting table filtering for year\\
+\textbf{Aesthetic attributes}: - x-axis mapped to variables \texttt{AB}
+- y-axis mapped to variable \texttt{R}
 
 \textbf{Geometric Representation}: points!
 
@@ -3907,10 +3940,10 @@ E.g., change the geometric representation
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# scatter plot of at bats vs. runs for 2010}
-\NormalTok{batting %>%}\StringTok{ }
-\StringTok{  }\KeywordTok{filter}\NormalTok{(yearID ==}\StringTok{ "2010"}\NormalTok{) %>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{AB, }\DataTypeTok{y=}\NormalTok{R, }\DataTypeTok{label=}\NormalTok{teamID)) +}
-\StringTok{    }\KeywordTok{geom_text}\NormalTok{() +}
+\NormalTok{batting }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(yearID }\OperatorTok{==}\StringTok{ "2010"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{AB, }\DataTypeTok{y=}\NormalTok{R, }\DataTypeTok{label=}\NormalTok{teamID)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_text}\NormalTok{() }\OperatorTok{+}
 \StringTok{    }\KeywordTok{geom_point}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -3922,9 +3955,9 @@ E.g., change the data.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# scatter plot of at bats vs. runs for 1995}
-\NormalTok{batting %>%}\StringTok{ }
-\StringTok{  }\KeywordTok{filter}\NormalTok{(yearID ==}\StringTok{ "1995"}\NormalTok{) %>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{AB, }\DataTypeTok{y=}\NormalTok{R)) +}
+\NormalTok{batting }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(yearID }\OperatorTok{==}\StringTok{ "1995"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{AB, }\DataTypeTok{y=}\NormalTok{R)) }\OperatorTok{+}
 \StringTok{    }\KeywordTok{geom_point}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -3940,9 +3973,9 @@ E.g., change the aesthetic.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# scatter plot of at bats vs. hits for 2010}
-\NormalTok{batting %>%}\StringTok{ }
-\StringTok{  }\KeywordTok{filter}\NormalTok{(yearID ==}\StringTok{ "2010"}\NormalTok{) %>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{AB, }\DataTypeTok{y=}\NormalTok{H)) +}
+\NormalTok{batting }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(yearID }\OperatorTok{==}\StringTok{ "2010"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{AB, }\DataTypeTok{y=}\NormalTok{H)) }\OperatorTok{+}
 \StringTok{    }\KeywordTok{geom_point}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -3955,10 +3988,10 @@ What do we change? (data, aesthetic or geometry?)
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{batting %>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(yearID ==}\StringTok{ "2010"}\NormalTok{) %>%}
-\StringTok{  }\KeywordTok{sample_n}\NormalTok{(}\DecValTok{100}\NormalTok{) %>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{AB, }\DataTypeTok{y=}\NormalTok{H)) +}
+\NormalTok{batting }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(yearID }\OperatorTok{==}\StringTok{ "2010"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{sample_n}\NormalTok{(}\DecValTok{100}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{AB, }\DataTypeTok{y=}\NormalTok{H)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom_line}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -3971,10 +4004,10 @@ What do we add? (data, aesthetic or geometry?)
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{batting %>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(yearID ==}\StringTok{ "2010"}\NormalTok{) %>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{AB, }\DataTypeTok{y=}\NormalTok{H)) +}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{() +}\StringTok{ }
+\NormalTok{batting }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(yearID }\OperatorTok{==}\StringTok{ "2010"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{AB, }\DataTypeTok{y=}\NormalTok{H)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method=}\NormalTok{lm)}
 \end{Highlighting}
 \end{Shaded}
@@ -3990,10 +4023,10 @@ Color: color by categorical variable
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{batting %>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(yearID ==}\StringTok{ "2010"}\NormalTok{) %>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{AB, }\DataTypeTok{y=}\NormalTok{H, }\DataTypeTok{color=}\NormalTok{lgID)) +}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{() +}\StringTok{ }
+\NormalTok{batting }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(yearID }\OperatorTok{==}\StringTok{ "2010"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{AB, }\DataTypeTok{y=}\NormalTok{H, }\DataTypeTok{color=}\NormalTok{lgID)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method=}\NormalTok{lm)}
 \end{Highlighting}
 \end{Shaded}
@@ -4004,10 +4037,10 @@ Size: size by (discrete) numeric variable
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{batting %>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(yearID ==}\StringTok{ "2010"}\NormalTok{) %>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{AB, }\DataTypeTok{y=}\NormalTok{R, }\DataTypeTok{size=}\NormalTok{HR)) +}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{() +}\StringTok{ }
+\NormalTok{batting }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(yearID }\OperatorTok{==}\StringTok{ "2010"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{AB, }\DataTypeTok{y=}\NormalTok{R, }\DataTypeTok{size=}\NormalTok{HR)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method=}\NormalTok{lm)}
 \end{Highlighting}
 \end{Shaded}
@@ -4023,11 +4056,11 @@ in statistical modeling, we've seen it as the motivation of
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{batting %>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(yearID %in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"1995"}\NormalTok{, }\StringTok{"2000"}\NormalTok{, }\StringTok{"2010"}\NormalTok{)) %>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{AB, }\DataTypeTok{y=}\NormalTok{R, }\DataTypeTok{size=}\NormalTok{HR)) +}
-\StringTok{  }\KeywordTok{facet_grid}\NormalTok{(lgID~yearID) +}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{() +}\StringTok{ }
+\NormalTok{batting }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(yearID }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"1995"}\NormalTok{, }\StringTok{"2000"}\NormalTok{, }\StringTok{"2010"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{AB, }\DataTypeTok{y=}\NormalTok{R, }\DataTypeTok{size=}\NormalTok{HR)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{facet_grid}\NormalTok{(lgID}\OperatorTok{~}\NormalTok{yearID) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method=}\NormalTok{lm)}
 \end{Highlighting}
 \end{Shaded}
@@ -4095,7 +4128,7 @@ the amount of money spent on TV advertising:
 \mathtt{sales} \approx \beta_0 + \beta_1 \times \mathtt{TV}
 \]
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/regression_example.png}
 \caption{}
@@ -4121,10 +4154,10 @@ miles per gallon and weight
 
 \KeywordTok{data}\NormalTok{(Auto)}
 
-\NormalTok{Auto %>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{weight, }\DataTypeTok{y=}\NormalTok{mpg)) +}
-\StringTok{    }\KeywordTok{geom_point}\NormalTok{() +}\StringTok{ }
-\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method=}\NormalTok{lm) +}\StringTok{ }
+\NormalTok{Auto }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{weight, }\DataTypeTok{y=}\NormalTok{mpg)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method=}\NormalTok{lm) }\OperatorTok{+}\StringTok{ }
 \StringTok{    }\KeywordTok{theme_minimal}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -4135,7 +4168,7 @@ In R, linear models are built using the \texttt{lm} function
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{auto_fit <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(mpg~weight, }\DataTypeTok{data=}\NormalTok{Auto)}
+\NormalTok{auto_fit <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(mpg}\OperatorTok{~}\NormalTok{weight, }\DataTypeTok{data=}\NormalTok{Auto)}
 \NormalTok{auto_fit}
 \end{Highlighting}
 \end{Shaded}
@@ -4172,7 +4205,7 @@ that the spread around \(\beta_0\) and \(\beta_1\) is well approximated
 by a normal distribution and that the spread goes to zero as the sample
 size increases.
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/population_line.png}
 \caption{}
@@ -4187,8 +4220,8 @@ the relationship between the two variables.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{auto_fit_stats <-}\StringTok{ }\NormalTok{auto_fit %>%}
-\StringTok{  }\KeywordTok{tidy}\NormalTok{() %>%}
+\NormalTok{auto_fit_stats <-}\StringTok{ }\NormalTok{auto_fit }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{tidy}\NormalTok{() }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{select}\NormalTok{(term, estimate, std.error)}
 \NormalTok{auto_fit_stats}
 \end{Highlighting}
@@ -4245,7 +4278,7 @@ In our example, we get a \(t\) statistic and P-value as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{auto_fit_stats <-}\StringTok{ }\NormalTok{auto_fit %>%}
+\NormalTok{auto_fit_stats <-}\StringTok{ }\NormalTok{auto_fit }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{tidy}\NormalTok{()}
 \NormalTok{auto_fit_stats}
 \end{Highlighting}
@@ -4300,8 +4333,8 @@ example
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{auto_fit %>%}
-\StringTok{  }\KeywordTok{glance}\NormalTok{() %>%}
+\NormalTok{auto_fit }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{glance}\NormalTok{() }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{select}\NormalTok{(r.squared, sigma, statistic, df, p.value)}
 \end{Highlighting}
 \end{Shaded}
@@ -4385,9 +4418,9 @@ model with information of the fitted model for each observation
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{augmented_auto <-}\StringTok{ }\NormalTok{auto_fit %>%}
+\NormalTok{augmented_auto <-}\StringTok{ }\NormalTok{auto_fit }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{augment}\NormalTok{()}
-\NormalTok{augmented_auto %>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
+\NormalTok{augmented_auto }\OperatorTok{%>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4413,10 +4446,10 @@ non-linearity
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{augmented_auto %>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{.fitted,}\DataTypeTok{y=}\NormalTok{.resid)) +}
-\StringTok{    }\KeywordTok{geom_point}\NormalTok{() +}\StringTok{ }
-\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{() +}
+\NormalTok{augmented_auto }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{.fitted,}\DataTypeTok{y=}\NormalTok{.resid)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{() }\OperatorTok{+}
 \StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{"fitted"}\NormalTok{, }\DataTypeTok{y=}\StringTok{"residual"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -4434,7 +4467,7 @@ identically distributed. We can spot non independence if we observe a
 trend in residuals as a function of the predictor \(X\). Here is a
 simulation to demonstrate this:
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/correlated_error.png}
 \caption{}
@@ -4450,7 +4483,7 @@ of residuals is not independent of the fitted values. Here is an
 illustration, and a possible fix using a log transformation on the
 outcome \(Y\).
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/residual_variance.png}
 \caption{}
@@ -4482,7 +4515,7 @@ gallon using multiple predictors:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{auto_fit <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(mpg~}\DecValTok{1}\NormalTok{+weight+cylinders+horsepower+displacement+year, }\DataTypeTok{data=}\NormalTok{Auto)}
+\NormalTok{auto_fit <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(mpg}\OperatorTok{~}\DecValTok{1}\OperatorTok{+}\NormalTok{weight}\OperatorTok{+}\NormalTok{cylinders}\OperatorTok{+}\NormalTok{horsepower}\OperatorTok{+}\NormalTok{displacement}\OperatorTok{+}\NormalTok{year, }\DataTypeTok{data=}\NormalTok{Auto)}
 \NormalTok{auto_fit}
 \end{Highlighting}
 \end{Shaded}
@@ -4513,9 +4546,9 @@ by the \texttt{broom} package:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{auto_fit_stats <-}\StringTok{ }\NormalTok{auto_fit %>%}
+\NormalTok{auto_fit_stats <-}\StringTok{ }\NormalTok{auto_fit }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{tidy}\NormalTok{()}
-\NormalTok{auto_fit_stats %>%}\StringTok{ }\NormalTok{knitr::}\KeywordTok{kable}\NormalTok{()}
+\NormalTok{auto_fit_stats }\OperatorTok{%>%}\StringTok{ }\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4568,10 +4601,10 @@ type of summary:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{auto_fit %>%}\StringTok{ }
-\StringTok{  }\KeywordTok{glance}\NormalTok{() %>%}
-\StringTok{  }\KeywordTok{select}\NormalTok{(r.squared, sigma, statistic, df, p.value) %>%}
-\StringTok{  }\NormalTok{knitr::}\KeywordTok{kable}\NormalTok{()}
+\NormalTok{auto_fit }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{glance}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(r.squared, sigma, statistic, df, p.value) }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4600,9 +4633,9 @@ can look at the full output of the \texttt{glance} function:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{auto_fit %>%}
-\StringTok{  }\KeywordTok{glance}\NormalTok{() %>%}
-\StringTok{  }\NormalTok{knitr::}\KeywordTok{kable}\NormalTok{()}
+\NormalTok{auto_fit }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{glance}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4622,9 +4655,9 @@ we saw before.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{lm}\NormalTok{(mpg~weight, }\DataTypeTok{data=}\NormalTok{Auto) %>%}
-\StringTok{  }\KeywordTok{glance}\NormalTok{() %>%}
-\StringTok{  }\NormalTok{knitr::}\KeywordTok{kable}\NormalTok{()}
+\KeywordTok{lm}\NormalTok{(mpg}\OperatorTok{~}\NormalTok{weight, }\DataTypeTok{data=}\NormalTok{Auto) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{glance}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4638,9 +4671,9 @@ r.squared & adj.r.squared & sigma & statistic & p.value & df & logLik & AIC & BI
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{lm}\NormalTok{(mpg~weight+year, }\DataTypeTok{data=}\NormalTok{Auto) %>%}
-\StringTok{  }\KeywordTok{glance}\NormalTok{() %>%}
-\StringTok{  }\NormalTok{knitr::}\KeywordTok{kable}\NormalTok{()}
+\KeywordTok{lm}\NormalTok{(mpg}\OperatorTok{~}\NormalTok{weight}\OperatorTok{+}\NormalTok{year, }\DataTypeTok{data=}\NormalTok{Auto) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{glance}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4666,9 +4699,9 @@ values
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{Auto <-}\StringTok{ }\NormalTok{Auto %>%}
+\NormalTok{Auto <-}\StringTok{ }\NormalTok{Auto }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{origin=}\KeywordTok{factor}\NormalTok{(origin))}
-\KeywordTok{levels}\NormalTok{(Auto$origin)}
+\KeywordTok{levels}\NormalTok{(Auto}\OperatorTok{$}\NormalTok{origin)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4708,8 +4741,9 @@ Now let's build a model to capture the relationship between
 \mathtt{salary} = \beta_0 + \beta_1 x_1 + \beta_2 x_2
 \]
 
-What is the expected salary for a CS major? \(\beta_0\).\\For a MATH
-major? \(\beta_0 + \beta_1\). For a BUS major? \(\beta_0 + \beta_2\).
+What is the expected salary for a CS major? \(\beta_0\).\\
+For a MATH major? \(\beta_0 + \beta_1\). For a BUS major?
+\(\beta_0 + \beta_2\).
 
 So, \(\beta_1\) is the average difference in salary between MATH and CS
 majors. How can we calculate the average difference in salary between
@@ -4722,16 +4756,16 @@ function and passing it the model formula we build:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{extended_df <-}\StringTok{ }\KeywordTok{model.matrix}\NormalTok{(~}\KeywordTok{factor}\NormalTok{(origin), }\DataTypeTok{data=}\NormalTok{Auto) %>%}\StringTok{ }
-\StringTok{  }\KeywordTok{as.data.frame}\NormalTok{() %>%}
-\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{origin =} \KeywordTok{factor}\NormalTok{(Auto$origin))}
+\NormalTok{extended_df <-}\StringTok{ }\KeywordTok{model.matrix}\NormalTok{(}\OperatorTok{~}\KeywordTok{factor}\NormalTok{(origin), }\DataTypeTok{data=}\NormalTok{Auto) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{as.data.frame}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{origin =} \KeywordTok{factor}\NormalTok{(Auto}\OperatorTok{$}\NormalTok{origin))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{extended_df %>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(origin ==}\StringTok{ "1"}\NormalTok{) %>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
+\NormalTok{extended_df }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(origin }\OperatorTok{==}\StringTok{ "1"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4747,8 +4781,8 @@ function and passing it the model formula we build:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{extended_df %>%}\StringTok{ }
-\StringTok{  }\KeywordTok{filter}\NormalTok{(origin ==}\StringTok{ "2"}\NormalTok{) %>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
+\NormalTok{extended_df }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(origin }\OperatorTok{==}\StringTok{ "2"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4764,8 +4798,8 @@ function and passing it the model formula we build:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{extended_df %>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(origin ==}\StringTok{ "3"}\NormalTok{) %>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
+\NormalTok{extended_df }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(origin }\OperatorTok{==}\StringTok{ "3"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4804,13 +4838,13 @@ look at what the numerical predictors look like:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{Auto$origin <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(Auto$origin)}
-\NormalTok{extended_df <-}\StringTok{ }\KeywordTok{model.matrix}\NormalTok{(~weight+origin+weight:origin, }\DataTypeTok{data=}\NormalTok{Auto) %>%}
-\KeywordTok{as.data.frame}\NormalTok{() %>%}
-\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{origin =} \KeywordTok{factor}\NormalTok{(Auto$origin))}
+\NormalTok{Auto}\OperatorTok{$}\NormalTok{origin <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(Auto}\OperatorTok{$}\NormalTok{origin)}
+\NormalTok{extended_df <-}\StringTok{ }\KeywordTok{model.matrix}\NormalTok{(}\OperatorTok{~}\NormalTok{weight}\OperatorTok{+}\NormalTok{origin}\OperatorTok{+}\NormalTok{weight}\OperatorTok{:}\NormalTok{origin, }\DataTypeTok{data=}\NormalTok{Auto) }\OperatorTok{%>%}
+\KeywordTok{as.data.frame}\NormalTok{() }\OperatorTok{%>%}
+\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{origin =} \KeywordTok{factor}\NormalTok{(Auto}\OperatorTok{$}\NormalTok{origin))}
 
-\NormalTok{extended_df %>%}
-\KeywordTok{filter}\NormalTok{(origin ==}\StringTok{ "1"}\NormalTok{) %>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
+\NormalTok{extended_df }\OperatorTok{%>%}
+\KeywordTok{filter}\NormalTok{(origin }\OperatorTok{==}\StringTok{ "1"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4826,8 +4860,8 @@ look at what the numerical predictors look like:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{extended_df %>%}
-\KeywordTok{filter}\NormalTok{(origin ==}\StringTok{ "2"}\NormalTok{) %>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
+\NormalTok{extended_df }\OperatorTok{%>%}
+\KeywordTok{filter}\NormalTok{(origin }\OperatorTok{==}\StringTok{ "2"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4843,8 +4877,8 @@ look at what the numerical predictors look like:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{extended_df %>%}
-\KeywordTok{filter}\NormalTok{(origin ==}\StringTok{ "3"}\NormalTok{) %>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
+\NormalTok{extended_df }\OperatorTok{%>%}
+\KeywordTok{filter}\NormalTok{(origin }\OperatorTok{==}\StringTok{ "3"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4882,9 +4916,9 @@ say color, and use the \texttt{geom\_smooth} method:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{Auto %>%}
-\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{weight, }\DataTypeTok{y=}\NormalTok{mpg, }\DataTypeTok{color=}\NormalTok{origin)) +}
-\KeywordTok{geom_point}\NormalTok{() +}
+\NormalTok{Auto }\OperatorTok{%>%}
+\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{weight, }\DataTypeTok{y=}\NormalTok{mpg, }\DataTypeTok{color=}\NormalTok{origin)) }\OperatorTok{+}
+\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
 \KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method=}\NormalTok{lm)}
 \end{Highlighting}
 \end{Shaded}
@@ -4901,10 +4935,10 @@ to those observations:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{auto_fit <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(mpg~weight*origin, }\DataTypeTok{data=}\NormalTok{Auto)}
-\NormalTok{auto_fit_stats <-}\StringTok{ }\NormalTok{auto_fit %>%}
+\NormalTok{auto_fit <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(mpg}\OperatorTok{~}\NormalTok{weight}\OperatorTok{*}\NormalTok{origin, }\DataTypeTok{data=}\NormalTok{Auto)}
+\NormalTok{auto_fit_stats <-}\StringTok{ }\NormalTok{auto_fit }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{tidy}\NormalTok{() }
-\NormalTok{auto_fit_stats %>%}\StringTok{ }\NormalTok{knitr::}\KeywordTok{kable}\NormalTok{()}
+\NormalTok{auto_fit_stats }\OperatorTok{%>%}\StringTok{ }\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4935,9 +4969,9 @@ can again check this for this model:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{auto_fit %>%}\StringTok{ }
-\StringTok{  }\KeywordTok{augment}\NormalTok{() %>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{.fitted, }\DataTypeTok{y=}\NormalTok{.resid)) +}
+\NormalTok{auto_fit }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{augment}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{.fitted, }\DataTypeTok{y=}\NormalTok{.resid)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom_point}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -4955,7 +4989,7 @@ into account when using this method for modeling. Multiple linear
 regression introduces an additional issue that is extremely important to
 consider when interpreting the results of these analyses: collinearity.
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics{img/collinearity.png}
 \caption{}
@@ -5008,9 +5042,9 @@ time:
 \KeywordTok{library}\NormalTok{(dplyr)}
 \KeywordTok{library}\NormalTok{(ggplot2)}
 
-\NormalTok{gapminder %>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\KeywordTok{factor}\NormalTok{(year), }\DataTypeTok{y=}\NormalTok{lifeExp)) +}
-\StringTok{    }\KeywordTok{geom_violin}\NormalTok{() +}
+\NormalTok{gapminder }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\KeywordTok{factor}\NormalTok{(year), }\DataTypeTok{y=}\NormalTok{lifeExp)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_violin}\NormalTok{() }\OperatorTok{+}
 \StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title=}\StringTok{"Life expectancy over time"}\NormalTok{,}
          \DataTypeTok{x =} \StringTok{"year"}\NormalTok{,}
          \DataTypeTok{y =} \StringTok{"life expectancy"}\NormalTok{)}
@@ -5228,5 +5262,6 @@ several advantages:
 \chapter{Day 3 Capstone Project}\label{day-3-capstone-project}
 
 Complete and publish a shiny application for our movie analysis.
+
 
 \end{document}
