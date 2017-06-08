@@ -1,0 +1,17 @@
+base
+BiocInstaller
+RColorBrewer
+tidyverse
+ggplot2
+tibble
+tidyr
+readr
+purrr
+dplyr
+xml2
+rvest
+stringr
+lubridate
+class
+broom
+nycflights13

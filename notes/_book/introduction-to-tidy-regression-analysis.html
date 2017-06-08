@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2017-06-02">
+<meta name="date" content="2017-06-07">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -279,7 +279,7 @@ Auto %&gt;%
 <span class="st">    </span><span class="kw">geom_point</span>() +<span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm) +<span class="st"> </span>
 <span class="st">    </span><span class="kw">theme_minimal</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
+<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-104-1.svg" width="672" /></p>
 <p>In R, linear models are built using the <code>lm</code> function</p>
 <pre class="sourceCode r"><code class="sourceCode r">auto_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg~weight, <span class="dt">data=</span>Auto)
 auto_fit</code></pre>
@@ -362,20 +362,20 @@ R^2 = \frac{\mathrm{TSS}-\mathrm{RSS}}{\mathrm{TSS}} = 1 - \frac{\mathrm{RSS}}{\
 <p>Suppose we have a categorical variable <code>sex</code> with values <code>female</code> and <code>male</code>, and we want to show the relationship between, say <code>credit card balance</code> and <code>sex</code>. We can create a dummy variable <span class="math">\(x\)</span> as follows:</p>
 <p><span class="math">\[
 x_i = \left\{
-\begin{align}
+\begin{aligned}
 1 &amp; \textrm{ if female} \\
 0 &amp; \textrm{o.w.}
-\end{align}
+\end{aligned}
 \right.
 \]</span></p>
 <p>and fit a model <span class="math">\(y = \beta_0 + \beta_1 x\)</span>. What is the conditional expectation given by this model? If the person is male, then <span class="math">\(y=\beta_0\)</span>, if the person is female, then <span class="math">\(y=\beta_0 + \beta_1\)</span>. So, what is the interpretation of <span class="math">\(\beta_1\)</span>? The average difference in credit card balance between females and males.</p>
 <p>We could do a different encoding:</p>
 <p><span class="math">\[
 x_i = \left\{
-\begin{align}
+\begin{aligned}
 +1 &amp; \textrm{ if female} \\
 -1 &amp; \textrm{o.w.}
-\end{align}
+\end{aligned}
 \right.
 \]</span></p>
 <p>Then what is the interpretation of <span class="math">\(\beta_1\)</span> in this case?</p>
@@ -412,7 +412,7 @@ augmented_auto %&gt;%<span class="st"> </span><span class="kw">head</span>()</co
 <span class="st">    </span><span class="kw">geom_smooth</span>() +
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;fitted&quot;</span>, <span class="dt">y=</span><span class="st">&quot;residual&quot;</span>)</code></pre>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
+<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-111-1.svg" width="672" /></p>
 </div>
 <div id="correlated-error" class="section level3">
 <h3><span class="header-section-number">10.4.2</span> Correlated Error</h3>
@@ -675,18 +675,18 @@ auto_fit_stats %&gt;%<span class="st"> </span>knitr::<span class="kw">kable</spa
 <p>As before, we can only use numerical predictors in linear regression models. The most common way of doing this is to create new dummy predictors to <em>encode</em> the value of the categorical predictor. Let’s take a categorical variable <code>major</code> that can take values <code>CS</code>, <code>MATH</code>, <code>BUS</code>. We can encode these values using variables <span class="math">\(x_1\)</span> and <span class="math">\(x_2\)</span></p>
 <p><span class="math">\[
 x_1 = \left\{
-\begin{align}
+\begin{aligned}
 1 &amp; \textrm{ if MATH} \\
 0 &amp; \textrm{ o.w.}
-\end{align}
+\end{aligned}
 \right.
 \]</span></p>
 <p><span class="math">\[
 x_2 = \left\{
-\begin{align}
+\begin{aligned}
 1 &amp; \textrm{ if BUS} \\
 0 &amp; \textrm{ o.w.}
-\end{align}
+\end{aligned}
 \right.
 \]</span></p>
 <p>Now let’s build a model to capture the relationship between <code>salary</code> and <code>major</code>:</p>
@@ -783,7 +783,7 @@ extended_df %&gt;%
 <span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>weight, <span class="dt">y=</span>mpg, <span class="dt">color=</span>origin)) +
 <span class="kw">geom_point</span>() +
 <span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-128-1.png" width="672" /></p>
+<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-128-1.svg" width="672" /></p>
 <p>The intercept of the three lines seem to be different, but the slope of <code>origin == 3</code> looks different (decreases faster) than the slopes of <code>origin == 1</code> and <code>origin == 2</code> that look very similar to each other.</p>
 <p>Let’s fit the model and see how much statistical confidence we can give to those observations:</p>
 <pre class="sourceCode r"><code class="sourceCode r">auto_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg~weight*origin, <span class="dt">data=</span>Auto)
@@ -850,7 +850,7 @@ auto_fit_stats %&gt;%<span class="st"> </span>knitr::<span class="kw">kable</spa
 <span class="st">  </span><span class="kw">augment</span>() %&gt;%
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>.fitted, <span class="dt">y=</span>.resid)) +
 <span class="st">  </span><span class="kw">geom_point</span>()</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-130-1.png" width="672" /></p>
+<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-130-1.svg" width="672" /></p>
 <p>The fact that residuals are not centered around zero suggests that a linear fit does not work well in this case.</p>
 </div>
 <div id="additional-issues-with-linear-regression" class="section level2">
@@ -882,7 +882,7 @@ gapminder %&gt;%
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Life expectancy over time&quot;</span>,
          <span class="dt">x =</span> <span class="st">&quot;year&quot;</span>,
          <span class="dt">y =</span> <span class="st">&quot;life expectancy&quot;</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-132-1.png" width="1152" /></p>
+<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-132-1.svg" width="1152" /></p>
 <p>This type of plot is called a <em>violin plot</em>, and it displays the distribution of the variable in the y-axis for each value of the variable in the x-axis.</p>
 <p><strong>Question 2</strong>: <em>How would you describe the distribution of life expectancy across countries for individual years? Is it skewed, or not? Unimodal or not? Symmetric around it’s center?</em></p>
 <p>Based on this plot, consider the following questions.</p>
@@ -945,9 +945,9 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["mtec_cadi_2017.pdf"],
 "toc": {
-"collapse": "subsection"
+"collapse": "none"
 }
 });
 });

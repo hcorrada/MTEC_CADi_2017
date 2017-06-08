@@ -142,10 +142,10 @@ Suppose we have a categorical variable `sex` with values `female` and `male`, an
 
 $$
 x_i = \left\{
-\begin{align}
+\begin{aligned}
 1 & \textrm{ if female} \\
 0 & \textrm{o.w.}
-\end{align}
+\end{aligned}
 \right.
 $$
 
@@ -155,10 +155,10 @@ We could do a different encoding:
 
 $$
 x_i = \left\{
-\begin{align}
+\begin{aligned}
 +1 & \textrm{ if female} \\
 -1 & \textrm{o.w.}
-\end{align}
+\end{aligned}
 \right.
 $$
 
@@ -335,19 +335,19 @@ As before, we can only use numerical predictors in linear regression models. The
 
 $$
 x_1 = \left\{
-\begin{align}
+\begin{aligned}
 1 & \textrm{ if MATH} \\
 0 & \textrm{ o.w.}
-\end{align}
+\end{aligned}
 \right.
 $$
 
 $$
 x_2 = \left\{
-\begin{align}
+\begin{aligned}
 1 & \textrm{ if BUS} \\
 0 & \textrm{ o.w.}
-\end{align}
+\end{aligned}
 \right.
 $$
 

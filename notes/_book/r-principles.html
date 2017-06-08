@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2017-06-02">
+<meta name="date" content="2017-06-07">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -694,22 +694,22 @@ mount_washington_index &lt;-<span class="st"> </span>arrest_tab$neighborhood ==<
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># how about a graphical summary of arrest ages in Mount Washington?</span>
 <span class="co"># we&#39;ll use a boxplot</span>
 <span class="kw">boxplot</span>(arrest_tab$age[mount_washington_index])</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-38-1.svg" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># can we do the same stratified by sex?</span>
 <span class="kw">boxplot</span>(arrest_tab$age[mount_washington_index]~arrest_tab$sex[mount_washington_index])</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-38-2.png" width="672" /></p>
+<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-38-2.svg" width="672" /></p>
 <p>This used a very useful notation in R: the tilde, <code>~</code> which we will encounter in a few different places. One way of thinking about that abstractly is, do something with this attribute, as a function (or depending on, stratified by, conditioned on) this other attribute. For instance, “plot <code>age</code> as a function of sex” in our example.</p>
 <p>Let’s write code that’s a little cleaner for that last plot, and let’s also make the plot a bit more useful by adding a title and axis labels:</p>
 <pre class="sourceCode r"><code class="sourceCode r">mount_washington_tab &lt;-<span class="st"> </span>arrest_tab[mount_washington_index,]
 <span class="kw">boxplot</span>(mount_washington_tab$age~mount_washington_tab$sex,
         <span class="dt">main=</span><span class="st">&quot;Mt. Washington&quot;</span>, 
         <span class="dt">xlab=</span><span class="st">&quot;Sex&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Arrest Age&quot;</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-39-1.svg" width="672" /></p>
 <p>Here’s one more useful plot:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(<span class="kw">table</span>(mount_washington_tab$race), 
         <span class="dt">xlab=</span><span class="st">&quot;Number of Arrests&quot;</span>,
         <span class="dt">ylab=</span><span class="st">&quot;Race&quot;</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-40-1.svg" width="672" /></p>
 </div>
 <div id="functions" class="section level2">
 <h2><span class="header-section-number">5.9</span> Functions</h2>
@@ -728,9 +728,9 @@ mount_washington_index &lt;-<span class="st"> </span>arrest_tab$neighborhood ==<
 }</code></pre>
 <p>Now we can use that function to make our plots for specific neighborhoods</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">analyze_neighborhood</span>(<span class="st">&quot;Mount Washington&quot;</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-42-1.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-42-2.png" width="672" /></p>
+<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-42-1.svg" width="672" /><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-42-2.svg" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">analyze_neighborhood</span>(<span class="st">&quot;Hampden&quot;</span>)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-42-3.png" width="672" /><img src="_main_files/figure-html/unnamed-chunk-42-4.png" width="672" /></p>
+<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-42-3.svg" width="672" /><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-42-4.svg" width="672" /></p>
 </div>
 <div id="a-note-on-data-types" class="section level2">
 <h2><span class="header-section-number">5.10</span> A note on data types</h2>
@@ -952,9 +952,9 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["mtec_cadi_2017.pdf"],
 "toc": {
-"collapse": "subsection"
+"collapse": "none"
 }
 });
 });
